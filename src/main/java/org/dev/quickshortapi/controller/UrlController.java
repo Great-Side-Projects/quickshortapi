@@ -32,6 +32,10 @@ public class UrlController {
         return new ResponseEntity<>(httpHeaders, HttpStatus.SEE_OTHER);
     }
 
+    @GetMapping("/estadisticas/{urlCorta}")
+    public Long estadisticas(@PathVariable String urlCorta) {
+        return urlService.estadisticasURL(urlCorta);
+    }
     @DeleteMapping("/{urlCorta}")
     public void eliminar(@PathVariable UrlRequest urlCorta) {
         urlService.deleteUrlbyUrlCorta(urlCorta.getUrl());
