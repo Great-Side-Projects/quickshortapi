@@ -41,4 +41,9 @@ public class UrlController {
     public void eliminar(@PathVariable String urlCorta) {
         urlService.deleteUrlbyUrlCorta(urlCorta);
     }
+
+    @DeleteMapping("/cache/{urlCorta}")
+    public void eliminarCache(@PathVariable String urlCorta) {
+        urlService.deleteCachebyUrlCorta(urlCorta);
+    }
 }

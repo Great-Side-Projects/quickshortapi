@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: QuickShort-api
+  data:
+    mongodb:
+      uri: mongodb://mymdb:5qcww1iZTvNpU9isEQTT4ndpyqbTdbHWBCOpxUmWDaMUZfDMrhLmm6bya8lwP7g3Q1i4jnJQ3PXpuIrmApYKZw==@mymdb.mongo.cosmos.azure.com:10255/Atirodeas?ssl=true&retryWrites=false
+    redis:
+      database: 0
+      host: redis-13987.c12.us-east-1-4.ec2.cloud.redislabs.com
+      port: 13987
+      password: IUUHl0T2nsu7rcqpbLA2Q1j6LEqSHReD
+      timeout: 60000
+

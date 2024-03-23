@@ -57,6 +57,7 @@ public class UrlService {
         return urlCorta;
         }
         catch (Exception e) {
+            System.out.println("Error interno al guardar la URL:" + e.getMessage());
             throw new UrlInternalServerErrorException("Error interno al guardar la URL:" + e.getMessage());
         }
     }
@@ -84,6 +85,7 @@ public class UrlService {
             url = BuscarEnUrlRepositoryThrow(urlCorta);
             // Guardar en cache si solo estaba en la base de datos
             UrlCache urlCacheAux = urlRepositoryCache.save(url.get().toUrlCache());
+            System.out.println("URL guardada en cache redirigirURL: " + urlCacheAux.totUrl().getUrlCorta());
             url = Optional.of(urlCacheAux.totUrl());
         }
         else {
@@ -108,6 +110,7 @@ public class UrlService {
         if (urlRepository.findByUrlCorta(urlCorta).isPresent()) {
             urlRepository.deleteByUrlCorta(urlCorta);
             urlRepositoryCache.deleteById(urlCorta);
+            System.out.println("URL corta eliminada: " + urlCorta);
             return;
         }
         throw new UrlNotFoundException("URL corta no encontrada");
@@ -135,5 +138,10 @@ public class UrlService {
             throw new UrlInternalServerErrorException("Error interno al incrementar las visitas:" + e.getMessage());
         }
         return CompletableFuture.completedFuture(urlAux.getVisitas());
+    }
+
+    public void deleteCachebyUrlCorta(String urlCorta) {
+        urlRepositoryCache.deleteById(urlCorta);
+        System.out.println("Cache eliminado: " + urlCorta);
     }
 }
