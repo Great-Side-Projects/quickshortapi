@@ -97,8 +97,7 @@ public class UrlService {
     }
 
     private Optional<Url> BuscarEnUrlRepositoryThrow(String urlCorta) {
-        Optional<Url> url;
-        url = urlRepository.findByUrlCorta(urlCorta);
+        Optional<Url> url = urlRepository.findByUrlCorta(urlCorta);
         if(url.isEmpty())
             throw new UrlNotFoundException("URL corta no encontrada");
         return url;
