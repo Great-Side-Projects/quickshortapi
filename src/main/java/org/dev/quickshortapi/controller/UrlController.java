@@ -1,5 +1,6 @@
 package org.dev.quickshortapi.controller;
 
+import org.dev.quickshortapi.model.UrlEstadisticasResponse;
 import org.dev.quickshortapi.model.UrlRequest;
 import org.dev.quickshortapi.service.UrlService;
 import org.springframework.http.HttpHeaders;
@@ -25,19 +26,19 @@ public class UrlController {
 
     @GetMapping("/{urlCorta}")
     public ResponseEntity redirigir(@PathVariable String urlCorta) {
+        //Todo: effiecient way to redirect?
         String urlOriginal = urlService.redirigirURL(urlCorta);
-        URI uri = URI.create(urlOriginal);
         HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.setLocation(uri);
+        httpHeaders.setLocation(URI.create(urlOriginal));
         return new ResponseEntity<>(httpHeaders, HttpStatus.SEE_OTHER);
     }
 
     @GetMapping("/estadisticas/{urlCorta}")
-    public Long estadisticas(@PathVariable String urlCorta) {
+    public UrlEstadisticasResponse estadisticas(@PathVariable String urlCorta) {
         return urlService.estadisticasURL(urlCorta);
     }
     @DeleteMapping("/{urlCorta}")
-    public void eliminar(@PathVariable UrlRequest urlCorta) {
-        urlService.deleteUrlbyUrlCorta(urlCorta.getUrl());
+    public void eliminar(@PathVariable String urlCorta) {
+        urlService.deleteUrlbyUrlCorta(urlCorta);
     }
 }
