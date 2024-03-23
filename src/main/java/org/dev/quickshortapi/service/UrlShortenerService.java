@@ -1,7 +1,6 @@
 package org.dev.quickshortapi.service;
 
 import org.springframework.stereotype.Service;
-
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -29,10 +28,9 @@ public class UrlShortenerService implements IUrlShortener {
             // Devolver los primeros 8 caracteres del hash como la URL corta
             return sb.toString().substring(0, 8);
         } catch (NoSuchAlgorithmException e) {
-            // Manejar la excepción si el algoritmo no está disponible
+            //Todo: handle exception properly
             e.printStackTrace();
-            // En este caso, podrías devolver una URL corta predeterminada o lanzar una excepción
-            return "default";
+            throw new RuntimeException(e);
         }
     }
 
@@ -49,6 +47,7 @@ public class UrlShortenerService implements IUrlShortener {
 
     @Override
     public boolean isValidUrl(String url) {
+        //Todo: improve URL validation
         try {
             new URL(url).toURI();
             return true;
