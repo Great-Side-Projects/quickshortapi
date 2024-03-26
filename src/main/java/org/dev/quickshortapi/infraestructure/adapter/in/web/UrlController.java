@@ -1,27 +1,30 @@
-package org.dev.quickshortapi.controller;
+package org.dev.quickshortapi.infraestructure.adapter.in.web;
 
-import org.dev.quickshortapi.model.UrlEstadisticasResponse;
-import org.dev.quickshortapi.model.UrlRequest;
-import org.dev.quickshortapi.service.UrlService;
+import org.dev.quickshortapi.application.port.in.IUrlServicePort;
+import org.dev.quickshortapi.common.WebAdapter;
+import org.dev.quickshortapi.domain.UrlEstadisticasResponse;
+import org.dev.quickshortapi.application.port.in.UrlCommand;
+import org.dev.quickshortapi.application.service.UrlService;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.net.URI;
 
+@WebAdapter
 @RestController
 @RequestMapping("/url")
 public class UrlController {
 
-    private UrlService urlService;
+    private final IUrlServicePort urlService;
 
     UrlController(UrlService urlService) {
         this.urlService = urlService;
     }
 
     @PostMapping("/acortar")
-    public String acortar(@RequestBody UrlRequest urlRequest) {
-        return urlService.acortarURL(urlRequest.getUrl());
+    public String acortar(@RequestBody UrlCommand urlCommand) {
+        return urlService.acortarURL(urlCommand);
     }
 
     @GetMapping("/{urlCorta}")

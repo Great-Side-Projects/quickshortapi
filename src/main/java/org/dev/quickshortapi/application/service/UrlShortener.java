@@ -1,15 +1,13 @@
-package org.dev.quickshortapi.service;
+package org.dev.quickshortapi.application.service;
 
-import org.springframework.stereotype.Service;
-import java.net.MalformedURLException;
-import java.net.URISyntaxException;
-import java.net.URL;
+import org.dev.quickshortapi.application.port.out.IUrlShortenerPort;
+import org.springframework.stereotype.Component;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Random;
 
-@Service
-public class UrlShortenerService implements IUrlShortener {
+@Component
+public class UrlShortener implements IUrlShortenerPort {
 
     private static final String ALPHABET = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
     private static final int URL_LENGTH = 8;
@@ -43,18 +41,5 @@ public class UrlShortenerService implements IUrlShortener {
             sb.append(ALPHABET.charAt(idx));
         }
         return sb.toString();
-    }
-
-    @Override
-    public boolean isValidUrl(String url) {
-        //Todo: improve URL validation
-        try {
-            new URL(url).toURI();
-            return true;
-        } catch (MalformedURLException e) {
-            return false;
-        } catch (URISyntaxException e) {
-            return false;
-        }
     }
 }
