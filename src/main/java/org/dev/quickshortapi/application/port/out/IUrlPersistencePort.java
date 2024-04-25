@@ -11,9 +11,9 @@ public interface IUrlPersistencePort {
 
     boolean existCollisionbyShortUrl(String urlCorta);
 
-    void save(Url url);
+    Url save(Url url);
 
-    Optional<Url> getUrlAndThrowByShortUrl(String urlCorta);
+    Optional<Url> getUrlOrThrowByShortUrl(String urlCorta);
 
     void increaseVisits(Url url);
 
