@@ -58,14 +58,10 @@ public class UrlService implements IUrlServicePort {
             urlCorta = urlShortenerService.generarURLCortaRandom(url.getUrlOriginal());
             System.out.println("URL corta generada generarURLCorta_Random: " + urlCorta);
         }
-
         url.setUrlCorta(urlCorta);
-
         // Guardar en DB
-
         try{
             urlPersistenceAdapter.save(url);
-            // Todo: save in cache
             urlRepositoryCacheAdapter.save(UrlMapper.toUrlCache(url));
             System.out.println("URL corta guardada: " + urlCorta);
         return urlCorta;
@@ -82,11 +78,10 @@ public class UrlService implements IUrlServicePort {
         Optional<UrlCache> urlCache = urlRepositoryCacheAdapter.findById(urlCorta);
         Optional<Url> url;
         if (urlCache.isEmpty()) {
-            url =  urlPersistenceAdapter.getUrlAndThrowByShortUrl(urlCorta);
-            // Guardar en cache si solo estaba en la base de datos
+            url =  urlPersistenceAdapter.getUrlOrThrowByShortUrl(urlCorta);
+            // Actualizar en cache si solo estaba en la base de datos
             UrlCache urlCacheAux = urlRepositoryCacheAdapter.save(UrlMapper.toUrlCache(url.get()));
             System.out.println("URL guardada en cache redirigirURL: " + urlCacheAux.getId());
-            url = Optional.of(UrlMapper.toUrl(urlCacheAux));
         }
         else {
             url = Optional.of(UrlMapper.toUrl(urlCache.get()));
@@ -117,8 +112,8 @@ public class UrlService implements IUrlServicePort {
     public UrlEstadisticasResponse estadisticasURL(String urlCorta) {
         Optional<UrlEntity> url = urlPersistenceAdapter.findByUrlCorta(urlCorta);
         if (url.isPresent()) {
-            UrlCache urlCache = urlRepositoryCacheAdapter.findById(urlCorta)
-                    .orElse(new UrlCache());
+            //urlRepositoryCacheAdapter.findById(urlCorta)
+            //        .orElse(new UrlCache());
             return new UrlEstadisticasResponse(url.get().getVisitas());
         }
         throw new UrlNotFoundException("URL corta no encontrada");
