@@ -5,9 +5,9 @@ import lombok.Getter;
 @Getter
 public class UrlEstadisticasResponse
 {
-    private Long visitas;
+    private Long visits;
 
-    public UrlEstadisticasResponse(Long visitas) {
-        this.visitas = visitas;
+    public UrlEstadisticasResponse(Long visits) {
+        this.visits = visits;
     }
 }

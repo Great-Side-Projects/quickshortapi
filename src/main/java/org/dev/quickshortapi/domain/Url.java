@@ -9,35 +9,31 @@ import java.net.URL;
 @Data
 public class Url {
     private String id;
-    private String urlOriginal;
-    private String urlCorta;
-    private Long visitas = 0L;
+    private String originalUrl;
+    private String shortUrl;
+    private Long visits = 0L;
 
-    public Url(String urlOriginal) {
-        this.urlOriginal = urlOriginal;
+    public Url(String originalUrl) {
+        this.originalUrl = originalUrl;
     }
 
-    public Url(String id, String urlOriginal, String urlCorta, Long visitas) {
+    public Url(String id, String originalUrl, String shortUrl, Long visits) {
         this.id = id;
-        this.urlOriginal = urlOriginal;
-        this.urlCorta = urlCorta;
-        this.visitas = visitas;
+        this.originalUrl = originalUrl;
+        this.shortUrl = shortUrl;
+        this.visits = visits;
     }
 
 
     public boolean isValidUrl() {
         //Todo: improve URL validation
         try {
-            new URL(this.urlOriginal).toURI();
+            new URL(this.originalUrl).toURI();
             return true;
         } catch (MalformedURLException e) {
             return false;
         } catch (URISyntaxException e) {
             return false;
         }
-    }
-
-    public void incrementVisitas() {
-        this.visitas++;
     }
 }

@@ -12,7 +12,7 @@ public class UrlShortener implements IUrlShortenerPort {
     private static final String ALPHABET = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
     private static final int URL_LENGTH = 8;
     @Override
-    public String generarURLCortaSHA(String urlOriginal) {
+    public String generateSHAShortUrl(String urlOriginal) {
         try {
             // Crear un objeto MessageDigest con el algoritmo SHA-256
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
@@ -33,7 +33,7 @@ public class UrlShortener implements IUrlShortenerPort {
     }
 
     @Override
-    public String generarURLCortaRandom(String urlOriginal) {
+    public String generateRandomShortUrl(String urlOriginal) {
         Random random = new Random();
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < URL_LENGTH; i++) {
