@@ -33,7 +33,7 @@ public class UrlService implements IUrlServicePort {
         this.urlPersistenceAdapter = urlRepository;
     }
     @Override
-    public String acortarURL(UrlCommand urlCommand) {
+    public String shortenUrl(UrlCommand urlCommand) {
 
         System.out.println("URL original: " + urlCommand.getUrl());
 
@@ -44,27 +44,27 @@ public class UrlService implements IUrlServicePort {
         }
 
         //Verificar si la URL original ya existe en la base de datos
-        String urlCortaDB = urlPersistenceAdapter.getShortUrlbyOriginalUrl(url.getUrlOriginal());
-        if (!urlCortaDB.isEmpty()) {
-            return urlCortaDB;
+        String shortUrlDB = urlPersistenceAdapter.getShortUrlbyOriginalUrl(url.getOriginalUrl());
+        if (!shortUrlDB.isEmpty()) {
+            return shortUrlDB;
         }
 
         // Lógica para generar la URL corta
-        String urlCorta = urlShortenerService.generarURLCortaSHA(url.getUrlOriginal());
-        System.out.println("URL corta generada SHA: " + urlCorta);
+        String shortUrl = urlShortenerService.generateSHAShortUrl(url.getOriginalUrl());
+        System.out.println("URL corta generada SHA: " + shortUrl);
 
-        if (urlPersistenceAdapter.existCollisionbyShortUrl(urlCorta)) {
+        if (urlPersistenceAdapter.existCollisionbyShortUrl(shortUrl)) {
             // Si la URL corta ya existe, genera otra URL corta Random
-            urlCorta = urlShortenerService.generarURLCortaRandom(url.getUrlOriginal());
-            System.out.println("URL corta generada generarURLCorta_Random: " + urlCorta);
+            shortUrl = urlShortenerService.generateRandomShortUrl(url.getOriginalUrl());
+            System.out.println("URL corta generada generateRandomShortUrl: " + shortUrl);
         }
-        url.setUrlCorta(urlCorta);
+        url.setShortUrl(shortUrl);
         // Guardar en DB
         try{
             urlPersistenceAdapter.save(url);
             urlRepositoryCacheAdapter.save(UrlMapper.toUrlCache(url));
-            System.out.println("URL corta guardada: " + urlCorta);
-        return urlCorta;
+            System.out.println("URL corta guardada: " + shortUrl);
+        return shortUrl;
         }
         catch (Exception e) {
             System.out.println("Error interno al guardar la URL:" + e.getMessage());
@@ -73,15 +73,15 @@ public class UrlService implements IUrlServicePort {
     }
 
     @Override
-    public String redirigirURL(String urlCorta) {
+    public String redirectUrl(String shortUrl) {
 
-        Optional<UrlCache> urlCache = urlRepositoryCacheAdapter.findById(urlCorta);
+        Optional<UrlCache> urlCache = urlRepositoryCacheAdapter.findById(shortUrl);
         Optional<Url> url;
         if (urlCache.isEmpty()) {
-            url =  urlPersistenceAdapter.getUrlOrThrowByShortUrl(urlCorta);
+            url =  urlPersistenceAdapter.getUrlOrThrowByShortUrl(shortUrl);
             // Actualizar en cache si solo estaba en la base de datos
             UrlCache urlCacheAux = urlRepositoryCacheAdapter.save(UrlMapper.toUrlCache(url.get()));
-            System.out.println("URL guardada en cache redirigirURL: " + urlCacheAux.getId());
+            System.out.println("URL guardada en cache redirectUrl: " + urlCacheAux.getId());
         }
         else {
             url = Optional.of(UrlMapper.toUrl(urlCache.get()));
@@ -95,26 +95,26 @@ public class UrlService implements IUrlServicePort {
         Optional<Url> finalUrl = url;
         CompletableFuture.runAsync(() -> incrementarVisitas(finalUrl));
         //incrementarVisitas(finalUrl);
-        return url.get().getUrlOriginal();
+        return url.get().getOriginalUrl();
     }
 
     @Override
-    public void deleteUrlbyUrlCorta(String urlCorta) {
+    public void deleteUrlbyShortUrl(String shortUrl) {
 
-        if (urlPersistenceAdapter.deleteUrlbyShortUrl(urlCorta)) {
-            urlRepositoryCacheAdapter.deleteById(urlCorta);
+        if (urlPersistenceAdapter.deleteUrlbyShortUrl(shortUrl)) {
+            urlRepositoryCacheAdapter.deleteById(shortUrl);
             return;
         }
         throw new UrlNotFoundException("URL corta no encontrada");
     }
 
     @Override
-    public UrlEstadisticasResponse estadisticasURL(String urlCorta) {
-        Optional<UrlEntity> url = urlPersistenceAdapter.findByUrlCorta(urlCorta);
+    public UrlEstadisticasResponse getUrlStatistics(String shortUrl) {
+        Optional<UrlEntity> url = urlPersistenceAdapter.findByUShortUrl(shortUrl);
         if (url.isPresent()) {
             //urlRepositoryCacheAdapter.findById(urlCorta)
             //        .orElse(new UrlCache());
-            return new UrlEstadisticasResponse(url.get().getVisitas());
+            return new UrlEstadisticasResponse(url.get().getVisits());
         }
         throw new UrlNotFoundException("URL corta no encontrada");
     }
@@ -122,12 +122,12 @@ public class UrlService implements IUrlServicePort {
     @Async
     protected CompletableFuture<Long> incrementarVisitas(Optional<Url> url) {
         urlPersistenceAdapter.increaseVisits(url.get());
-        return CompletableFuture.completedFuture(url.get().getVisitas());
+        return CompletableFuture.completedFuture(url.get().getVisits());
     }
 
     @Override
-    public void deleteCachebyUrlCorta(String urlCorta) {
-        urlRepositoryCacheAdapter.deleteById(urlCorta);
-        System.out.println("Cache eliminado: " + urlCorta);
+    public void deleteCachebyShortUrl(String shortUrl) {
+        urlRepositoryCacheAdapter.deleteById(shortUrl);
+        System.out.println("Cache eliminado: " + shortUrl);
     }
 }

@@ -2,7 +2,6 @@ package org.dev.quickshortapi.infraestructure.adapter.out.persistence;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.dev.quickshortapi.infraestructure.adapter.out.persistence.UrlEntity;
 import org.springframework.data.redis.core.RedisHash;
 
 import java.io.Serializable;
@@ -14,13 +13,13 @@ public class UrlCache implements Serializable {
 
     private String id;
     private String idDbUrl;
-    private String urlOriginal;
+    private String originalUrl;
 
     public UrlCache() {
     }
-    public UrlCache(String id, String idDbUrl, String urlOriginal) {
+    public UrlCache(String id, String idDbUrl, String originalUrl) {
         this.id = id;
         this.idDbUrl = idDbUrl;
-        this.urlOriginal = urlOriginal;
+        this.originalUrl = originalUrl;
     }
 }

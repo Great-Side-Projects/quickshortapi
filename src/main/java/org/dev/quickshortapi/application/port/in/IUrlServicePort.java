@@ -3,9 +3,9 @@ package org.dev.quickshortapi.application.port.in;
 import org.dev.quickshortapi.domain.UrlEstadisticasResponse;
 
 public interface IUrlServicePort {
-    String acortarURL(UrlCommand urlCommand);
-    String redirigirURL(String urlCorta);
-    void deleteUrlbyUrlCorta(String urlCorta);
-    UrlEstadisticasResponse estadisticasURL(String urlCorta);
-    void deleteCachebyUrlCorta(String urlCorta);
+    String shortenUrl(UrlCommand urlCommand);
+    String redirectUrl(String urlCorta);
+    void deleteUrlbyShortUrl(String urlCorta);
+    UrlEstadisticasResponse getUrlStatistics(String urlCorta);
+    void deleteCachebyShortUrl(String urlCorta);
 }

@@ -7,7 +7,8 @@ import java.util.Optional;
 
 @Repository
 public interface UrlRepository extends MongoRepository<UrlEntity, String> {
-    Optional<UrlEntity> findByUrlCorta(String urlCorta);
-    Optional<UrlEntity> findByUrlOriginal(String urlOriginal);
-    void deleteByUrlCorta(String urlCorta);
+
+    Optional<UrlEntity> findByShortUrl(String urlCorta);
+    Optional<UrlEntity> findByOriginalUrl(String urlOriginal);
+    void deleteByShortUrl(String urlCorta);
 }

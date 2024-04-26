@@ -22,31 +22,31 @@ public class UrlController {
         this.urlService = urlService;
     }
 
-    @PostMapping("/acortar")
-    public String acortar(@RequestBody UrlCommand urlCommand) {
-        return urlService.acortarURL(urlCommand);
+    @PostMapping("/shorten")
+    public String shorten(@RequestBody UrlCommand urlCommand) {
+        return urlService.shortenUrl(urlCommand);
     }
 
-    @GetMapping("/{urlCorta}")
-    public ResponseEntity redirigir(@PathVariable String urlCorta) {
+    @GetMapping("/{shortUrl}")
+    public ResponseEntity redirect(@PathVariable String shortUrl) {
         //Todo: effiecient way to redirect?
-        String urlOriginal = urlService.redirigirURL(urlCorta);
+        String urlOriginal = urlService.redirectUrl(shortUrl);
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setLocation(URI.create(urlOriginal));
         return new ResponseEntity<>(httpHeaders, HttpStatus.SEE_OTHER);
     }
 
-    @GetMapping("/estadisticas/{urlCorta}")
-    public UrlEstadisticasResponse estadisticas(@PathVariable String urlCorta) {
-        return urlService.estadisticasURL(urlCorta);
+    @GetMapping("/statistics/{shortUrl}")
+    public UrlEstadisticasResponse statistics(@PathVariable String shortUrl) {
+        return urlService.getUrlStatistics(shortUrl);
     }
-    @DeleteMapping("/{urlCorta}")
-    public void eliminar(@PathVariable String urlCorta) {
-        urlService.deleteUrlbyUrlCorta(urlCorta);
+    @DeleteMapping("/{shortUrl}")
+    public void delete(@PathVariable String shortUrl) {
+        urlService.deleteUrlbyShortUrl(shortUrl);
     }
 
-    @DeleteMapping("/cache/{urlCorta}")
-    public void eliminarCache(@PathVariable String urlCorta) {
-        urlService.deleteCachebyUrlCorta(urlCorta);
+    @DeleteMapping("/cache/{shortUrl}")
+    public void deleteCache(@PathVariable String shortUrl) {
+        urlService.deleteCachebyShortUrl(shortUrl);
     }
 }

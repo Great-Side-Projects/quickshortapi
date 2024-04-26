@@ -14,28 +14,28 @@ public class UrlEntity {
     private String id;
 
     @Indexed(unique = true)
-    private String urlOriginal;
+    private String originalUrl;
 
     @Indexed
-    private String urlCorta;
+    private String shortUrl;
 
-    private Long visitas = 0L;
-    public UrlEntity(String urlOriginal, String urlCorta) {
-        this.urlOriginal = urlOriginal;
-        this.urlCorta = urlCorta;
+    private Long visits = 0L;
+    public UrlEntity(String originalUrl, String shortUrl) {
+        this.originalUrl = originalUrl;
+        this.shortUrl = shortUrl;
     }
 
-    public UrlEntity(String id, String urlOriginal, String urlCorta, Long visitas) {
+    public UrlEntity(String id, String originalUrl, String shortUrl, Long visits) {
         this.id = id;
-        this.urlOriginal = urlOriginal;
-        this.urlCorta = urlCorta;
-        this.visitas = visitas;
+        this.originalUrl = originalUrl;
+        this.shortUrl = shortUrl;
+        this.visits = visits;
     }
 
-    public UrlEntity(String urlCorta, String urlOriginal, Long visitas) {
-        this.urlCorta = urlCorta;
-        this.urlOriginal = urlOriginal;
-        this.visitas = visitas;
+    public UrlEntity(String shortUrl, String originalUrl, Long visits) {
+        this.shortUrl = shortUrl;
+        this.originalUrl = originalUrl;
+        this.visits = visits;
     }
 
     public UrlEntity() {
