@@ -2,6 +2,7 @@ package org.dev.quickshortapi.application.service;
 
 import org.dev.quickshortapi.application.port.in.IUrlServicePort;
 import org.dev.quickshortapi.application.port.in.UrlCommand;
+import org.dev.quickshortapi.application.port.out.IUrlEventStreamingPort;
 import org.dev.quickshortapi.application.port.out.IUrlPersistenceCachePort;
 import org.dev.quickshortapi.application.port.out.IUrlPersistencePort;
 import org.dev.quickshortapi.application.port.out.IUrlShortenerPort;
@@ -13,10 +14,7 @@ import org.dev.quickshortapi.domain.UrlEstadisticasResponse;
 import org.dev.quickshortapi.infraestructure.adapter.out.persistence.UrlMapper;
 import org.dev.quickshortapi.infraestructure.adapter.out.persistence.UrlEntity;
 import org.dev.quickshortapi.infraestructure.adapter.out.persistence.UrlCache;
-import org.springframework.scheduling.annotation.Async;
-
 import java.util.Optional;
-import java.util.concurrent.CompletableFuture;
 
 @UseCase
 public class UrlService implements IUrlServicePort {
@@ -24,13 +22,16 @@ public class UrlService implements IUrlServicePort {
     private IUrlShortenerPort urlShortenerService;
     private IUrlPersistenceCachePort urlRepositoryCacheAdapter;
     private IUrlPersistencePort urlPersistenceAdapter;
+    private IUrlEventStreamingPort urlEventStreamingAdapter;
 
     public UrlService(IUrlPersistencePort urlRepository,
                       IUrlShortenerPort urlShortenerService,
-                      IUrlPersistenceCachePort urlRepositoryCache) {
+                      IUrlPersistenceCachePort urlRepositoryCache,
+                      IUrlEventStreamingPort urlEventStreaming) {
         this.urlShortenerService = urlShortenerService;
         this.urlRepositoryCacheAdapter = urlRepositoryCache;
         this.urlPersistenceAdapter = urlRepository;
+        this.urlEventStreamingAdapter = urlEventStreaming;
     }
     @Override
     public String shortenUrl(UrlCommand urlCommand) {
@@ -92,9 +93,7 @@ public class UrlService implements IUrlServicePort {
             throw new UrlNotFoundException("URL no válida");
         }
 
-        Optional<Url> finalUrl = url;
-        CompletableFuture.runAsync(() -> incrementarVisitas(finalUrl));
-        //incrementarVisitas(finalUrl);
+        urlEventStreamingAdapter.sendVisitedEvent(url.get());
         return url.get().getOriginalUrl();
     }
 
@@ -112,17 +111,9 @@ public class UrlService implements IUrlServicePort {
     public UrlEstadisticasResponse getUrlStatistics(String shortUrl) {
         Optional<UrlEntity> url = urlPersistenceAdapter.findByUShortUrl(shortUrl);
         if (url.isPresent()) {
-            //urlRepositoryCacheAdapter.findById(urlCorta)
-            //        .orElse(new UrlCache());
             return new UrlEstadisticasResponse(url.get().getVisits());
         }
         throw new UrlNotFoundException("URL corta no encontrada");
-    }
-
-    @Async
-    protected CompletableFuture<Long> incrementarVisitas(Optional<Url> url) {
-        urlPersistenceAdapter.increaseVisits(url.get());
-        return CompletableFuture.completedFuture(url.get().getVisits());
     }
 
     @Override
