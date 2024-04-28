@@ -1,6 +1,10 @@
 package org.dev.quickshortapi.infraestructure.adapter.out.persistence;
 
+import org.dev.quickshortapi.common.Event.EventType;
+import org.dev.quickshortapi.common.Event.UrlVisitedEvent;
 import org.dev.quickshortapi.domain.Url;
+import java.util.Date;
+import java.util.UUID;
 
 public class UrlMapper {
     public static Url toUrl(UrlEntity urlEntity) {
@@ -17,5 +21,9 @@ public class UrlMapper {
 
     public static UrlCache toUrlCache(Url url) {
         return new UrlCache(url.getShortUrl(), url.getId(), url.getOriginalUrl());
+    }
+
+    public static UrlVisitedEvent toUrlVisitedEvent(Url url){
+        return new UrlVisitedEvent(UUID.randomUUID().toString(),new Date(), EventType.VISITED, url);
     }
 }

@@ -1,6 +1,7 @@
 package org.dev.quickshortapi.domain;
 
 import lombok.Data;
+import org.dev.quickshortapi.common.Event.Event;
 
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
@@ -13,6 +14,8 @@ public class Url {
     private String shortUrl;
     private Long visits = 0L;
 
+    public Url() {
+    }
     public Url(String originalUrl) {
         this.originalUrl = originalUrl;
     }
