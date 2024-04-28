@@ -2,31 +2,31 @@ package org.dev.quickshortapi.infraestructure.adapter.out.persistence;
 
 import org.dev.quickshortapi.application.port.out.IUrlPersistenceCachePort;
 import org.dev.quickshortapi.common.PersistenceAdapter;
-import org.dev.quickshortapi.application.port.out.UrlRepositoryCache;
+import org.dev.quickshortapi.application.port.out.IUrlRepositoryCache;
 
 import java.util.Optional;
 
 @PersistenceAdapter
 public class UrlPersistenceCacheAdapter implements IUrlPersistenceCachePort {
 
-    private final UrlRepositoryCache urlRepositoryCache;
+    private final IUrlRepositoryCache UrlRepositoryCache;
 
-    public UrlPersistenceCacheAdapter(UrlRepositoryCache urlRepositoryCache) {
-        this.urlRepositoryCache = urlRepositoryCache;
+    public UrlPersistenceCacheAdapter(IUrlRepositoryCache urlRepositoryCache) {
+        this.UrlRepositoryCache = urlRepositoryCache;
     }
    @Override
     public UrlCache save(UrlCache urlCache) {
-      return urlRepositoryCache.save(urlCache);
+      return UrlRepositoryCache.save(urlCache);
 
     }
 
     @Override
     public Optional<UrlCache> findById(String id) {
-        return urlRepositoryCache.findById(id);
+        return UrlRepositoryCache.findById(id);
     }
 
     @Override
     public void deleteById(String id) {
-        urlRepositoryCache.deleteById(id);
+        UrlRepositoryCache.deleteById(id);
     }
 }
