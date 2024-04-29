@@ -1,6 +1,13 @@
+server:
+  port: 8080
 spring:
   application:
     name: QuickShort-api
+    springdoc:
+      api-docs:
+        path: /v3/api-docs
+      swagger-ui:
+        path: /swagger-ui.html
   data:
     #Datasource configuration
     mongodb:
@@ -39,6 +46,31 @@ spring:
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
       acks: all
       client-id: redirecturl
+#Swagger configuration
+springdoc:
+  api-docs:
+    enabled: true
+    path: /v3/api-docs
+  swagger-ui:
+    enabled: true
+    path: /swagger-ui.html
+  open-api:
+    info:
+     title: QuickShort API Documentation
+     description: This is the API documentation for the QuickShort API
+     version: 1.0.0
+     #termsOfService: https://quickshort.com/terms
+     license:
+       name: MTI License
+       url: https://github.com/angelmoralesb/QuickShort-api/blob/main/LICENSE
+     contact:
+       name: Angel Morales
+       email: angelmoralesb@gmail.com
+  #paths-to-match: /api/.*
+  #packages-to-scan: com.quickshort.api
+
+
+
 
 
 
