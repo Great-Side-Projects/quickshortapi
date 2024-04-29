@@ -1,8 +1,6 @@
 package org.dev.quickshortapi.domain;
 
 import lombok.Data;
-import org.dev.quickshortapi.common.Event.Event;
-
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -26,7 +24,6 @@ public class Url {
         this.shortUrl = shortUrl;
         this.visits = visits;
     }
-
 
     public boolean isValidUrl() {
         //Todo: improve URL validation
