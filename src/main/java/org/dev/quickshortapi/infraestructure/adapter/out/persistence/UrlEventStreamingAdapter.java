@@ -26,8 +26,7 @@ public class UrlEventStreamingAdapter implements IUrlEventStreamingPort {
         urlEventTemplate.send(visited.getId(), visited);
     }
 
-    @KafkaListener(topics = "${spring.kafka.topic.name}",
-            groupId = "quickshort")
+    @KafkaListener(topics = "${spring.kafka.topic.name}")
     @Override
     public void visitedEvent(Event<Url> url) {
         urlPersistenceAdapter.increaseVisits(url.getData());
