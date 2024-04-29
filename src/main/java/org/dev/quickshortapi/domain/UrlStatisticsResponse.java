@@ -3,11 +3,11 @@ package org.dev.quickshortapi.domain;
 import lombok.Getter;
 
 @Getter
-public class UrlEstadisticasResponse
+public class UrlStatisticsResponse
 {
     private Long visits;
 
-    public UrlEstadisticasResponse(Long visits) {
+    public UrlStatisticsResponse(Long visits) {
         this.visits = visits;
     }
 }
