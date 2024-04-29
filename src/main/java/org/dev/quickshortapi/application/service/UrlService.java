@@ -10,7 +10,8 @@ import org.dev.quickshortapi.common.UseCase;
 import org.dev.quickshortapi.common.exceptionhandler.UrlInternalServerErrorException;
 import org.dev.quickshortapi.common.exceptionhandler.UrlNotFoundException;
 import org.dev.quickshortapi.domain.Url;
-import org.dev.quickshortapi.domain.UrlEstadisticasResponse;
+import org.dev.quickshortapi.domain.UrlStatisticsResponse;
+import org.dev.quickshortapi.domain.UrlShortenResponse;
 import org.dev.quickshortapi.infraestructure.adapter.out.persistence.UrlMapper;
 import org.dev.quickshortapi.infraestructure.adapter.out.persistence.UrlEntity;
 import org.dev.quickshortapi.infraestructure.adapter.out.persistence.UrlCache;
@@ -34,7 +35,7 @@ public class UrlService implements IUrlServicePort {
         this.urlEventStreamingAdapter = urlEventStreaming;
     }
     @Override
-    public String shortenUrl(UrlCommand urlCommand) {
+    public UrlShortenResponse shortenUrl(UrlCommand urlCommand) {
 
         System.out.println("URL original: " + urlCommand.getUrl());
 
@@ -47,7 +48,7 @@ public class UrlService implements IUrlServicePort {
         //Verificar si la URL original ya existe en la base de datos
         String shortUrlDB = urlPersistenceAdapter.getShortUrlbyOriginalUrl(url.getOriginalUrl());
         if (!shortUrlDB.isEmpty()) {
-            return shortUrlDB;
+            return new UrlShortenResponse(url.getOriginalUrl(), shortUrlDB);
         }
 
         // Lógica para generar la URL corta
@@ -65,7 +66,7 @@ public class UrlService implements IUrlServicePort {
             urlPersistenceAdapter.save(url);
             urlRepositoryCacheAdapter.save(UrlMapper.toUrlCache(url));
             System.out.println("URL corta guardada: " + shortUrl);
-        return shortUrl;
+        return new UrlShortenResponse(url.getOriginalUrl(), url.getShortUrl());
         }
         catch (Exception e) {
             System.out.println("Error interno al guardar la URL:" + e.getMessage());
@@ -108,10 +109,10 @@ public class UrlService implements IUrlServicePort {
     }
 
     @Override
-    public UrlEstadisticasResponse getUrlStatistics(String shortUrl) {
+    public UrlStatisticsResponse getUrlStatistics(String shortUrl) {
         Optional<UrlEntity> url = urlPersistenceAdapter.findByUShortUrl(shortUrl);
         if (url.isPresent()) {
-            return new UrlEstadisticasResponse(url.get().getVisits());
+            return new UrlStatisticsResponse(url.get().getVisits());
         }
         throw new UrlNotFoundException("URL corta no encontrada");
     }
