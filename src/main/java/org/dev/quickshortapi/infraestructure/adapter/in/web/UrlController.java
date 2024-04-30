@@ -8,11 +8,13 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.dev.quickshortapi.application.port.in.IUrlServicePort;
+import org.dev.quickshortapi.application.port.out.UrlResponse;
 import org.dev.quickshortapi.common.WebAdapter;
-import org.dev.quickshortapi.domain.UrlStatisticsResponse;
+import org.dev.quickshortapi.application.port.out.UrlStatisticsResponse;
 import org.dev.quickshortapi.application.port.in.UrlCommand;
 import org.dev.quickshortapi.application.service.UrlService;
-import org.dev.quickshortapi.domain.UrlShortenResponse;
+import org.dev.quickshortapi.application.port.out.UrlShortenResponse;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -105,5 +107,18 @@ public class UrlController {
             @Parameter(description = "Short url to delete cache")
             @PathVariable String shortUrl) {
         urlService.deleteCachebyShortUrl(shortUrl);
+    }
+
+    @Operation(summary = "Get all urls",
+            description = "Get all urls paginated", tags = "Url")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Found urls",
+                    content = { @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = UrlResponse.class)) }),
+            @ApiResponse(responseCode = "404", description = "Urls not found",
+                    content = @Content) })
+    @GetMapping("/all")
+       public ResponseEntity<Page<UrlResponse>> getAllUrls(@RequestParam int page) {
+        return ResponseEntity.ok(urlService.getAllUrls(page));
     }
 }

@@ -7,25 +7,29 @@ import org.dev.quickshortapi.common.exceptionhandler.UrlInternalServerErrorExcep
 import org.dev.quickshortapi.common.exceptionhandler.UrlNotFoundException;
 import org.dev.quickshortapi.domain.Url;
 import org.dev.quickshortapi.application.port.out.IUrlRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 import java.util.Optional;
 
 @PersistenceAdapter
 public class UrlPersistenceAdapter implements IUrlPersistencePort{
 
-    private final IUrlRepository UrlRepository;
+    private final IUrlRepository urlRepository;
     private final IUrlMongoTemplate urlMongoTemplate;
-    private  final int INCREASE_VISITS_BY_1 = 1;
+    private final int INCREASE_VISITS_BY_1 = 1;
+    private final int PAGE_SIZE = 100;
 
     public UrlPersistenceAdapter(IUrlMongoTemplate urlMongoTemplate,
                                  IUrlRepository UrlRepository){
         this.urlMongoTemplate = urlMongoTemplate;
-        this.UrlRepository = UrlRepository;
+        this.urlRepository = UrlRepository;
     }
 
     @Override
     public String getShortUrlbyOriginalUrl(String originalUrl) {
-        Optional<UrlEntity> existingOriginal = UrlRepository.findByOriginalUrl(originalUrl);
+        Optional<UrlEntity> existingOriginal = urlRepository.findByOriginalUrl(originalUrl);
         if (existingOriginal.isPresent()) {
             System.out.println("URL existente findByUrlOriginal: " + existingOriginal.get().getShortUrl());
             return existingOriginal.get().getShortUrl(); // Devolver la URL corta existente si ya está en la base de datos
@@ -36,21 +40,21 @@ public class UrlPersistenceAdapter implements IUrlPersistencePort{
     @Override
     public boolean existCollisionbyShortUrl(String shortUrl) {
         // Verificar si la URL corta ya existe en la base de datos
-        if (UrlRepository.findByShortUrl(shortUrl).isPresent())
+        if (urlRepository.findByShortUrl(shortUrl).isPresent())
             return true;
         return false;
     }
 
     @Override
     public Url save(Url url) {
-      UrlEntity urlEntity = UrlRepository.save(UrlMapper.toUrlEntity(url));
+      UrlEntity urlEntity = urlRepository.save(UrlMapper.toUrlEntity(url));
       url.setId(urlEntity.getId());
       return url;
     }
 
     @Override
     public Optional<Url> getUrlOrThrowByShortUrl(String shortUrl) {
-        Optional<UrlEntity> url = UrlRepository.findByShortUrl(shortUrl);
+        Optional<UrlEntity> url = urlRepository.findByShortUrl(shortUrl);
         if(url.isEmpty())
             throw new UrlNotFoundException("URL corta no encontrada");
         return Optional.of(UrlMapper.toUrl(url.get()));
@@ -71,8 +75,8 @@ public class UrlPersistenceAdapter implements IUrlPersistencePort{
 
     @Override
     public boolean deleteUrlbyShortUrl(String shortUrl) {
-        if (UrlRepository.findByShortUrl(shortUrl).isPresent()) {
-            UrlRepository.deleteByShortUrl(shortUrl);
+        if (urlRepository.findByShortUrl(shortUrl).isPresent()) {
+            urlRepository.deleteByShortUrl(shortUrl);
             System.out.println("URL corta eliminada: " + shortUrl);
             return true;
         }
@@ -81,6 +85,12 @@ public class UrlPersistenceAdapter implements IUrlPersistencePort{
 
     @Override
     public Optional<UrlEntity> findByUShortUrl(String shortUrl) {
-        return  UrlRepository.findByShortUrl(shortUrl);
+        return  urlRepository.findByShortUrl(shortUrl);
+    }
+
+    @Override
+    public Page<UrlEntity> getAllUrls(int page) {
+       Pageable pageable = PageRequest.of(page, PAGE_SIZE);
+       return urlRepository.findAll(pageable);
     }
 }
