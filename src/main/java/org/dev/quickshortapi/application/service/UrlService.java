@@ -2,21 +2,18 @@ package org.dev.quickshortapi.application.service;
 
 import org.dev.quickshortapi.application.port.in.IUrlServicePort;
 import org.dev.quickshortapi.application.port.in.UrlCommand;
-import org.dev.quickshortapi.application.port.out.IUrlEventStreamingPort;
-import org.dev.quickshortapi.application.port.out.IUrlPersistenceCachePort;
-import org.dev.quickshortapi.application.port.out.IUrlPersistencePort;
+import org.dev.quickshortapi.application.port.out.*;
+import org.dev.quickshortapi.common.format.IUrlFormat;
 import org.dev.quickshortapi.common.format.UrlFormatProvider;
 import org.dev.quickshortapi.common.shortener.IUrlShortener;
 import org.dev.quickshortapi.common.UseCase;
 import org.dev.quickshortapi.common.exceptionhandler.UrlInternalServerErrorException;
 import org.dev.quickshortapi.common.exceptionhandler.UrlNotFoundException;
 import org.dev.quickshortapi.domain.Url;
-import org.dev.quickshortapi.domain.UrlStatisticsResponse;
-import org.dev.quickshortapi.domain.UrlShortenResponse;
 import org.dev.quickshortapi.infraestructure.adapter.out.persistence.UrlMapper;
 import org.dev.quickshortapi.infraestructure.adapter.out.persistence.UrlEntity;
 import org.dev.quickshortapi.infraestructure.adapter.out.persistence.UrlCache;
-
+import org.springframework.data.domain.Page;
 import java.util.Optional;
 
 @UseCase
@@ -114,11 +111,7 @@ public class UrlService implements IUrlServicePort {
     public UrlStatisticsResponse getUrlStatistics(String shortUrl) {
         Optional<UrlEntity> url = urlPersistenceAdapter.findByUShortUrl(shortUrl);
         if (url.isPresent()) {
-            return new UrlStatisticsResponse(
-                    url.get().getVisits(),
-                    url.get().getCreatedDate(),
-                    url.get().getLastVisitedDate(),
-                    new UrlFormatProvider());
+            return UrlMapper.toUrlStatisticsResponse(url.get(), new UrlFormatProvider());
         }
         throw new UrlNotFoundException("URL corta no encontrada");
     }
@@ -127,5 +120,14 @@ public class UrlService implements IUrlServicePort {
     public void deleteCachebyShortUrl(String shortUrl) {
         urlRepositoryCacheAdapter.deleteById(shortUrl);
         System.out.println("Cache eliminado: " + shortUrl);
+    }
+
+    @Override
+    public Page<UrlResponse> getAllUrls(int page) {
+        Page<UrlEntity> urls = urlPersistenceAdapter.getAllUrls(page);
+        IUrlFormat urlFormatProvider = new UrlFormatProvider();
+        return urls.map(urlEntity -> UrlMapper.toUrlResponse(urlEntity, urlFormatProvider));
+
+
     }
 }
