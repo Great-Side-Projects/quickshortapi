@@ -1,7 +1,7 @@
 package org.dev.quickshortapi.infraestructure.adapter.out.persistence;
 
-import org.dev.quickshortapi.common.Event.EventType;
-import org.dev.quickshortapi.common.Event.UrlVisitedEvent;
+import org.dev.quickshortapi.common.event.EventType;
+import org.dev.quickshortapi.common.event.UrlVisitedEvent;
 import org.dev.quickshortapi.domain.Url;
 import java.util.Date;
 import java.util.UUID;
@@ -12,7 +12,7 @@ public class UrlMapper {
     }
 
     public static UrlEntity toUrlEntity(Url url) {
-        return new UrlEntity(url.getId(),url.getOriginalUrl(), url.getShortUrl(), url.getVisits());
+        return new UrlEntity(url.getOriginalUrl(), url.getShortUrl(), url.getVisits(), url.getCreatedDate());
     }
 
     public static Url toUrl(UrlCache urlCache) {
