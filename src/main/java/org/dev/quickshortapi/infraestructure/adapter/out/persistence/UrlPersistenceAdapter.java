@@ -1,30 +1,25 @@
 package org.dev.quickshortapi.infraestructure.adapter.out.persistence;
 
+import org.dev.quickshortapi.application.port.out.IUrlMongoTemplate;
 import org.dev.quickshortapi.application.port.out.IUrlPersistencePort;
 import org.dev.quickshortapi.common.PersistenceAdapter;
 import org.dev.quickshortapi.common.exceptionhandler.UrlInternalServerErrorException;
 import org.dev.quickshortapi.common.exceptionhandler.UrlNotFoundException;
 import org.dev.quickshortapi.domain.Url;
 import org.dev.quickshortapi.application.port.out.IUrlRepository;
-import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Query;
-import org.springframework.data.mongodb.core.query.Update;
+
 import java.util.Optional;
 
 @PersistenceAdapter
 public class UrlPersistenceAdapter implements IUrlPersistencePort{
 
-    private final MongoTemplate mongoTemplate;
     private final IUrlRepository UrlRepository;
-    private static final int INCREASE_VISITS_BY_1 = 1;
-    private static final String ID = "_id";
-    private static final String LAST_VISITED_DATE = "lastVisitedDate";
-    private static final String VISITS = "visits";
+    private final IUrlMongoTemplate urlMongoTemplate;
+    private  final int INCREASE_VISITS_BY_1 = 1;
 
-    public UrlPersistenceAdapter(MongoTemplate mongoTemplate,
+    public UrlPersistenceAdapter(IUrlMongoTemplate urlMongoTemplate,
                                  IUrlRepository UrlRepository){
-        this.mongoTemplate = mongoTemplate;
+        this.urlMongoTemplate = urlMongoTemplate;
         this.UrlRepository = UrlRepository;
     }
 
@@ -64,10 +59,10 @@ public class UrlPersistenceAdapter implements IUrlPersistencePort{
     @Override
     public void increaseVisitsAndUpdateLastVisitedDate(Url url) {
         try{
-            Query query = new Query(Criteria.where(ID).is(url.getId()));
-            Update update = new Update().inc(VISITS, INCREASE_VISITS_BY_1)
-                    .set(LAST_VISITED_DATE, url.getLastVisitedDate());
-            mongoTemplate.updateFirst(query, update, UrlEntity.class);
+            urlMongoTemplate.updateVisitsByIncrementAndLastVisitedDate(
+                    url.getId(),
+                    INCREASE_VISITS_BY_1,
+                    url.getLastVisitedDate());
         }
         catch (Exception e) {
             throw new UrlInternalServerErrorException("Error interno al incrementar las visitas:" + e.getMessage());
