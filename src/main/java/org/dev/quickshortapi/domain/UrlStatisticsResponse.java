@@ -1,6 +1,7 @@
 package org.dev.quickshortapi.domain;
 
 import lombok.Getter;
+import lombok.NonNull;
 import org.dev.quickshortapi.common.format.IUrlFormat;
 import java.util.Date;
 
@@ -10,7 +11,11 @@ public class UrlStatisticsResponse
     private Long visits;
     private String createdDate;
     private String lastVisitedDate;
-    public UrlStatisticsResponse(Long visits, Date createdDate, Date lastVisitedDate, IUrlFormat urlFormatProvider) {
+    public UrlStatisticsResponse(
+            Long visits,
+            Date createdDate,
+            Date lastVisitedDate,
+            IUrlFormat urlFormatProvider) {
         this.visits = visits;
         this.createdDate = urlFormatProvider.getDateFormatedToString(createdDate);
         this.lastVisitedDate = urlFormatProvider.getDateFormatedToString(lastVisitedDate);
