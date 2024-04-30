@@ -1,4 +1,4 @@
-package org.dev.quickshortapi.domain;
+package org.dev.quickshortapi.application.port.out;
 public class UrlShortenResponse {
         private String originalUrl;
         private String shortUrl;

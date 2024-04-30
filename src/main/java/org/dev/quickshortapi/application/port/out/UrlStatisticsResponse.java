@@ -1,7 +1,6 @@
-package org.dev.quickshortapi.domain;
+package org.dev.quickshortapi.application.port.out;
 
 import lombok.Getter;
-import lombok.NonNull;
 import org.dev.quickshortapi.common.format.IUrlFormat;
 import java.util.Date;
 
