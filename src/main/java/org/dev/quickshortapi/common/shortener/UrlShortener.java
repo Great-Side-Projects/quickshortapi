@@ -1,13 +1,13 @@
-package org.dev.quickshortapi.application.service;
+package org.dev.quickshortapi.common.shortener;
 
-import org.dev.quickshortapi.application.port.out.IUrlShortenerPort;
+import org.dev.quickshortapi.common.shortener.IUrlShortener;
 import org.springframework.stereotype.Component;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Random;
 
 @Component
-public class UrlShortener implements IUrlShortenerPort {
+public class UrlShortener implements IUrlShortener {
 
     private static final String ALPHABET = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
     private static final int URL_LENGTH = 8;

@@ -1,6 +1,6 @@
-package org.dev.quickshortapi.application.port.out;
+package org.dev.quickshortapi.common.shortener;
 
-public interface IUrlShortenerPort {
+public interface IUrlShortener {
     String generateSHAShortUrl(String urlOriginal);
     String generateRandomShortUrl(String urlOriginal);
 }
