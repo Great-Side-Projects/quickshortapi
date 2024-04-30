@@ -1,7 +1,7 @@
 package org.dev.quickshortapi.application.port.out;
 
 import org.dev.quickshortapi.domain.Url;
-import org.dev.quickshortapi.common.Event.Event;
+import org.dev.quickshortapi.common.event.Event;
 
 public interface IUrlEventStreamingPort {
 
