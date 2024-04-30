@@ -22,11 +22,10 @@ public class Url {
         this.createdDate = new Date();
     }
 
-    public Url(String id, String originalUrl, String shortUrl, Long visits) {
+    public Url(String id, String originalUrl, String shortUrl) {
         this.id = id;
         this.originalUrl = originalUrl;
         this.shortUrl = shortUrl;
-        this.visits = visits;
     }
 
     public boolean isValidUrl() {
