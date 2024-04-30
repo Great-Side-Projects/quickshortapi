@@ -23,14 +23,14 @@ jobs:
       uses: docker/login-action@v2
       with:
         registry: https://quickshortregistry.azurecr.io/
-        username: ${{ secrets.AzureAppService_ContainerUsername_4ae02da933844b39b23a5702cde7c2b1 }}
-        password: ${{ secrets.AzureAppService_ContainerPassword_a9e6548e07dd4ea98f66f4719c8468ba }}
+        username: ${{ secrets.AzureAppService_ContainerUsername_d72b5804c6dd40f8b3164e2271ceeff8 }}
+        password: ${{ secrets.AzureAppService_ContainerPassword_7c59deeabcc44d18b9dc5d69ade1d830 }}
 
     - name: Build and push container image to registry
       uses: docker/build-push-action@v3
       with:
         push: true
-        tags: quickshortregistry.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_4ae02da933844b39b23a5702cde7c2b1 }}/quickshort-api:${{ github.sha }}
+        tags: quickshortregistry.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_d72b5804c6dd40f8b3164e2271ceeff8 }}/quickshort-api:${{ github.sha }}
         file: ./Dockerfile
 
   deploy:
@@ -47,5 +47,5 @@ jobs:
       with:
         app-name: 'QuickShortApi'
         slot-name: 'production'
-        publish-profile: ${{ secrets.AzureAppService_PublishProfile_7e7d71afc2894a929abfc9762d5f4a4f }}
-        images: 'quickshortregistry.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_4ae02da933844b39b23a5702cde7c2b1 }}/quickshort-api:${{ github.sha }}'
+        publish-profile: ${{ secrets.AzureAppService_PublishProfile_6b648c617c7145c4b42d8605e1a21a32 }}
+        images: 'quickshortregistry.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_d72b5804c6dd40f8b3164e2271ceeff8 }}/quickshort-api:${{ github.sha }}'
