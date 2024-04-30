@@ -15,7 +15,7 @@ public interface IUrlPersistencePort {
 
     Optional<Url> getUrlOrThrowByShortUrl(String shortUrl);
 
-    void increaseVisits(Url url);
+    void increaseVisitsAndUpdateLastVisitedDate(Url url);
 
     boolean deleteUrlbyShortUrl(String shortUrl);
 

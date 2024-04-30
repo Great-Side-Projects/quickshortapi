@@ -5,7 +5,8 @@ import org.dev.quickshortapi.application.port.in.UrlCommand;
 import org.dev.quickshortapi.application.port.out.IUrlEventStreamingPort;
 import org.dev.quickshortapi.application.port.out.IUrlPersistenceCachePort;
 import org.dev.quickshortapi.application.port.out.IUrlPersistencePort;
-import org.dev.quickshortapi.application.port.out.IUrlShortenerPort;
+import org.dev.quickshortapi.common.format.UrlFormatProvider;
+import org.dev.quickshortapi.common.shortener.IUrlShortener;
 import org.dev.quickshortapi.common.UseCase;
 import org.dev.quickshortapi.common.exceptionhandler.UrlInternalServerErrorException;
 import org.dev.quickshortapi.common.exceptionhandler.UrlNotFoundException;
@@ -15,21 +16,22 @@ import org.dev.quickshortapi.domain.UrlShortenResponse;
 import org.dev.quickshortapi.infraestructure.adapter.out.persistence.UrlMapper;
 import org.dev.quickshortapi.infraestructure.adapter.out.persistence.UrlEntity;
 import org.dev.quickshortapi.infraestructure.adapter.out.persistence.UrlCache;
+
 import java.util.Optional;
 
 @UseCase
 public class UrlService implements IUrlServicePort {
 
-    private IUrlShortenerPort urlShortenerService;
+    private IUrlShortener urlShortener;
     private IUrlPersistenceCachePort urlRepositoryCacheAdapter;
     private IUrlPersistencePort urlPersistenceAdapter;
     private IUrlEventStreamingPort urlEventStreamingAdapter;
 
     public UrlService(IUrlPersistencePort urlRepository,
-                      IUrlShortenerPort urlShortenerService,
+                      IUrlShortener urlShortener,
                       IUrlPersistenceCachePort urlRepositoryCache,
                       IUrlEventStreamingPort urlEventStreaming) {
-        this.urlShortenerService = urlShortenerService;
+        this.urlShortener = urlShortener;
         this.urlRepositoryCacheAdapter = urlRepositoryCache;
         this.urlPersistenceAdapter = urlRepository;
         this.urlEventStreamingAdapter = urlEventStreaming;
@@ -52,12 +54,12 @@ public class UrlService implements IUrlServicePort {
         }
 
         // Lógica para generar la URL corta
-        String shortUrl = urlShortenerService.generateSHAShortUrl(url.getOriginalUrl());
+        String shortUrl = urlShortener.generateSHAShortUrl(url.getOriginalUrl());
         System.out.println("URL corta generada SHA: " + shortUrl);
 
         if (urlPersistenceAdapter.existCollisionbyShortUrl(shortUrl)) {
             // Si la URL corta ya existe, genera otra URL corta Random
-            shortUrl = urlShortenerService.generateRandomShortUrl(url.getOriginalUrl());
+            shortUrl = urlShortener.generateRandomShortUrl(url.getOriginalUrl());
             System.out.println("URL corta generada generateRandomShortUrl: " + shortUrl);
         }
         url.setShortUrl(shortUrl);
@@ -112,7 +114,11 @@ public class UrlService implements IUrlServicePort {
     public UrlStatisticsResponse getUrlStatistics(String shortUrl) {
         Optional<UrlEntity> url = urlPersistenceAdapter.findByUShortUrl(shortUrl);
         if (url.isPresent()) {
-            return new UrlStatisticsResponse(url.get().getVisits());
+            return new UrlStatisticsResponse(
+                    url.get().getVisits(),
+                    url.get().getCreatedDate(),
+                    url.get().getLastVisitedDate(),
+                    new UrlFormatProvider());
         }
         throw new UrlNotFoundException("URL corta no encontrada");
     }

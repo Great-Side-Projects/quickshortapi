@@ -18,6 +18,8 @@ public class UrlPersistenceAdapter implements IUrlPersistencePort{
     private final MongoTemplate mongoTemplate;
     private final IUrlRepository UrlRepository;
     private static final int INCREASE_VISITS_BY_1 = 1;
+    private static final String ID = "_id";
+    private static final String LAST_VISITED_DATE = "lastVisitedDate";
     private static final String VISITS = "visits";
 
     public UrlPersistenceAdapter(MongoTemplate mongoTemplate,
@@ -60,10 +62,11 @@ public class UrlPersistenceAdapter implements IUrlPersistencePort{
     }
 
     @Override
-    public void increaseVisits(Url url) {
+    public void increaseVisitsAndUpdateLastVisitedDate(Url url) {
         try{
-            Query query = new Query(Criteria.where("_id").is(url.getId()));
-            Update update = new Update().inc(VISITS, INCREASE_VISITS_BY_1);
+            Query query = new Query(Criteria.where(ID).is(url.getId()));
+            Update update = new Update().inc(VISITS, INCREASE_VISITS_BY_1)
+                    .set(LAST_VISITED_DATE, url.getLastVisitedDate());
             mongoTemplate.updateFirst(query, update, UrlEntity.class);
         }
         catch (Exception e) {

@@ -5,6 +5,7 @@ import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
+import java.util.Date;
 
 @Document(collection = "Url")
 @Getter
@@ -20,26 +21,18 @@ public class UrlEntity {
     private String shortUrl;
 
     private Long visits = 0L;
-    public UrlEntity(String originalUrl, String shortUrl) {
-        this.originalUrl = originalUrl;
-        this.shortUrl = shortUrl;
-    }
 
-    public UrlEntity(String id, String originalUrl, String shortUrl, Long visits) {
-        this.id = id;
+    private Date createdDate;
+
+    private Date lastVisitedDate;
+
+    public UrlEntity(String originalUrl, String shortUrl, Long visits, Date createdDate) {
         this.originalUrl = originalUrl;
         this.shortUrl = shortUrl;
         this.visits = visits;
-    }
-
-    public UrlEntity(String shortUrl, String originalUrl, Long visits) {
-        this.shortUrl = shortUrl;
-        this.originalUrl = originalUrl;
-        this.visits = visits;
+        this.createdDate = createdDate;
     }
 
     public UrlEntity() {
     }
-
-
 }
