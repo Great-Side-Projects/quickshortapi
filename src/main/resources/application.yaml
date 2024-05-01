@@ -41,11 +41,15 @@ spring:
               packages: '*'
         spring.deserializer.key.delegate.class: org.apache.kafka.common.serialization.StringDeserializer
         spring.deserializer.value.delegate.class: org.springframework.kafka.support.serializer.JsonDeserializer
+      fetch-max-wait: 60000
+      timeout: 70000
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
       acks: all
       client-id: redirecturl
+    listener:
+      poll-timeout: 60000
 #Swagger configuration
 springdoc:
   api-docs:
@@ -68,13 +72,3 @@ springdoc:
        email: angelmoralesb@gmail.com
   #paths-to-match: /api/.*
   #packages-to-scan: com.quickshort.api
-
-
-
-
-
-
-
-
-
-
