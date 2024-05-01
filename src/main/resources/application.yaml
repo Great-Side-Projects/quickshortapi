@@ -58,8 +58,6 @@ springdoc:
   api-docs:
     enabled: true
     path: /v3/api-docs
-  cache:
-    disabled: true
   swagger-ui:
     enabled: true
     path: /swagger-ui.html
