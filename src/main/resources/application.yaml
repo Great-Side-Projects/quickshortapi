@@ -36,6 +36,8 @@ spring:
       value-deserializer: org.springframework.kafka.support.serializer.ErrorHandlingDeserializer
       properties:
         request.timeout.ms: 70000
+        max.poll.interval.ms: 300000
+        max.poll.records: 500
         spring:
           json:
             trusted:
@@ -43,7 +45,6 @@ spring:
         spring.deserializer.key.delegate.class: org.apache.kafka.common.serialization.StringDeserializer
         spring.deserializer.value.delegate.class: org.springframework.kafka.support.serializer.JsonDeserializer
       fetch-max-wait: 60000
-
 
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
@@ -57,6 +58,8 @@ springdoc:
   api-docs:
     enabled: true
     path: /v3/api-docs
+  cache:
+    disabled: true
   swagger-ui:
     enabled: true
     path: /swagger-ui.html
