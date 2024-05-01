@@ -52,7 +52,7 @@ public class UrlController {
     @Operation(summary = "Redirect to original url",
             description = "Redirect to original url", tags = "Url")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "308",
+            @ApiResponse(responseCode = "303",
                     description = "Found url by short url and redirect to original url"),
             @ApiResponse(responseCode = "404",
                     description = "Url not found",
@@ -65,7 +65,7 @@ public class UrlController {
         String urlOriginal = urlService.redirectUrl(shortUrl);
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setLocation(URI.create(urlOriginal));
-        return new ResponseEntity<>(httpHeaders, HttpStatus.PERMANENT_REDIRECT);
+        return new ResponseEntity<>(httpHeaders, HttpStatus.SEE_OTHER);
     }
 
     @Operation(summary = "Get statistics of a short url",
