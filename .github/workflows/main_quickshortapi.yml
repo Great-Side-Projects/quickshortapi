@@ -23,7 +23,7 @@ jobs:
         distribution: 'temurin'
         cache: maven
     - name: Build with Maven
-      run: mvn clean install
+      run: mvn --batch-mode --update-snapshots package -DskipTests
 
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v2
@@ -38,6 +38,7 @@ jobs:
     - name: Build and push container image to registry
       uses: docker/build-push-action@v3
       with:
+        context: .
         push: true
         tags: quickshortregistry.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_7b7f1f9646764d188bfab3dc6c7d7989 }}/quickshortapi:${{ github.sha }}
         file: ./Dockerfile
