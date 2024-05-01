@@ -24,7 +24,7 @@ import java.net.URI;
 @WebAdapter
 @RestController
 @RequestMapping("/url")
-@Tag(name = "Url", description = "Url shortener")
+@Tag(name = "Url", description = "Url shortenerrrrrrr")
 public class UrlController {
 
     private final IUrlServicePort urlService;
