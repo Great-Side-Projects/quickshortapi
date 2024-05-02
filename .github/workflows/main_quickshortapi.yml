@@ -9,7 +9,7 @@ on:
 name: Main Workflow
 jobs:
   sonarqube-analysis:
-    name: SonarQube Analysis
+    #name: SonarQube Analysis
     runs-on: 'ubuntu-latest'
 
     steps:
