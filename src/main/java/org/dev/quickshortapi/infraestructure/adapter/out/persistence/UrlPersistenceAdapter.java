@@ -37,9 +37,7 @@ public class UrlPersistenceAdapter implements IUrlPersistencePort{
     @Override
     public boolean existCollisionbyShortUrl(String shortUrl) {
         // Verificar si la URL corta ya existe en la base de datos
-        if (urlRepository.findByShortUrl(shortUrl).isPresent())
-            return true;
-        return false;
+        return urlRepository.findByShortUrl(shortUrl).isPresent();
     }
 
     @Override
