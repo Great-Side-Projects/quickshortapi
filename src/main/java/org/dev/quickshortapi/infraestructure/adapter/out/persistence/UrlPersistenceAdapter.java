@@ -18,8 +18,8 @@ public class UrlPersistenceAdapter implements IUrlPersistencePort{
 
     private final IUrlRepository urlRepository;
     private final IUrlMongoTemplate urlMongoTemplate;
-    private final static int INCREASE_VISITS_BY_1 = 1;
-    private final static int PAGE_SIZE = 100;
+    private static final int INCREASE_VISITS_BY_1 = 1;
+    private static final int PAGE_SIZE = 100;
 
     public UrlPersistenceAdapter(IUrlMongoTemplate urlMongoTemplate,
                                  IUrlRepository UrlRepository){
