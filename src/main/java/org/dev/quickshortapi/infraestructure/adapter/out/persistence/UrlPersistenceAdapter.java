@@ -31,7 +31,6 @@ public class UrlPersistenceAdapter implements IUrlPersistencePort{
     public String getShortUrlbyOriginalUrl(String originalUrl) {
         Optional<UrlEntity> existingOriginal = urlRepository.findByOriginalUrl(originalUrl);
         if (existingOriginal.isPresent()) {
-            System.out.println("URL existente findByUrlOriginal: " + existingOriginal.get().getShortUrl());
             return existingOriginal.get().getShortUrl(); // Devolver la URL corta existente si ya está en la base de datos
         }
         return "";
