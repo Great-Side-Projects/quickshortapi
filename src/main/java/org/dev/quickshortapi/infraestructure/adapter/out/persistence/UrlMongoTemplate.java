@@ -12,10 +12,10 @@ import java.util.Date;
 @Component
 public class UrlMongoTemplate implements IUrlMongoTemplate {
 
-    private final MongoTemplate mongoTemplate;
-    private  final String ID = "_id";
-    private  final String LAST_VISITED_DATE = "lastVisitedDate";
-    private  final String VISITS = "visits";
+    private final  MongoTemplate mongoTemplate;
+    private final static String ID = "_id";
+    private final static String LAST_VISITED_DATE = "lastVisitedDate";
+    private final static String VISITS = "visits";
 
     public UrlMongoTemplate(MongoTemplate mongoTemplate) {
 

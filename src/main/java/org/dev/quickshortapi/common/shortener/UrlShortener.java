@@ -1,6 +1,5 @@
 package org.dev.quickshortapi.common.shortener;
 
-import org.dev.quickshortapi.common.shortener.IUrlShortener;
 import org.springframework.stereotype.Component;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
