@@ -4,6 +4,7 @@ import org.dev.quickshortapi.common.exceptionhandler.UrlInternalServerErrorExcep
 import org.springframework.stereotype.Component;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 import java.util.Random;
 
 @Component
@@ -12,7 +13,7 @@ public class UrlShortener implements IUrlShortener {
     private static final String ALPHABET = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
     private static final int URL_LENGTH = 8;
 
-    private Random random = new Random();
+    private SecureRandom random = new SecureRandom();
 
     @Override
     public String generateSHAShortUrl(String urlOriginal) {
