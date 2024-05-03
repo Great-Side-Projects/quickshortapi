@@ -25,6 +25,8 @@ public class UrlService implements IUrlServicePort {
     private IUrlPersistencePort urlPersistenceAdapter;
     private IUrlEventStreamingPort urlEventStreamingAdapter;
 
+    private final String INVALID_URL = "URL no válida";
+
     Logger logger = Logger.getLogger(getClass().getName());
 
     public UrlService(IUrlPersistencePort urlRepository,
@@ -43,8 +45,8 @@ public class UrlService implements IUrlServicePort {
 
         Url url = new Url(urlCommand.getUrl());
         if (!url.isValidUrl()) {
-            logger.warning("URL no válida");
-            throw new UrlNotFoundException("URL no válida");
+            logger.warning(INVALID_URL);
+            throw new UrlNotFoundException(INVALID_URL);
         }
 
         //Verificar si la URL original ya existe en la base de datos
@@ -93,8 +95,8 @@ public class UrlService implements IUrlServicePort {
         }
 
         if (!url.get().isValidUrl()) {
-            logger.warning("URL no válida");
-            throw new UrlNotFoundException("URL no válida");
+            logger.warning(INVALID_URL);
+            throw new UrlNotFoundException(INVALID_URL);
         }
 
         urlEventStreamingAdapter.sendVisitedEvent(url.get());
