@@ -18,8 +18,8 @@ public class UrlPersistenceAdapter implements IUrlPersistencePort{
 
     private final IUrlRepository urlRepository;
     private final IUrlMongoTemplate urlMongoTemplate;
-    private final int INCREASE_VISITS_BY_1 = 1;
-    private final int PAGE_SIZE = 100;
+    private static final int INCREASE_VISITS_BY_1 = 1;
+    private static final int PAGE_SIZE = 100;
 
     public UrlPersistenceAdapter(IUrlMongoTemplate urlMongoTemplate,
                                  IUrlRepository UrlRepository){
@@ -29,20 +29,15 @@ public class UrlPersistenceAdapter implements IUrlPersistencePort{
 
     @Override
     public String getShortUrlbyOriginalUrl(String originalUrl) {
-        Optional<UrlEntity> existingOriginal = urlRepository.findByOriginalUrl(originalUrl);
-        if (existingOriginal.isPresent()) {
-            System.out.println("URL existente findByUrlOriginal: " + existingOriginal.get().getShortUrl());
-            return existingOriginal.get().getShortUrl(); // Devolver la URL corta existente si ya está en la base de datos
-        }
-        return "";
+        return urlRepository.findByOriginalUrl(originalUrl)
+                .map(UrlEntity::getShortUrl)
+                .orElse("");
     }
 
     @Override
     public boolean existCollisionbyShortUrl(String shortUrl) {
         // Verificar si la URL corta ya existe en la base de datos
-        if (urlRepository.findByShortUrl(shortUrl).isPresent())
-            return true;
-        return false;
+        return urlRepository.findByShortUrl(shortUrl).isPresent();
     }
 
     @Override
@@ -77,7 +72,6 @@ public class UrlPersistenceAdapter implements IUrlPersistencePort{
     public boolean deleteUrlbyShortUrl(String shortUrl) {
         if (urlRepository.findByShortUrl(shortUrl).isPresent()) {
             urlRepository.deleteByShortUrl(shortUrl);
-            System.out.println("URL corta eliminada: " + shortUrl);
             return true;
         }
         return false;

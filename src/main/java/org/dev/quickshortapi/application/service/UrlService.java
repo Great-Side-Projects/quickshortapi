@@ -15,6 +15,8 @@ import org.dev.quickshortapi.infraestructure.adapter.out.persistence.UrlEntity;
 import org.dev.quickshortapi.infraestructure.adapter.out.persistence.UrlCache;
 import org.springframework.data.domain.Page;
 import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @UseCase
 public class UrlService implements IUrlServicePort {
@@ -23,6 +25,10 @@ public class UrlService implements IUrlServicePort {
     private IUrlPersistenceCachePort urlRepositoryCacheAdapter;
     private IUrlPersistencePort urlPersistenceAdapter;
     private IUrlEventStreamingPort urlEventStreamingAdapter;
+
+    private static final String INVALID_URL = "URL no válida";
+
+    Logger logger = Logger.getLogger(getClass().getName());
 
     public UrlService(IUrlPersistencePort urlRepository,
                       IUrlShortener urlShortener,
@@ -36,39 +42,39 @@ public class UrlService implements IUrlServicePort {
     @Override
     public UrlShortenResponse shortenUrl(UrlCommand urlCommand) {
 
-        System.out.println("URL original: " + urlCommand.getUrl());
+        logger.log(Level.INFO,"URL original: {0}" , urlCommand.getUrl());
 
         Url url = new Url(urlCommand.getUrl());
         if (!url.isValidUrl()) {
-            System.out.println("URL no válida");
-            throw new UrlNotFoundException("URL no válida");
+            logger.warning(INVALID_URL);
+            throw new UrlNotFoundException(INVALID_URL);
         }
 
         //Verificar si la URL original ya existe en la base de datos
         String shortUrlDB = urlPersistenceAdapter.getShortUrlbyOriginalUrl(url.getOriginalUrl());
         if (!shortUrlDB.isEmpty()) {
+            logger.log(Level.INFO,"URL corta ya existe en la base de datos: {0}", shortUrlDB);
             return new UrlShortenResponse(url.getOriginalUrl(), shortUrlDB);
         }
 
         // Lógica para generar la URL corta
         String shortUrl = urlShortener.generateSHAShortUrl(url.getOriginalUrl());
-        System.out.println("URL corta generada SHA: " + shortUrl);
+        logger.log(Level.INFO,"URL corta generada SHA: {0}}", shortUrl);
 
         if (urlPersistenceAdapter.existCollisionbyShortUrl(shortUrl)) {
             // Si la URL corta ya existe, genera otra URL corta Random
-            shortUrl = urlShortener.generateRandomShortUrl(url.getOriginalUrl());
-            System.out.println("URL corta generada generateRandomShortUrl: " + shortUrl);
+            shortUrl = urlShortener.generateRandomShortUrl();
+            logger.log(Level.INFO,"URL corta generada Random: {0}", shortUrl);
         }
         url.setShortUrl(shortUrl);
         // Guardar en DB
         try{
             urlPersistenceAdapter.save(url);
             urlRepositoryCacheAdapter.save(UrlMapper.toUrlCache(url));
-            System.out.println("URL corta guardada: " + shortUrl);
+            logger.log(Level.INFO,"URL corta guardada: {0}" , shortUrl);
         return new UrlShortenResponse(url.getOriginalUrl(), url.getShortUrl());
         }
         catch (Exception e) {
-            System.out.println("Error interno al guardar la URL:" + e.getMessage());
             throw new UrlInternalServerErrorException("Error interno al guardar la URL:" + e.getMessage());
         }
     }
@@ -82,15 +88,15 @@ public class UrlService implements IUrlServicePort {
             url =  urlPersistenceAdapter.getUrlOrThrowByShortUrl(shortUrl);
             // Actualizar en cache si solo estaba en la base de datos
             UrlCache urlCacheAux = urlRepositoryCacheAdapter.save(UrlMapper.toUrlCache(url.get()));
-            System.out.println("URL guardada en cache redirectUrl: " + urlCacheAux.getId());
+            logger.log(Level.INFO,"URL guardada en cache redirectUrl: {0}}" , urlCacheAux.getId());
         }
         else {
             url = Optional.of(UrlMapper.toUrl(urlCache.get()));
         }
 
         if (!url.get().isValidUrl()) {
-            System.out.println("URL no válida");
-            throw new UrlNotFoundException("URL no válida");
+            logger.warning(INVALID_URL);
+            throw new UrlNotFoundException(INVALID_URL);
         }
 
         urlEventStreamingAdapter.sendVisitedEvent(url.get());
@@ -102,6 +108,7 @@ public class UrlService implements IUrlServicePort {
 
         if (urlPersistenceAdapter.deleteUrlbyShortUrl(shortUrl)) {
             urlRepositoryCacheAdapter.deleteById(shortUrl);
+            logger.log(Level.INFO,"URL corta eliminada: {0}" , shortUrl);
             return;
         }
         throw new UrlNotFoundException("URL corta no encontrada");
@@ -119,7 +126,7 @@ public class UrlService implements IUrlServicePort {
     @Override
     public void deleteCachebyShortUrl(String shortUrl) {
         urlRepositoryCacheAdapter.deleteById(shortUrl);
-        System.out.println("Cache eliminado: " + shortUrl);
+        logger.log(Level.INFO,"Cache eliminado: {0}" , shortUrl);
     }
 
     @Override
@@ -127,7 +134,5 @@ public class UrlService implements IUrlServicePort {
         Page<UrlEntity> urls = urlPersistenceAdapter.getAllUrls(page);
         IUrlFormat urlFormatProvider = new UrlFormatProvider();
         return urls.map(urlEntity -> UrlMapper.toUrlResponse(urlEntity, urlFormatProvider));
-
-
     }
 }
