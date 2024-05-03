@@ -75,7 +75,6 @@ public class UrlService implements IUrlServicePort {
         return new UrlShortenResponse(url.getOriginalUrl(), url.getShortUrl());
         }
         catch (Exception e) {
-            //logger.log(Level.SEVERE,String.format("Error interno al guardar la URL: {0}}", e.getMessage());
             throw new UrlInternalServerErrorException("Error interno al guardar la URL:" + e.getMessage());
         }
     }
