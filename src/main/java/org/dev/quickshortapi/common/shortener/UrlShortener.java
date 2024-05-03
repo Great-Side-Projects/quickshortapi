@@ -5,7 +5,6 @@ import org.springframework.stereotype.Component;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
-import java.util.Random;
 
 @Component
 public class UrlShortener implements IUrlShortener {
