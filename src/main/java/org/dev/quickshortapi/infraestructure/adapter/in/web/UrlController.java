@@ -65,7 +65,7 @@ public class UrlController {
         String urlOriginal = urlService.redirectUrl(shortUrl);
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setLocation(URI.create(urlOriginal));
-        return new ResponseEntity<>(httpHeaders, HttpStatus.SEE_OTHER);
+        return new ResponseEntity(httpHeaders, HttpStatus.SEE_OTHER);
     }
 
     @Operation(summary = "Get statistics of a short url",

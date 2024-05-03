@@ -33,9 +33,7 @@ public class Url {
         try {
             new URL(this.originalUrl).toURI();
             return true;
-        } catch (MalformedURLException e) {
-            return false;
-        } catch (URISyntaxException e) {
+        } catch (MalformedURLException | URISyntaxException e) {
             return false;
         }
     }

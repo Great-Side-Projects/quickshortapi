@@ -8,14 +8,14 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
 
 @Component
-public class UrlEventAdapter implements IUrlEventTemplatePort<String, Event<Url>> {
+public class UrlEventTemplateAdapter implements IUrlEventTemplatePort<String, Event<Url>> {
 
     private KafkaTemplate<String, Event<?>> kafkaTemplate;
 
     @Value("${spring.kafka.topic.name}")
     private String TOPIC_NAME;
 
-    public UrlEventAdapter(KafkaTemplate<String, Event<?>> kafkaTemplate) {
+    public UrlEventTemplateAdapter(KafkaTemplate<String, Event<?>> kafkaTemplate) {
         this.kafkaTemplate = kafkaTemplate;
     }
 
