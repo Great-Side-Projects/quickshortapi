@@ -63,7 +63,7 @@ public class UrlService implements IUrlServicePort {
 
         if (urlPersistenceAdapter.existCollisionbyShortUrl(shortUrl)) {
             // Si la URL corta ya existe, genera otra URL corta Random
-            shortUrl = urlShortener.generateRandomShortUrl(url.getOriginalUrl());
+            shortUrl = urlShortener.generateRandomShortUrl();
             logger.log(Level.INFO,"URL corta generada Random: {0}", shortUrl);
         }
         url.setShortUrl(shortUrl);
