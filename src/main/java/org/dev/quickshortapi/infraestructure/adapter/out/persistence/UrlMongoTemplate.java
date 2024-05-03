@@ -13,9 +13,9 @@ import java.util.Date;
 public class UrlMongoTemplate implements IUrlMongoTemplate {
 
     private final  MongoTemplate mongoTemplate;
-    private final static String ID = "_id";
-    private final static String LAST_VISITED_DATE = "lastVisitedDate";
-    private final static String VISITS = "visits";
+    private static final String ID = "_id";
+    private static final String LAST_VISITED_DATE = "lastVisitedDate";
+    private static final String VISITS = "visits";
 
     public UrlMongoTemplate(MongoTemplate mongoTemplate) {
 

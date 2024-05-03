@@ -8,7 +8,7 @@ import java.util.Date;
 
 public class UrlFormatProvider implements IUrlFormat {
 
-    private final static String DATE_FORMAT_PATTERN = "E, yyyy-MM-dd HH:mm:ss";
+    private static final String DATE_FORMAT_PATTERN = "E, yyyy-MM-dd HH:mm:ss";
     @Override
     public String getDateFormatedToString(Date date) {
         if (date == null)
