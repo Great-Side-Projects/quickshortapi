@@ -15,6 +15,7 @@ import org.dev.quickshortapi.application.port.in.UrlCommand;
 import org.dev.quickshortapi.application.service.UrlService;
 import org.dev.quickshortapi.application.port.out.UrlShortenResponse;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -58,7 +59,7 @@ public class UrlController {
                     description = "Url not found",
                     content = @Content) })
     @GetMapping("/{shortUrl}")
-    public ResponseEntity redirect(
+    public HttpEntity<Object> redirect(
             @Parameter(description = "Short url to redirect")
             @PathVariable String shortUrl) {
         //Todo: effiecient way to redirect?
