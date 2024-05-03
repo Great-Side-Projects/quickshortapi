@@ -10,14 +10,18 @@ import org.dev.quickshortapi.domain.Url;
 import org.springframework.kafka.annotation.KafkaListener;
 
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @PersistenceAdapter
 public class UrlEventStreamingAdapter implements IUrlEventStreamingPort {
 
     private final IUrlPersistencePort urlPersistenceAdapter;
-    private final IUrlEventTemplatePort urlEventTemplateAdapter;
+    private final IUrlEventTemplatePort<String, Event<Url>> urlEventTemplateAdapter;
 
-    public UrlEventStreamingAdapter(IUrlEventTemplatePort urlEventTemplateAdapter, UrlPersistenceAdapter urlPersistenceAdapter) {
+    Logger logger = Logger.getLogger(getClass().getName());
+
+    public UrlEventStreamingAdapter(IUrlEventTemplatePort<String,Event<Url>>  urlEventTemplateAdapter, UrlPersistenceAdapter urlPersistenceAdapter) {
         this.urlEventTemplateAdapter = urlEventTemplateAdapter;
         this.urlPersistenceAdapter = urlPersistenceAdapter;
     }
@@ -33,6 +37,6 @@ public class UrlEventStreamingAdapter implements IUrlEventStreamingPort {
     @Override
     public void visitedEvent(Event<Url> url) {
         urlPersistenceAdapter.increaseVisitsAndUpdateLastVisitedDate(url.getData());
-        System.out.println("Visitas incrementadas: " + url.getData().getShortUrl() + " - " + url.getId());
+        logger.log(Level.INFO, "Visitas incrementadas: {0} - {1}", new Object[]{url.getData().getShortUrl(), url.getId()});
     }
 }

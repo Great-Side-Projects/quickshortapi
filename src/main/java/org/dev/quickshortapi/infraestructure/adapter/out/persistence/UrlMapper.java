@@ -10,6 +10,9 @@ import java.util.Date;
 import java.util.UUID;
 
 public class UrlMapper {
+
+    private UrlMapper() {
+    }
     public static Url toUrl(UrlEntity urlEntity) {
         return new Url(urlEntity.getId(), urlEntity.getOriginalUrl(), urlEntity.getShortUrl());
     }

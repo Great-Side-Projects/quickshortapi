@@ -1,16 +1,19 @@
 package org.dev.quickshortapi.common.shortener;
 
-import org.dev.quickshortapi.common.shortener.IUrlShortener;
+import org.dev.quickshortapi.common.exceptionhandler.UrlInternalServerErrorException;
 import org.springframework.stereotype.Component;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.Random;
+import java.security.SecureRandom;
 
 @Component
 public class UrlShortener implements IUrlShortener {
 
     private static final String ALPHABET = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
     private static final int URL_LENGTH = 8;
+
+    private SecureRandom random = new SecureRandom();
+
     @Override
     public String generateSHAShortUrl(String urlOriginal) {
         try {
@@ -26,15 +29,13 @@ public class UrlShortener implements IUrlShortener {
             // Devolver los primeros 8 caracteres del hash como la URL corta
             return sb.toString().substring(0, 8);
         } catch (NoSuchAlgorithmException e) {
-            //Todo: handle exception properly
-            e.printStackTrace();
-            throw new RuntimeException(e);
+            //Define and throw a dedicated exception instead of using a generic one.
+            throw new UrlInternalServerErrorException(e.getMessage());
         }
     }
 
     @Override
-    public String generateRandomShortUrl(String urlOriginal) {
-        Random random = new Random();
+    public String generateRandomShortUrl() {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < URL_LENGTH; i++) {
             int idx = random.nextInt(ALPHABET.length());

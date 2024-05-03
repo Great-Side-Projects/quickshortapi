@@ -29,13 +29,10 @@ public class Url {
     }
 
     public boolean isValidUrl() {
-        //Todo: improve URL validation
         try {
             new URL(this.originalUrl).toURI();
             return true;
-        } catch (MalformedURLException e) {
-            return false;
-        } catch (URISyntaxException e) {
+        } catch (MalformedURLException | URISyntaxException e) {
             return false;
         }
     }
