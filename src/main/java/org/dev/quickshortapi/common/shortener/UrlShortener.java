@@ -1,5 +1,6 @@
 package org.dev.quickshortapi.common.shortener;
 
+import org.dev.quickshortapi.common.exceptionhandler.UrlInternalServerErrorException;
 import org.springframework.stereotype.Component;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -30,7 +31,8 @@ public class UrlShortener implements IUrlShortener {
         } catch (NoSuchAlgorithmException e) {
             //Todo: handle exception properly
             e.printStackTrace();
-            throw new RuntimeException(e);
+            //Define and throw a dedicated exception instead of using a generic one.
+            throw new UrlInternalServerErrorException(e.getMessage());
         }
     }
 
