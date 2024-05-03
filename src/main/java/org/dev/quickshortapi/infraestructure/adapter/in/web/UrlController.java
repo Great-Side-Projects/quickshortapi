@@ -62,7 +62,6 @@ public class UrlController {
     public HttpEntity<Object> redirect(
             @Parameter(description = "Short url to redirect")
             @PathVariable String shortUrl) {
-        //Todo: effiecient way to redirect?
         String urlOriginal = urlService.redirectUrl(shortUrl);
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setLocation(URI.create(urlOriginal));

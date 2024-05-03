@@ -29,7 +29,6 @@ public class Url {
     }
 
     public boolean isValidUrl() {
-        //Todo: improve URL validation
         try {
             new URL(this.originalUrl).toURI();
             return true;
