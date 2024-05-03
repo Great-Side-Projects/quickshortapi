@@ -58,7 +58,7 @@ public class UrlController {
                     description = "Url not found",
                     content = @Content) })
     @GetMapping("/{shortUrl}")
-    public ResponseEntity<?> redirect(
+    public ResponseEntity redirect(
             @Parameter(description = "Short url to redirect")
             @PathVariable String shortUrl) {
         //Todo: effiecient way to redirect?
