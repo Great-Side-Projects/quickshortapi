@@ -15,6 +15,7 @@ import org.dev.quickshortapi.infraestructure.adapter.out.persistence.UrlEntity;
 import org.dev.quickshortapi.infraestructure.adapter.out.persistence.UrlCache;
 import org.springframework.data.domain.Page;
 import java.util.Optional;
+import java.util.logging.Logger;
 
 @UseCase
 public class UrlService implements IUrlServicePort {
@@ -23,6 +24,8 @@ public class UrlService implements IUrlServicePort {
     private IUrlPersistenceCachePort urlRepositoryCacheAdapter;
     private IUrlPersistencePort urlPersistenceAdapter;
     private IUrlEventStreamingPort urlEventStreamingAdapter;
+
+    Logger logger = Logger.getLogger(getClass().getName());
 
     public UrlService(IUrlPersistencePort urlRepository,
                       IUrlShortener urlShortener,
@@ -36,39 +39,40 @@ public class UrlService implements IUrlServicePort {
     @Override
     public UrlShortenResponse shortenUrl(UrlCommand urlCommand) {
 
-        System.out.println("URL original: " + urlCommand.getUrl());
+        logger.info("URL original: " + urlCommand.getUrl());
 
         Url url = new Url(urlCommand.getUrl());
         if (!url.isValidUrl()) {
-            System.out.println("URL no válida");
+            logger.warning("URL no válida");
             throw new UrlNotFoundException("URL no válida");
         }
 
         //Verificar si la URL original ya existe en la base de datos
         String shortUrlDB = urlPersistenceAdapter.getShortUrlbyOriginalUrl(url.getOriginalUrl());
         if (!shortUrlDB.isEmpty()) {
+            logger.info("URL existente findByUrlOriginal: " + shortUrlDB);
             return new UrlShortenResponse(url.getOriginalUrl(), shortUrlDB);
         }
 
         // Lógica para generar la URL corta
         String shortUrl = urlShortener.generateSHAShortUrl(url.getOriginalUrl());
-        System.out.println("URL corta generada SHA: " + shortUrl);
+        logger.info("URL corta generada SHA: " + shortUrl);
 
         if (urlPersistenceAdapter.existCollisionbyShortUrl(shortUrl)) {
             // Si la URL corta ya existe, genera otra URL corta Random
             shortUrl = urlShortener.generateRandomShortUrl(url.getOriginalUrl());
-            System.out.println("URL corta generada generateRandomShortUrl: " + shortUrl);
+            logger.info("URL corta generada Random: " + shortUrl);
         }
         url.setShortUrl(shortUrl);
         // Guardar en DB
         try{
             urlPersistenceAdapter.save(url);
             urlRepositoryCacheAdapter.save(UrlMapper.toUrlCache(url));
-            System.out.println("URL corta guardada: " + shortUrl);
+            logger.info("URL corta guardada: " + shortUrl);
         return new UrlShortenResponse(url.getOriginalUrl(), url.getShortUrl());
         }
         catch (Exception e) {
-            System.out.println("Error interno al guardar la URL:" + e.getMessage());
+            logger.severe("Error interno al guardar la URL:" + e.getMessage());
             throw new UrlInternalServerErrorException("Error interno al guardar la URL:" + e.getMessage());
         }
     }
@@ -82,14 +86,14 @@ public class UrlService implements IUrlServicePort {
             url =  urlPersistenceAdapter.getUrlOrThrowByShortUrl(shortUrl);
             // Actualizar en cache si solo estaba en la base de datos
             UrlCache urlCacheAux = urlRepositoryCacheAdapter.save(UrlMapper.toUrlCache(url.get()));
-            System.out.println("URL guardada en cache redirectUrl: " + urlCacheAux.getId());
+            logger.info("URL guardada en cache redirectUrl: " + urlCacheAux.getId());
         }
         else {
             url = Optional.of(UrlMapper.toUrl(urlCache.get()));
         }
 
         if (!url.get().isValidUrl()) {
-            System.out.println("URL no válida");
+            logger.warning("URL no válida");
             throw new UrlNotFoundException("URL no válida");
         }
 
@@ -119,7 +123,7 @@ public class UrlService implements IUrlServicePort {
     @Override
     public void deleteCachebyShortUrl(String shortUrl) {
         urlRepositoryCacheAdapter.deleteById(shortUrl);
-        System.out.println("Cache eliminado: " + shortUrl);
+        logger.info("Cache eliminado: " + shortUrl);
     }
 
     @Override
