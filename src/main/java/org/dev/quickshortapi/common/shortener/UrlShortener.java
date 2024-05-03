@@ -10,6 +10,7 @@ public class UrlShortener implements IUrlShortener {
 
     private static final String ALPHABET = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
     private static final int URL_LENGTH = 8;
+
     @Override
     public String generateSHAShortUrl(String urlOriginal) {
         try {
@@ -32,7 +33,7 @@ public class UrlShortener implements IUrlShortener {
     }
 
     @Override
-    public String generateRandomShortUrl(String urlOriginal) {
+    public String generateRandomShortUrl() {
         Random random = new Random();
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < URL_LENGTH; i++) {
