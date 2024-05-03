@@ -4,18 +4,15 @@ on:
   push:
     branches:
       - develop
-      - main
   pull_request:
     branches:
       - develop
-      - main
 
 jobs:
   build:
     name: Build and analyze
     runs-on: ubuntu-latest
 
-    if: github.ref == 'refs/heads/develop'
     steps:
       - uses: actions/checkout@v4
         with:
