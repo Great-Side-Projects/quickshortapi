@@ -29,8 +29,6 @@ public class UrlShortener implements IUrlShortener {
             // Devolver los primeros 8 caracteres del hash como la URL corta
             return sb.toString().substring(0, 8);
         } catch (NoSuchAlgorithmException e) {
-            //Todo: handle exception properly
-            e.printStackTrace();
             //Define and throw a dedicated exception instead of using a generic one.
             throw new UrlInternalServerErrorException(e.getMessage());
         }
