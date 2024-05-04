@@ -83,8 +83,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-<!--[![Product Name Screen Shot][product-screenshot]](https://example.com) -->
-<iframe src="https://quickshortapi.azurewebsites.net/swagger-ui/index.html#/" title="QuickShort API"></iframe>
+[![Product Name Screen Shot][product-screenshot]](https://example.com)
 
 I remember when I was in an interview and they said to me, 'we need to create a URL shortener, we have 3 hours for the design and let's discuss the project.' Well, after we finished, I was left with many doubts that I couldn't let pass, so I decided to build it. Postscript: I got an email and didn't continue in the process :(.
 
