@@ -3,11 +3,6 @@ server:
 spring:
   application:
     name: QuickShort-api
-    springdoc:
-      api-docs:
-        path: /v3/api-docs
-      swagger-ui:
-        path: /swagger-ui.html
   data:
     #Datasource configuration
     mongodb:
@@ -45,7 +40,6 @@ spring:
         spring.deserializer.key.delegate.class: org.apache.kafka.common.serialization.StringDeserializer
         spring.deserializer.value.delegate.class: org.springframework.kafka.support.serializer.JsonDeserializer
       fetch-max-wait: 60000
-
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
@@ -73,5 +67,3 @@ springdoc:
      contact:
        name: Angel Morales
        email: angelmoralesb@gmail.com
-  #paths-to-match: /api/.*
-  #packages-to-scan: com.quickshort.api
