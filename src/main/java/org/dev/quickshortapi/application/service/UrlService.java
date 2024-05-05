@@ -82,16 +82,17 @@ public class UrlService implements IUrlServicePort {
     @Override
     public String redirectUrl(String shortUrl) {
 
-        Optional<UrlCache> urlCache = urlRepositoryCacheAdapter.findById(shortUrl);
-        Optional<Url> url;
-        if (urlCache.isEmpty()) {
-            url =  urlPersistenceAdapter.getUrlOrThrowByShortUrl(shortUrl);
+        Optional<Url> url = urlRepositoryCacheAdapter.findById(shortUrl)
+                .map(UrlMapper::toUrl);
+
+        if (url.isEmpty()) {
+
             // Actualizar en cache si solo estaba en la base de datos
-            UrlCache urlCacheAux = urlRepositoryCacheAdapter.save(UrlMapper.toUrlCache(url.get()));
-            logger.log(Level.INFO,"URL guardada en cache redirectUrl: {0}}" , urlCacheAux.getId());
-        }
-        else {
-            url = Optional.of(UrlMapper.toUrl(urlCache.get()));
+            url =  urlPersistenceAdapter.getUrlOrThrowByShortUrl(shortUrl).map(u -> {
+                urlRepositoryCacheAdapter.save(UrlMapper.toUrlCache(u));
+                return u;
+            });
+            logger.log(Level.INFO,"URL guardada en cache redirectUrl: {0}" , url.get().getShortUrl());
         }
 
         if (!url.get().isValidUrl()) {
