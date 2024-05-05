@@ -25,7 +25,7 @@ import java.net.URI;
 @WebAdapter
 @RestController
 @RequestMapping("/url")
-@Tag(name = "Url", description = "Url shortene")
+@Tag(name = "Url", description = "Url shorten and redirect operations")
 public class UrlController {
 
     private final IUrlServicePort urlService;
@@ -58,11 +58,11 @@ public class UrlController {
             @ApiResponse(responseCode = "404",
                     description = "Url not found",
                     content = @Content) })
-    @GetMapping("/{shortUrl}")
+    @GetMapping("/{shorturl}")
     public HttpEntity<Object> redirect(
             @Parameter(description = "Short url to redirect")
-            @PathVariable String shortUrl) {
-        String urlOriginal = urlService.redirectUrl(shortUrl);
+            @PathVariable String shorturl) {
+        String urlOriginal = urlService.redirectUrl(shorturl);
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setLocation(URI.create(urlOriginal));
         return ResponseEntity.status(HttpStatus.SEE_OTHER).headers(httpHeaders).build();
@@ -76,11 +76,11 @@ public class UrlController {
                             schema = @Schema(implementation = UrlStatisticsResponse.class)) }),
             @ApiResponse(responseCode = "404", description = "Url not found",
                     content = @Content) })
-    @GetMapping("/statistics/{shortUrl}")
+    @GetMapping("/statistics/{shorturl}")
     public UrlStatisticsResponse statistics(
             @Parameter(description = "Short url to get statistics")
-            @PathVariable String shortUrl) {
-        return urlService.getUrlStatistics(shortUrl);
+            @PathVariable String shorturl) {
+        return urlService.getUrlStatistics(shorturl);
     }
 
     @Operation(summary = "Delete a short url",
@@ -89,11 +89,11 @@ public class UrlController {
             @ApiResponse(responseCode = "200", description = "Url deleted"),
             @ApiResponse(responseCode = "404", description = "Url not found",
                     content = @Content) })
-    @DeleteMapping("/{shortUrl}")
+    @DeleteMapping("/{shorturl}")
     public void delete(
             @Parameter(description = "Short url to delete")
-            @PathVariable String shortUrl) {
-        urlService.deleteUrlbyShortUrl(shortUrl);
+            @PathVariable String shorturl) {
+        urlService.deleteUrlbyShortUrl(shorturl);
     }
 
     @Operation(summary = "Delete cache of a short url",
@@ -102,11 +102,11 @@ public class UrlController {
             @ApiResponse(responseCode = "200", description = "Url cache deleted"),
             @ApiResponse(responseCode = "404", description = "Url not found",
                     content = @Content) })
-    @DeleteMapping("/cache/{shortUrl}")
+    @DeleteMapping("/cache/{shorturl}")
     public void deleteCache(
             @Parameter(description = "Short url to delete cache")
-            @PathVariable String shortUrl) {
-        urlService.deleteCachebyShortUrl(shortUrl);
+            @PathVariable String shorturl) {
+        urlService.deleteCachebyShortUrl(shorturl);
     }
 
     @Operation(summary = "Get all urls",
