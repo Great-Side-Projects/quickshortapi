@@ -85,7 +85,8 @@
 
 [![Product Name Screen Shot][product-screenshot]](https://quickshortapi.azurewebsites.net/swagger-ui/index.html#/)
 
-I remember when I was in an interview and they said to me, 'we need to create a URL shortener, we have 3 hours for the design and let's discuss the project.' Well, after we finished, I was left with many doubts that I couldn't let pass, so I decided to build it. Postscript: I got an email and didn't continue in the process :(.
+I remember when I was in an interview and they said to me, 'we need to create a URL shortener, we have 3 hours for the design and let's discuss the project.' Well, after we finished, I was left with many doubts that I couldn't let pass, so I decided to build it.
+**Postscript: I got an email and didn't continue in the process :(.**
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -113,10 +114,11 @@ To get a local copy up and running follow these simple example steps.
 ### Prerequisites
 
 This is an example of how to list things you need to use the software and how to install them.
-* npm
-  ```sh
-  npm install npm@latest -g
-  ```
+* Redis cache local or cloud
+* Apache Kafka local or cloud
+* MonngoDB local or cloud
+* Docker
+
 
 ### Installation
 
@@ -125,16 +127,37 @@ _Below is an example of how you can instruct your audience on installing and set
 1. Get a free API Key at [https://example.com](https://example.com)
 2. Clone the repo
    ```sh
-   git clone https://github.com/your_username_/Project-Name.git
+   git clone https://github.com/Great-Side-Projects/quickshortapi.git
    ```
-3. Install NPM packages
+3. Modify the `application.yaml` file with your own configuration
+   ```yaml
+   #Datasource configuration
+   mongodb:
+     uri: mongodb://localhost:27017/quickshort #url of your mongodb
+   #Redis configuration
+   redis:
+     host: localhost #url of your redis
+     port: 14612 #port of your redis
+     password: password #password of your redis
+     #Kafka configuration
+   kafka:
+    bootstrap-servers: localhost:9092 #url of your kafka
+    properties:
+      sasl.jaas.config: org.apache.kafka.common.security.plain.PlainLoginModule required username="username" password="password"; #username and password of your kafka
+   ```
+4. Generate the jar file. root folder of the project or use the IDE, verify that name of the jar file is target/QuickShort-api-1.0.0-SNAPSHOT.jar or change the name in the Dockerfile.
    ```sh
-   npm install
+   mvn clean install
+   ``` 
+5. Create image and run with docker. root folder of the project 
+ 
+   ```sh
+    docker build -t quickshortapi:latest .
+    docker run -p 8080:8080 quickshortapi:latest
    ```
-4. Enter your API in `config.js`
-   ```js
-   const API_KEY = 'ENTER YOUR API';
-   ```
+6. Open your browser and go to `http://localhost:8080/swagger-ui/index.html#/` to see the API documentation
+7. Enjoy!
+
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -154,7 +177,22 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 <!-- ROADMAP -->
 ## Roadmap
 
-- [x] Add Changelog
+- [x] investigate about URL shortener 
+- [x] Create API rest project with Spring Boot
+- [x] Architecture design with Hexagonal Architecture
+- [x] Implement database with MongoDB
+- [x] Implement URL shortener logic
+- [ ] Implement Unit Tests
+- [x] Implement Redis for cache
+- [x] Implement Kafka for async communication
+- [x] Implement Swagger for API documentation
+- [x] Implement Docker for deployment
+- [x] Implement CI/CD with GitHub Actions
+- [x] Implement SonarQube for security
+- [ ] Implement JWT/Authentication for security
+- [ ] Implement Rate Limit for security
+- [ ] Implement Circuit Breaker for security
+-
 - [x] Add back to top links
 - [ ] Add Additional Templates w/ Examples
 - [ ] Add "components" document to easily copy & paste sections of the readme
@@ -198,9 +236,9 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 <!-- CONTACT -->
 ## Contact
 
-Your Name - [@your_twitter](https://twitter.com/your_username) - email@example.com
+Angel Morales - [@your_twitter](https://twitter.com/your_username) - angelmoralesb@gmail.com
 
-Project Link: [https://github.com/your_username/repo_name](https://github.com/your_username/repo_name)
+Project Link: [https://github.com/Great-Side-Projects/quickshortapi](https://github.com/Great-Side-Projects/quickshortapi)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
