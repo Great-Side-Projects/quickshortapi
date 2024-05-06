@@ -2,24 +2,28 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>URL Management</title>
+    <title>QuickShort URL Management</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-<h1>URL Management</h1>
+<div class="container">
+    <h1 class="mt-5">QuickShort URL Management</h1>
 
 <!-- Formulario para acortar URL -->
 
 
-<form th:action="@{/shorten}" th:object="${urlCommand}" method="post">
-    <input type="text" name="originalUrl" th:field="*{url}" placeholder="Enter URL to shorten" required>
-    <button type="submit">Shorten</button>
+<form th:action="@{/shorten}" th:object="${urlCommand}" method="post" class="mt-3">
+    <div class="form-group">
+    <input type="text" name="originalUrl" th:field="*{url}" class="form-control" placeholder="Enter URL to shorten" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Shorten</button>
 </form>
 
 
 <!-- Tabla para mostrar las URLs -->
 
-<table>
-    <thead>
+<table class="table mt-5">
+    <thead class="thead-dark">
     <tr>
         <th>Original URL</th>
         <th>Short URL</th>
@@ -45,7 +49,7 @@
 
            <form th:action="@{'/delete/' + ${url.shortUrl}}" method="get">
                <input type="hidden" name="_method" value="delete">
-               <button type="submit">Delete</button>
+               <button type="submit" class="btn btn-danger">Delete</button>
            </form>
         </td>
     </tr>
@@ -53,25 +57,27 @@
 </table>
 <!-- Paginación -->
 
-<div>
-    <ul>
+    <div class="mt-5">
+        <ul class="pagination">
         <li th:if="${currentPage > 0}">
-            <form th:action="@{/urls}" method="get">
+            <form th:action="@{/urls}" method="get" class="page-item">
                 <input type="hidden" name="page" th:value="${currentPage - 1}">
-                <button type="submit">Previous</button>
+                <button type="submit" class="page-link">Previous</button>
             </form>
         </li>
-        <li>
-            <span th:text="${currentPage + 1}"></span>
+            <li class="page-item">
+            <span  class="page-link" th:text="${currentPage + 1}"></span>
         </li>
-        <li th:if="${currentPage < totalPages - 1}">
+        <li th:if="${currentPage < totalPages - 1}" class="page-item">
            <!-- lionk pagination -->
             <form th:action="@{/urls}" method="get">
                 <input type="hidden" name="page" th:value="${currentPage + 1}">
-                <button type="submit">Next</button>
+                <button type="submit" class="page-link">Next</button>
             </form>
         </li>
     </ul>
 </div>
+</div>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
