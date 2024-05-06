@@ -44,9 +44,9 @@
     <br />
     <a href="https://quickshortapi.azurewebsites.net/swagger-ui/index.html#/">View Demo</a>
     ·
-    <a href="https://github.com/othneildrew/Best-README-Template/issues/new?labels=bug&template=bug-report---.md">Report Bug</a>
+    <a href="https://github.com/Great-Side-Projects/quickshortapi/issues">Report Bug</a>
     ·
-    <a href="https://github.com/othneildrew/Best-README-Template/issues/new?labels=enhancement&template=feature-request---.md">Request Feature</a>
+    <a href="https://github.com/Great-Side-Projects/quickshortapi/issues/new">Request Feature</a>
   </p>
 </div>
 
@@ -84,6 +84,8 @@
 ## About The Project
 
 [![Product Name Screen Shot][product-screenshot]](https://quickshortapi.azurewebsites.net/swagger-ui/index.html#/)
+[![Product Name Screen Shot][product-screenshot-UI]](https://quickshortapi.azurewebsites.net/)
+
 
 I remember when I was in an interview and they said to me, 'we need to create a URL shortener, we have 3 hours for the design and let's discuss the project.' Well, after we finished, I was left with many doubts that I couldn't let pass, so I decided to build it.
 **Postscript: I got an email and didn't continue in the process :(.**
@@ -108,8 +110,7 @@ This section should list any major frameworks/libraries used to bootstrap your p
 <!-- GETTING STARTED -->
 ## Getting Started
 
-This is an example of how you may give instructions on setting up your project locally.
-To get a local copy up and running follow these simple example steps.
+Here you can find the steps to run the project in your local environment to explore the API and the simple UI. 
 
 ### Prerequisites
 
@@ -155,7 +156,7 @@ _Below is an example of how you can instruct your audience on installing and set
     docker build -t quickshortapi:latest .
     docker run -p 8080:8080 quickshortapi:latest
    ```
-6. Open your browser and go to `http://localhost:8080/swagger-ui/index.html#/` to see the API documentation
+6. Open your browser and go to `http://localhost:8080/swagger-ui/index.html#/` to see the API documentation or `http://localhost:8080/` to see the simple UI QuickShort URL Management.
 7. Enjoy!
 
 
@@ -166,9 +167,28 @@ _Below is an example of how you can instruct your audience on installing and set
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
+### Easy way:
+Go to `http://localhost:8080/` and you can see the simple UI to manage the URLs.
 
-_For more examples, please refer to the [Documentation](https://example.com)_
+### Medium way:
+Go to `http://localhost:8080/swagger-ui/index.html#/` and you can see the API documentation to manage the URLs.
+
+### Pro way:
+Use CURL to manage the URLs.
+
+1. Shorten URL by CURL
+   ```sh
+   curl -X POST "http://localhost:8080/url/shorten" -H "accept: */*" -H "Content-Type: application/json" -d "{ \"url\": \"https://www.google.com\"}"
+   ```
+2. Build the URL and redirect by CURL - take the shorturl from the response of the previous step 
+   ```sh
+    curl -X GET "http://localhost:8080/url/{shorturl}" -H "accept: */*"
+   ```
+3. or you can take de full url the second step ej: `http://localhost:8080/url/{shorturl}` and paste in your browser.
+4. redirect will be to the original URL.
+5. Enjoy!
+   
+_For more examples, please refer to the [Documentation](https://quickshortapi.azurewebsites.net/swagger-ui/index.html#/)_
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -177,30 +197,27 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 <!-- ROADMAP -->
 ## Roadmap
 
-- [x] investigate about URL shortener 
-- [x] Create API rest project with Spring Boot
+- [x] investigate about URL shortener
 - [x] Architecture design with Hexagonal Architecture
+- [x] Create API rest project with Spring Boot
 - [x] Implement database with MongoDB
 - [x] Implement URL shortener logic
 - [ ] Implement Unit Tests
-- [x] Implement Redis for cache
-- [x] Implement Kafka for async communication
+- [ ] Implement Integration Tests
+- [ ] Implement three party services
+  - [x] Implement Redis for cache
+  - [x] Implement Kafka for async communication
 - [x] Implement Swagger for API documentation
 - [x] Implement Docker for deployment
 - [x] Implement CI/CD with GitHub Actions
 - [x] Implement SonarQube for security
-- [ ] Implement JWT/Authentication for security
-- [ ] Implement Rate Limit for security
+- [x] Create a simple front-end to manage the URLs
+- [ ] API versioning
 - [ ] Implement Circuit Breaker for security
--
-- [x] Add back to top links
-- [ ] Add Additional Templates w/ Examples
-- [ ] Add "components" document to easily copy & paste sections of the readme
-- [ ] Multi-language Support
-    - [ ] Chinese
-    - [ ] Spanish
+- [ ] Implement Rate Limit for security
+- [ ] Implement Authentication for security
 
-See the [open issues](https://github.com/othneildrew/Best-README-Template/issues) for a full list of proposed features (and known issues).
+See the [open issues](https://github.com/Great-Side-Projects/quickshortapi/issues) for a full list of proposed features (and known issues).
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -217,7 +234,7 @@ Don't forget to give the project a star! Thanks again!
 1. Fork the Project
 2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
 3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the Branch (`git push origin feature/AmazingFeature`)
+4. Push to the "develop" Branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -236,7 +253,7 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 <!-- CONTACT -->
 ## Contact
 
-Angel Morales - [@your_twitter](https://twitter.com/your_username) - angelmoralesb@gmail.com
+Angel Morales - [LinkedIn](https://www.linkedin.com/in/angelmoralesb/) - angelmoralesb@gmail.com
 
 Project Link: [https://github.com/Great-Side-Projects/quickshortapi](https://github.com/Great-Side-Projects/quickshortapi)
 
@@ -247,16 +264,17 @@ Project Link: [https://github.com/Great-Side-Projects/quickshortapi](https://git
 <!-- ACKNOWLEDGMENTS -->
 ## Acknowledgments
 
-Use this space to list resources you find helpful and would like to give credit to. I've included a few of my favorites to kick things off!
-
 * [Choose an Open Source License](https://choosealicense.com)
-* [GitHub Emoji Cheat Sheet](https://www.webpagefx.com/tools/emoji-cheat-sheet)
-* [Malven's Flexbox Cheatsheet](https://flexbox.malven.co/)
-* [Malven's Grid Cheatsheet](https://grid.malven.co/)
-* [Img Shields](https://shields.io)
-* [GitHub Pages](https://pages.github.com)
-* [Font Awesome](https://fontawesome.com)
-* [React Icons](https://react-icons.github.io/react-icons/search)
+* [Redis](https://redis.io/es/)
+* [Apache Kafka](https://www.confluent.io/)
+* [MongoDB](https://www.mongodb.com/)
+* [Docker](https://www.docker.com/)
+* [Swagger](https://www.baeldung.com/spring-rest-openapi-documentation)
+* [SonnarQube comunity Edition](https://www.sonarsource.com/open-source-editions/sonarqube-community-edition/)
+* [GitHub Actions](https://docs.github.com/es/actions)
+* [Sonarqube Docker Web App on Linux with Azure SQL](https://learn.microsoft.com/en-us/samples/azure/azure-quickstart-templates/webapp-linux-sonarqube-azuresql/)
+* [Spring Boot with MongoDB](https://www.baeldung.com/spring-boot-mongodb)
+ 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -265,18 +283,19 @@ Use this space to list resources you find helpful and would like to give credit 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
 [contributors-shield]: https://img.shields.io/github/contributors/othneildrew/Best-README-Template.svg?style=for-the-badge
-[contributors-url]: https://github.com/othneildrew/Best-README-Template/graphs/contributors
+[contributors-url]: https://github.com/Great-Side-Projects/graphs/contributors
 [forks-shield]: https://img.shields.io/github/forks/othneildrew/Best-README-Template.svg?style=for-the-badge
-[forks-url]: https://github.com/othneildrew/Best-README-Template/network/members
+[forks-url]: https://github.com/Great-Side-Projects/quickshortapi/forks
 [stars-shield]: https://img.shields.io/github/stars/othneildrew/Best-README-Template.svg?style=for-the-badge
-[stars-url]: https://github.com/othneildrew/Best-README-Template/stargazers
+[stars-url]: https://github.com/Great-Side-Projects/quickshortapi/stargazers
 [issues-shield]: https://img.shields.io/github/issues/othneildrew/Best-README-Template.svg?style=for-the-badge
-[issues-url]: https://github.com/othneildrew/Best-README-Template/issues
+[issues-url]: https://github.com/Great-Side-Projects/quickshortapi/issues
 [license-shield]: https://img.shields.io/github/license/othneildrew/Best-README-Template.svg?style=for-the-badge
-[license-url]: https://github.com/othneildrew/Best-README-Template/blob/master/LICENSE.txt
+[license-url]: https://github.com/Great-Side-Projects/quickshortapi/blob/main/LICENSE
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://www.linkedin.com/in/angelmoralesb/
 [product-screenshot]: images/screenshot.png
+[product-screenshot-UI]: images/screenshotUI.png
 [Next.js]: https://img.shields.io/badge/next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white
 [Next-url]: https://nextjs.org/
 [React.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
@@ -301,4 +320,3 @@ Use this space to list resources you find helpful and would like to give credit 
 [redis-url]: https://redis.io/
 [Apache Kafka]: https://img.shields.io/badge/Apache_Kafka-231F20?style=for-the-badge&logo=apache-kafka&logoColor=white
 [Apache Kafka-url]: https://kafka.apache.org/
-
