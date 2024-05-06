@@ -22,5 +22,5 @@ public interface IUrlPersistencePort {
 
     Optional<UrlEntity> findByUShortUrl(String shortUrl);
 
-    Page<UrlEntity> getAllUrls(int page);
+    Page<UrlEntity> getAllUrls(int page, int pageSize);
 }
