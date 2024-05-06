@@ -12,7 +12,6 @@ import org.dev.quickshortapi.common.exceptionhandler.UrlNotFoundException;
 import org.dev.quickshortapi.domain.Url;
 import org.dev.quickshortapi.infraestructure.adapter.out.persistence.UrlMapper;
 import org.dev.quickshortapi.infraestructure.adapter.out.persistence.UrlEntity;
-import org.dev.quickshortapi.infraestructure.adapter.out.persistence.UrlCache;
 import org.springframework.data.domain.Page;
 import java.util.Optional;
 import java.util.logging.Level;
@@ -131,8 +130,8 @@ public class UrlService implements IUrlServicePort {
     }
 
     @Override
-    public Page<UrlResponse> getAllUrls(int page) {
-        Page<UrlEntity> urls = urlPersistenceAdapter.getAllUrls(page);
+    public Page<UrlResponse> getAllUrls(int page, int pageSize) {
+        Page<UrlEntity> urls = urlPersistenceAdapter.getAllUrls(page, pageSize);
         IUrlFormat urlFormatProvider = new UrlFormatProvider();
         return urls.map(urlEntity -> UrlMapper.toUrlResponse(urlEntity, urlFormatProvider));
     }
