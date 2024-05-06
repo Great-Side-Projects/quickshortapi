@@ -11,5 +11,5 @@ public interface IUrlServicePort {
     void deleteUrlbyShortUrl(String urlCorta);
     UrlStatisticsResponse getUrlStatistics(String urlCorta);
     void deleteCachebyShortUrl(String urlCorta);
-    Page<UrlResponse> getAllUrls(int page);
+    Page<UrlResponse> getAllUrls(int page, int pageSize);
 }

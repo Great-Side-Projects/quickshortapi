@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>URL Management</title>
+</head>
+<body>
+<h1>URL Management</h1>
+
+<!-- Formulario para acortar URL -->
+
+
+<form th:action="@{/shorten}" th:object="${urlCommand}" method="post">
+    <input type="text" name="originalUrl" th:field="*{url}" placeholder="Enter URL to shorten" required>
+    <button type="submit">Shorten</button>
+</form>
+
+
+<!-- Tabla para mostrar las URLs -->
+
+<table>
+    <thead>
+    <tr>
+        <th>Original URL</th>
+        <th>Short URL</th>
+        <th>Visits</th>
+        <th>Creation Date</th>
+        <th>Last Visited Date</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+
+    <!-- Iteración sobre las URLs -->
+
+    <tr th:each="url : ${urls}">
+        <td th:text="${url.originalUrl}"></td>
+        <td><a th:target="_blank" th:href="@{'/url/' + ${url.shortUrl}}" th:text="${url.shortUrl}"></a></td>
+        <td th:text="${url.visits}"></td>
+        <td th:text="${url.createdDate}"></td>
+        <td th:text="${url.lastVisitedDate}"></td>
+        <td>
+
+            <!-- Formulario para eliminar URL -->
+
+           <form th:action="@{'/delete/' + ${url.shortUrl}}" method="get">
+               <input type="hidden" name="_method" value="delete">
+               <button type="submit">Delete</button>
+           </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<!-- Paginación -->
+
+<div>
+    <ul>
+        <li th:if="${currentPage > 0}">
+            <form th:action="@{/urls}" method="get">
+                <input type="hidden" name="page" th:value="${currentPage - 1}">
+                <button type="submit">Previous</button>
+            </form>
+        </li>
+        <li>
+            <span th:text="${currentPage + 1}"></span>
+        </li>
+        <li th:if="${currentPage < totalPages - 1}">
+           <!-- lionk pagination -->
+            <form th:action="@{/urls}" method="get">
+                <input type="hidden" name="page" th:value="${currentPage + 1}">
+                <button type="submit">Next</button>
+            </form>
+        </li>
+    </ul>
+</div>
+</body>
+</html>

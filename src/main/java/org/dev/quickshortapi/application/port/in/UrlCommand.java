@@ -1,8 +1,8 @@
 package org.dev.quickshortapi.application.port.in;
 
-import lombok.Getter;
+import lombok.Data;
 
-@Getter
+@Data
 public class UrlCommand{
     private String url;
 }

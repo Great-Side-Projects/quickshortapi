@@ -12,7 +12,6 @@ import org.dev.quickshortapi.common.exceptionhandler.UrlNotFoundException;
 import org.dev.quickshortapi.domain.Url;
 import org.dev.quickshortapi.infraestructure.adapter.out.persistence.UrlMapper;
 import org.dev.quickshortapi.infraestructure.adapter.out.persistence.UrlEntity;
-import org.dev.quickshortapi.infraestructure.adapter.out.persistence.UrlCache;
 import org.springframework.data.domain.Page;
 import java.util.Optional;
 import java.util.logging.Level;
@@ -82,16 +81,17 @@ public class UrlService implements IUrlServicePort {
     @Override
     public String redirectUrl(String shortUrl) {
 
-        Optional<UrlCache> urlCache = urlRepositoryCacheAdapter.findById(shortUrl);
-        Optional<Url> url;
-        if (urlCache.isEmpty()) {
-            url =  urlPersistenceAdapter.getUrlOrThrowByShortUrl(shortUrl);
+        Optional<Url> url = urlRepositoryCacheAdapter.findById(shortUrl)
+                .map(UrlMapper::toUrl);
+
+        if (url.isEmpty()) {
+
             // Actualizar en cache si solo estaba en la base de datos
-            UrlCache urlCacheAux = urlRepositoryCacheAdapter.save(UrlMapper.toUrlCache(url.get()));
-            logger.log(Level.INFO,"URL guardada en cache redirectUrl: {0}}" , urlCacheAux.getId());
-        }
-        else {
-            url = Optional.of(UrlMapper.toUrl(urlCache.get()));
+            url =  urlPersistenceAdapter.getUrlOrThrowByShortUrl(shortUrl).map(u -> {
+                urlRepositoryCacheAdapter.save(UrlMapper.toUrlCache(u));
+                return u;
+            });
+            logger.log(Level.INFO,"URL guardada en cache redirectUrl: {0}" , url.get().getShortUrl());
         }
 
         if (!url.get().isValidUrl()) {
@@ -130,8 +130,8 @@ public class UrlService implements IUrlServicePort {
     }
 
     @Override
-    public Page<UrlResponse> getAllUrls(int page) {
-        Page<UrlEntity> urls = urlPersistenceAdapter.getAllUrls(page);
+    public Page<UrlResponse> getAllUrls(int page, int pageSize) {
+        Page<UrlEntity> urls = urlPersistenceAdapter.getAllUrls(page, pageSize);
         IUrlFormat urlFormatProvider = new UrlFormatProvider();
         return urls.map(urlEntity -> UrlMapper.toUrlResponse(urlEntity, urlFormatProvider));
     }
