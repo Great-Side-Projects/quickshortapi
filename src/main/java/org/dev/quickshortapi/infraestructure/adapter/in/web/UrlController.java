@@ -118,7 +118,11 @@ public class UrlController {
             @ApiResponse(responseCode = "404", description = "Urls not found",
                     content = @Content) })
     @GetMapping("/all")
-       public ResponseEntity<Page<UrlResponse>> getAllUrls(@RequestParam int page) {
-        return ResponseEntity.ok(urlService.getAllUrls(page));
+       public ResponseEntity<Page<UrlResponse>> getAllUrls(
+                @Parameter(description = "Page number")
+               @RequestParam int page ,
+                @Parameter(description = "Page size limited to 100")
+               @RequestParam int pageSize) {
+        return ResponseEntity.ok(urlService.getAllUrls(page,pageSize));
     }
 }

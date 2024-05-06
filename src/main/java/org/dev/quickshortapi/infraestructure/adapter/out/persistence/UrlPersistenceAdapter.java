@@ -83,8 +83,10 @@ public class UrlPersistenceAdapter implements IUrlPersistencePort{
     }
 
     @Override
-    public Page<UrlEntity> getAllUrls(int page) {
-       Pageable pageable = PageRequest.of(page, PAGE_SIZE);
+    public Page<UrlEntity> getAllUrls(int page, int pageSize) {
+        if (pageSize > PAGE_SIZE)
+            pageSize = PAGE_SIZE;
+       Pageable pageable = PageRequest.of(page, pageSize);
        return urlRepository.findAll(pageable);
     }
 }
