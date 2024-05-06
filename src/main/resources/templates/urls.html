@@ -37,16 +37,14 @@
 
     <!-- Iteración sobre las URLs -->
 
-    <tr th:each="url : ${urls}">
-        <td th:text="${url.originalUrl}"></td>
-        <td><a th:target="_blank" th:href="@{'/url/' + ${url.shortUrl}}" th:text="${url.shortUrl}"></a></td>
-        <td th:text="${url.visits}"></td>
-        <td th:text="${url.createdDate}"></td>
-        <td th:text="${url.lastVisitedDate}"></td>
-        <td>
-
+    <tr th:each="url : ${urls}" style="padding: 5px;">
+        <td style="padding: 5px;" th:text="${url.originalUrl}"></td>
+        <td style="padding: 5px;"><a th:target="_blank" th:href="@{'/url/' + ${url.shortUrl}}" th:text="${url.shortUrl}"></a></td>
+        <td style="padding: 5px;" th:text="${url.visits}"></td>
+        <td style="padding: 5px;" th:text="${url.createdDate}"></td>
+        <td style="padding: 5px;" th:text="${url.lastVisitedDate}"></td>
+        <td style="padding: 5px;">
             <!-- Formulario para eliminar URL -->
-
            <form th:action="@{'/delete/' + ${url.shortUrl}}" method="get">
                <input type="hidden" name="_method" value="delete">
                <button type="submit" class="btn btn-danger">Delete</button>
@@ -55,6 +53,11 @@
     </tr>
     </tbody>
 </table>
+
+    <!-- Botón de Refresh -->
+    <div class="mt-3">
+        <button type="button" class="btn btn-secondary" onclick="window.location.reload();">Refresh</button>
+    </div>
 <!-- Paginación -->
 
     <div class="mt-5">
