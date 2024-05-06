@@ -90,3 +90,6 @@ jobs:
         slot-name: 'production'
         publish-profile: ${{ secrets.AzureAppService_PublishProfile_8895fcb27e2a40e6a0ea93dba31b1602 }}
         images: 'quickshortregistry.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_7b7f1f9646764d188bfab3dc6c7d7989 }}/quickshortapi:${{ github.sha }}'
+        app-settings: |
+          - name: SPRING_DATA_MONGODB_URI
+            value: ${{ secrets.MONGODB_URI }}
