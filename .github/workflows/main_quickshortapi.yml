@@ -62,7 +62,7 @@ jobs:
         cache: maven
     - name: Build with Maven
       env:
-        SPRING_DATA_MONGODB_URI: ${{ secrets.MONGODB_URI }}
+        MONGODB_URI: ${{ secrets.MONGODB_URI }}
         SPRING_DATA_REDIS_HOST: ${{ secrets.REDIS_HOST }}
         SPRING_DATA_REDIS_PORT: ${{ secrets.REDIS_PORT }}
         SPRING_DATA_REDIS_PASSWORD: ${{ secrets.REDIS_PASSWORD }}
