@@ -96,7 +96,7 @@ I remember when I was in an interview and they said to me, 'we need to create a 
 
 ### Built With
 
-This section should list any major frameworks/libraries used to bootstrap your project. Leave any add-ons/plugins for the acknowledgements section. Here are a few examples.
+
 
 * [![Java][java.com/es/]][Java-url]
 * [![Spring Boot][Spring Boot]][Spring Boot-url]
@@ -123,14 +123,13 @@ This is an example of how to list things you need to use the software and how to
 
 ### Installation
 
-_Below is an example of how you can instruct your audience on installing and setting up your app. This template doesn't rely on any external dependencies or services._
 
-1. Get a free API Key at [https://example.com](https://example.com)
-2. Clone the repo
+
+1. Clone the repo
    ```sh
    git clone https://github.com/Great-Side-Projects/quickshortapi.git
    ```
-3. Modify the `application.yaml` file with your own configuration
+2. Modify the `application.yaml` file with your own configuration
    ```yaml
    #Datasource configuration
    mongodb:
@@ -146,18 +145,18 @@ _Below is an example of how you can instruct your audience on installing and set
     properties:
       sasl.jaas.config: org.apache.kafka.common.security.plain.PlainLoginModule required username="username" password="password"; #username and password of your kafka
    ```
-4. Generate the jar file. root folder of the project or use the IDE, verify that name of the jar file is target/QuickShort-api-1.0.0-SNAPSHOT.jar or change the name in the Dockerfile.
+3. Generate the jar file. root folder of the project or use the IDE, verify that name of the jar file is target/QuickShort-api-1.0.0-SNAPSHOT.jar or change the name in the Dockerfile.
    ```sh
    mvn clean install
    ``` 
-5. Create image and run with docker. root folder of the project 
+4. Create image and run with docker. root folder of the project 
  
    ```sh
     docker build -t quickshortapi:latest .
     docker run -p 8080:8080 quickshortapi:latest
    ```
-6. Open your browser and go to `http://localhost:8080/swagger-ui/index.html#/` to see the API documentation or `http://localhost:8080/` to see the simple UI QuickShort URL Management.
-7. Enjoy!
+5. Open your browser and go to `http://localhost:8080/swagger-ui/index.html#/` to see the API documentation or `http://localhost:8080/` to see the simple UI QuickShort URL Management.
+6. Enjoy!
 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -267,9 +266,11 @@ Project Link: [https://github.com/Great-Side-Projects/quickshortapi](https://git
 * [Choose an Open Source License](https://choosealicense.com)
 * [Redis](https://redis.io/es/)
 * [Apache Kafka](https://www.confluent.io/)
+* [Kafka with Spring Boot](https://www.baeldung.com/spring-kafka)
+* [Redis with Spring Boot](https://www.baeldung.com/spring-data-redis-tutorial)
 * [MongoDB](https://www.mongodb.com/)
 * [Docker](https://www.docker.com/)
-* [Swagger](https://www.baeldung.com/spring-rest-openapi-documentation)
+* [Swagger Spring REST API](https://www.baeldung.com/spring-rest-openapi-documentation)
 * [SonnarQube comunity Edition](https://www.sonarsource.com/open-source-editions/sonarqube-community-edition/)
 * [GitHub Actions](https://docs.github.com/es/actions)
 * [Sonarqube Docker Web App on Linux with Azure SQL](https://learn.microsoft.com/en-us/samples/azure/azure-quickstart-templates/webapp-linux-sonarqube-azuresql/)
