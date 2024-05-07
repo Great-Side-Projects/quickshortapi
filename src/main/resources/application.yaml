@@ -10,16 +10,16 @@ spring:
     #Redis configuration
     redis:
       database: 0
-      host: ${REDIS_HOST}
-      port: ${REDIS_PORT}
-      password: ${REDIS_PASSWORD}
+      host: redis-14612.c282.east-us-mz.azure.redns.redis-cloud.com
+      port: 14612
+      password: s2vhMK1yubKRubA1CfpFY0qHNvs7p2xE
       timeout: 60000
   #Kafka configuration
   kafka:
-    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS}
+    bootstrap-servers: pkc-12576z.us-west2.gcp.confluent.cloud:9092
     properties:
       sasl.mechanism: PLAIN
-      sasl.jaas.config: org.apache.kafka.common.security.plain.PlainLoginModule required username=${KAFKA_USERNAME} password=${KAFKA_PASSWORD};
+      sasl.jaas.config: org.apache.kafka.common.security.plain.PlainLoginModule required username="QJFWIQ7JPYXMFSKX" password="SfKMTgFuPz+c/3l5rxx3yHTNoWw3LUeRPRqdi307FCzZDhddXL8Eaj3raIH7Bzle";
     security:
       protocol: SASL_SSL
     topic:
