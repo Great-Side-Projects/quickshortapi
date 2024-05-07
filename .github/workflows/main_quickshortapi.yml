@@ -74,8 +74,9 @@ jobs:
 
     - name: Set MongoDB URI in Dockerfile
       run: |
-        escaped_mongodb_uri=$(sed 's/[^^]/[&]/g; s/\^/\\^/g' <<<"${{ secrets.MONGODB_URI }}")
-        sed -i "s|${escaped_mongodb_uri}|${{ secrets.MONGODB_URI }}|g" Dockerfile
+        mongodb_uri="${{ secrets.MONGODB_URI }}"
+        escaped_mongodb_uri=$(printf '%s\n' "$mongodb_uri" | sed -e 's/[\/&]/\\&/g')
+        sed -i "s|\${MONGODB_URI}|$escaped_mongodb_uri|g" Dockerfile
 
     - name: Print Dockerfile content before build
       run: cat Dockerfile
