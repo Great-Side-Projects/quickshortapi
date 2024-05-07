@@ -7,6 +7,11 @@ WORKDIR /app
 # Exponer el puerto en el que se ejecuta la aplicación Spring Boot
 EXPOSE 8080
 # Comando para ejecutar la aplicación Spring Boot al iniciar el contenedor
-CMD ["java", "-jar", "quickshortapi.jar", \
-"--spring.data.mongodb.uri=${MONGODB_URI}"\
+CMD ["java", "-jar", "quickshortapi.jar",\
+"--spring.data.mongodb.uri=${MONGODB_URI}",\
+"--sprin.data.redis.host=${REDIS_HOST}",\
+"--spring.data.redis.port=${REDIS_PORT}",\
+"--spring.data.redis.password=${REDIS_PASSWORD}",\
+"--spring.kafka.bootstrap-servers=${KAFKA_BOOTSTRAP_SERVERS}",\
+"--spring.properties.sals.JAAS.config=${KAFKA_PROPERTIES_SASL_JAAS_CONFIG}"\
 ]
