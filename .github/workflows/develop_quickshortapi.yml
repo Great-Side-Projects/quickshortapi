@@ -37,5 +37,5 @@ jobs:
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-          MONGODB_URI: ${{ secrets.MONGODB_URI }}
+          SPRING_DATA_MONGODB_URI: ${{ secrets.MONGODB_URI }}
         run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=quickshort -Dsonar.projectName='quickshort'
