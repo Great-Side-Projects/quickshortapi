@@ -8,4 +8,4 @@ WORKDIR /app
 EXPOSE 8080
 # Comando para ejecutar la aplicación Spring Boot al iniciar el contenedor
 CMD ["java", "-jar", "quickshortapi.jar",
-"--spring.data.mongodb.uri=$SPRING_DATA_MONGODB_URI"]
+"--spring.data.mongodb.uri=${SPRING_DATA_MONGODB_URI}"]
