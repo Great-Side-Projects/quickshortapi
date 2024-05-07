@@ -6,7 +6,7 @@ spring:
   data:
     #Datasource configuration
     mongodb:
-      uri: ${MONGO_URI}
+      uri: mongodb://mymdb:5qcww1iZTvNpU9isEQTT4ndpyqbTdbHWBCOpxUmWDaMUZfDMrhLmm6bya8lwP7g3Q1i4jnJQ3PXpuIrmApYKZw==@mymdb.mongo.cosmos.azure.com:10255/Atirodeas?ssl=true&retryWrites=false
     #Redis configuration
     redis:
       database: 0
