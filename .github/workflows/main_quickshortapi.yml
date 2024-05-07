@@ -61,6 +61,14 @@ jobs:
         distribution: 'temurin'
         cache: maven
     - name: Build with Maven
+      env:
+        SPRING_DATA_MONGODB_URI: ${{ secrets.MONGODB_URI }}
+        SPRING_DATA_REDIS_HOST: ${{ secrets.REDIS_HOST }}
+        SPRING_DATA_REDIS_PORT: ${{ secrets.REDIS_PORT }}
+        SPRING_DATA_REDIS_PASSWORD: ${{ secrets.REDIS_PASSWORD }}
+        SPRING_KAFKA_BOOTSTRAP_SERVERS: ${{ secrets.KAFKA_BOOTSTRAP_SERVERS }}
+        KAFKA_USERNAME: ${{ secrets.KAFKA_USERNAME }}
+        KAFKA_PASSWORD: ${{ secrets.KAFKA_PASSWORD }}
       run: mvn --batch-mode --update-snapshots package -DskipTests
 
     - name: Set up Docker Buildx
@@ -79,14 +87,6 @@ jobs:
         context: .
         push: true
         tags: quickshortregistry.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_7b7f1f9646764d188bfab3dc6c7d7989 }}/quickshortapi:${{ github.sha }}
-      env:
-        SPRING_DATA_MONGODB_URI: ${{ secrets.MONGODB_URI }}
-        SPRING_DATA_REDIS_HOST: ${{ secrets.REDIS_HOST }}
-        SPRING_DATA_REDIS_PORT: ${{ secrets.REDIS_PORT }}
-        SPRING_DATA_REDIS_PASSWORD: ${{ secrets.REDIS_PASSWORD }}
-        SPRING_KAFKA_BOOTSTRAP_SERVERS: ${{ secrets.KAFKA_BOOTSTRAP_SERVERS }}
-        KAFKA_USERNAME: ${{ secrets.KAFKA_USERNAME }}
-        KAFKA_PASSWORD: ${{ secrets.KAFKA_PASSWORD }}
         file: ./Dockerfile
 
 
