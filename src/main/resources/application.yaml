@@ -6,17 +6,17 @@ spring:
   data:
     #Datasource configuration
     mongodb:
-      uri: mymongourl
+      uri: ${SPRING_DATA_MONGODB_URI}
     #Redis configuration
     redis:
       database: 0
-      host: myredishost
-      port: 00000
-      password: myredispassword
+      host: ${SPRING_DATA_REDIS_HOST}
+      port: ${SPRING_DATA_REDIS_PORT}
+      password: ${SPRING_DATA_REDIS_PASSWORD}
       timeout: 60000
   #Kafka configuration
   kafka:
-    bootstrap-servers: pkc-12576z.us-west2.gcp.confluent.cloud:9092
+    bootstrap-servers: ${SPRING_KAFKA_BOOTSTRAP_SERVERS}
     properties:
       sasl.mechanism: PLAIN
       sasl.jaas.config: org.apache.kafka.common.security.plain.PlainLoginModule required username=${KAFKA_USERNAME} password=${KAFKA_PASSWORD};
