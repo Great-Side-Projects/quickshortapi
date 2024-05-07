@@ -77,6 +77,8 @@ jobs:
 
     - name: Build and push container image to registry
       uses: docker/build-push-action@v3
+      env:
+        MONGODB_URI: ${{ secrets.MONGODB_URI }}
       with:
         context: .
         push: true
