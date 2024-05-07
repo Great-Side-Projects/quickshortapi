@@ -75,10 +75,11 @@ jobs:
     - name: Set MongoDB URI in Dockerfile
       run: sed -i "s|\${MONGODB_URI}|${{ secrets.MONGODB_URI }}|g" Dockerfile
 
+    - name: Print Dockerfile content before build
+      run: cat Dockerfile
+
     - name: Build and push container image to registry
       uses: docker/build-push-action@v3
-      env:
-        MONGODB_URI: ${{ secrets.MONGODB_URI }}
       with:
         context: .
         push: true
