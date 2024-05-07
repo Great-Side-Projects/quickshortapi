@@ -6,7 +6,7 @@ spring:
   data:
     #Datasource configuration
     mongodb:
-      uri: mongodb://
+      uri: ${SPRING_DATA_MONGODB_URI}
     #Redis configuration
     redis:
       database: 0
