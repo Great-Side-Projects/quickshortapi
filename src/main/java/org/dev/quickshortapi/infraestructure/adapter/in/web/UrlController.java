@@ -7,6 +7,8 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import org.dev.quickshortapi.application.port.in.IUrlServicePort;
 import org.dev.quickshortapi.application.port.out.UrlResponse;
 import org.dev.quickshortapi.common.WebAdapter;
@@ -19,6 +21,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import java.net.URI;
 
@@ -26,6 +29,7 @@ import java.net.URI;
 @RestController
 @RequestMapping("/url")
 @Tag(name = "Url", description = "Url shorten and redirect operations")
+@Validated
 public class UrlController {
 
     private final IUrlServicePort urlService;
@@ -121,8 +125,8 @@ public class UrlController {
        public ResponseEntity<Page<UrlResponse>> getAllUrls(
                 @Parameter(description = "Page number")
                @RequestParam int page ,
-                @Parameter(description = "Page size limited to 100")
-               @RequestParam int pageSize) {
+                @Parameter(description = "Page size between 1 and 100")
+               @RequestParam @Min(1) @Max(100) int pageSize) {
         return ResponseEntity.ok(urlService.getAllUrls(page,pageSize));
     }
 }
