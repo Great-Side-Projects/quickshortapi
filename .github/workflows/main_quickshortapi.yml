@@ -73,7 +73,7 @@ jobs:
         password: ${{ secrets.AzureAppService_ContainerPassword_25a8c812f2d94527874bf324504870eb }}
 
     - name: Set MongoDB URI in Dockerfile
-      run: sed -i "s|${MONGO_URI}|${{ secrets.MONGODB_URI }}|g" Dockerfile
+      run: sed -i "s|\${MONGODB_URI}|${{ secrets.MONGODB_URI }}|g" Dockerfile
 
     - name: Build and push container image to registry
       uses: docker/build-push-action@v3
