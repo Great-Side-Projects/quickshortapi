@@ -73,7 +73,9 @@ jobs:
         password: ${{ secrets.AzureAppService_ContainerPassword_25a8c812f2d94527874bf324504870eb }}
 
     - name: Set MongoDB URI in Dockerfile
-      run: sed -i "s|\${MONGODB_URI}|${{ secrets.MONGODB_URI }}|g" Dockerfile
+      run: |
+        escaped_mongodb_uri=$(sed 's/[^^]/[&]/g; s/\^/\\^/g' <<<"${{ secrets.MONGODB_URI }}")
+        sed -i "s|${escaped_mongodb_uri}|${{ secrets.MONGODB_URI }}|g" Dockerfile
 
     - name: Print Dockerfile content before build
       run: cat Dockerfile
