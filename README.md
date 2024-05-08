@@ -115,6 +115,9 @@ Here you can find the steps to run the project in your local environment to expl
 ### Prerequisites
 
 This is an example of how to list things you need to use the software and how to install them.
+
+* Java 17+
+* Maven
 * Redis cache local or cloud
 * Apache Kafka local or cloud
 * MonngoDB local or cloud
