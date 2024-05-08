@@ -129,7 +129,15 @@ This is an example of how to list things you need to use the software and how to
    ```sh
    git clone https://github.com/Great-Side-Projects/quickshortapi.git
    ```
-2. Modify the `application.yaml` file with your own configuration
+2. Go to the root folder of the project
+   ```sh
+   cd quickshortapi
+   ```
+3. find the 'Dockerfile_local' file and rename it to 'Dockerfile' 
+   ```sh
+   mv Dockerfile_local Dockerfile
+   ``` 
+4. Modify the `application.yaml` file with your own configuration
    ```yaml
    #Datasource configuration
    mongodb:
@@ -145,18 +153,18 @@ This is an example of how to list things you need to use the software and how to
     properties:
       sasl.jaas.config: org.apache.kafka.common.security.plain.PlainLoginModule required username="username" password="password"; #username and password of your kafka
    ```
-3. Generate the jar file. root folder of the project or use the IDE, verify that name of the jar file is target/QuickShort-api-1.0.0-SNAPSHOT.jar or change the name in the Dockerfile.
+5. Generate the jar file. root folder of the project or use the IDE, verify that name of the jar file is target/QuickShort-api-1.0.0-SNAPSHOT.jar or change the name in the Dockerfile.
    ```sh
    mvn clean install
    ``` 
-4. Create image and run with docker. root folder of the project 
+6. Create image and run with docker. root folder of the project 
  
    ```sh
     docker build -t quickshortapi:latest .
     docker run -p 8080:8080 quickshortapi:latest
    ```
-5. Open your browser and go to `http://localhost:8080/swagger-ui/index.html#/` to see the API documentation or `http://localhost:8080/` to see the simple UI QuickShort URL Management.
-6. Enjoy!
+7. Open your browser and go to `http://localhost:8080/swagger-ui/index.html#/` to see the API documentation or `http://localhost:8080/` to see the simple UI QuickShort URL Management.
+8. Enjoy!
 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
