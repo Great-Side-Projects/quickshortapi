@@ -115,6 +115,9 @@ Here you can find the steps to run the project in your local environment to expl
 ### Prerequisites
 
 This is an example of how to list things you need to use the software and how to install them.
+
+* Java 17+
+* Maven
 * Redis cache local or cloud
 * Apache Kafka local or cloud
 * MonngoDB local or cloud
@@ -219,6 +222,8 @@ _For more examples, please refer to the [Documentation](https://quickshortapi.az
 - [x] Implement CI/CD with GitHub Actions
 - [x] Implement SonarQube for security
 - [x] Create a simple front-end to manage the URLs
+- [ ] Health check for the API
+- [ ] Telemetry for the API
 - [ ] API versioning
 - [ ] Implement Circuit Breaker for security
 - [ ] Implement Rate Limit for security
