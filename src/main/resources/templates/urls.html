@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <title>QuickShort URL Management</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
 </head>
 <body>
 <div class="container">
@@ -22,7 +24,7 @@
 
 <!-- Tabla para mostrar las URLs -->
 
-<table class="table mt-5">
+<table class="table mt-4">
     <thead class="thead-dark">
     <tr>
         <th>Original URL</th>
@@ -39,7 +41,13 @@
 
     <tr th:each="url : ${urls}" style="padding: 5px;">
         <td style="padding: 5px;" th:text="${url.originalUrl}"></td>
-        <td style="padding: 5px;"><a th:target="_blank" th:href="@{'/url/' + ${url.shortUrl}}" th:text="${url.shortUrl}"></a></td>
+        <!-- celda mas grande -->
+        <td style="padding: 5px;">
+            <div style="display: block ruby">
+                <a th:target="_blank" th:href="@{'/url/' + ${url.shortUrl}}" th:text="${url.shortUrl}"></a>
+                <button class="copy-url-button" th:data-url="${url.shortUrl}"><i class="fas fa-copy"></i></button>
+            </div>
+        </td>
         <td style="padding: 5px;" th:text="${url.visits}"></td>
         <td style="padding: 5px;" th:text="${url.createdDate}"></td>
         <td style="padding: 5px;" th:text="${url.lastVisitedDate}"></td>
@@ -81,6 +89,27 @@
     </ul>
 </div>
 </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+    // Función para copiar la URL al portapapeles
+    document.addEventListener('DOMContentLoaded', function () {
+        const copyButtons = document.querySelectorAll('.copy-url-button');
+        copyButtons.forEach(function (button) {
+            button.addEventListener('click', function (event) {
+                event.preventDefault();
+                const host = window.location.protocol + '//' + window.location.host;
+                const url = host +'/url/'+ button.getAttribute('data-url');
+                navigator.clipboard.writeText(url)
+                    .then(function () {
+                        console.log('URL copied to clipboard '+ url);
+                    })
+                    .catch(function (error) {
+                        console.error('Error copying URL to clipboard: ', error);
+                    });
+            });
+        });
+    });
+</script>
 </body>
 </html>
