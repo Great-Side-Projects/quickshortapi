@@ -24,13 +24,13 @@
 [![Issues][issues-shield]][issues-url]
 [![MIT License][license-shield]][license-url]
 [![LinkedIn][linkedin-shield]][linkedin-url]
-
-
+[![Quality Gate Status](https://sonarqube.wise-moth-21.telebit.io/api/project_badges/measure?project=quickshort&metric=alert_status&token=sqb_d6d760d2c4c8281f3d3a27dff6d1bc548804a966)](https://sonarqube.wise-moth-21.telebit.io/dashboard?id=quickshort)
+[![Quality gate](https://sonarqube.wise-moth-21.telebit.io/api/project_badges/quality_gate?project=quickshort&token=sqb_d6d760d2c4c8281f3d3a27dff6d1bc548804a966)](https://sonarqube.wise-moth-21.telebit.io/dashboard?id=quickshort)
 
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="https://github.com/othneildrew/Best-README-Template">
+  <a href="https://github.com/Great-Side-Projects/quickshortapi">
     <img src="images/logo.jpeg" alt="Logo" width="80" height="80">
   </a>
 
