@@ -56,7 +56,7 @@
       <ul>
         <li><a href="#built-with">Built With</a></li>
         <li><a href="#Design-Architecture">Design Architecture</a></li>
-        <li><a href="#Arquitecture-diagram">Diagram Architecture</a></li>
+        <li><a href="#Architecture-diagram">Diagram Architecture</a></li>
      </ul>
     </li>
     <li>
@@ -105,9 +105,8 @@ I remember when I was in an interview and they said to me, 'we need to create a 
 The project is designed with Hexagonal Architecture, this architecture is a way to design software systems that are easy to maintain, test, and understand. The main idea is to separate the business logic from the technical details. The business logic is the core of the application and should not depend on the technical details. The technical details are the implementation details that can change over time. The business logic should be stable and should not change often. The technical details can change often and should be easy to change. The business logic should be easy to test and should not depend on the technical details. The technical details should be easy to test and should not depend on the business logic. The business logic should be easy to understand and should not depend on the technical details. The technical details should be easy to understand and should not depend on the business logic.
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-### Arquitecture diagram
-
-TBD...
+### Architecture diagram
+[![Architecture diagram][architecture-diagram]](https://quickshortapi.azurewebsites.net/)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -211,9 +210,9 @@ _For more examples, please refer to the [Documentation](https://quickshortapi.az
 <!-- ROADMAP -->
 ## Roadmap
 
-- [x] investigate about URL shortener
+- [x] Investigate about URL shortener
 - [x] Architecture design with Hexagonal Architecture
-- [ ] Arquitecture diagram
+- [x] Architecture diagram
 - [x] Create API rest project with Spring Boot
 - [x] Implement database with MongoDB
 - [x] Implement URL shortener logic
@@ -315,6 +314,7 @@ Project Link: [https://github.com/Great-Side-Projects/quickshortapi](https://git
 [linkedin-url]: https://www.linkedin.com/in/angelmoralesb/
 [product-screenshot]: images/screenshot.png
 [product-screenshot-UI]: images/screenshotUI.png
+[architecture-diagram]: images/DesignArchitectureQuickShortv1.0.drawio.png
 [Next.js]: https://img.shields.io/badge/next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white
 [Next-url]: https://nextjs.org/
 [React.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
