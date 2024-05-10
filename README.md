@@ -55,7 +55,9 @@
       <a href="#about-the-project">About The Project</a>
       <ul>
         <li><a href="#built-with">Built With</a></li>
-      </ul>
+        <li><a href="#Design-Architecture">Design Architecture</a></li>
+        <li><a href="#Arquitecture-diagram">Diagram Architecture</a></li>
+     </ul>
     </li>
     <li>
       <a href="#getting-started">Getting Started</a>
@@ -98,9 +100,16 @@ I remember when I was in an interview and they said to me, 'we need to create a 
 * [![Redis][redis]][redis-url]
 * [![Apache Kafka][Apache Kafka]][Apache Kafka-url]
 
+### Design Architecture
+
+The project is designed with Hexagonal Architecture, this architecture is a way to design software systems that are easy to maintain, test, and understand. The main idea is to separate the business logic from the technical details. The business logic is the core of the application and should not depend on the technical details. The technical details are the implementation details that can change over time. The business logic should be stable and should not change often. The technical details can change often and should be easy to change. The business logic should be easy to test and should not depend on the technical details. The technical details should be easy to test and should not depend on the business logic. The business logic should be easy to understand and should not depend on the technical details. The technical details should be easy to understand and should not depend on the business logic.
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
+### Arquitecture diagram
 
+TBD...
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- GETTING STARTED -->
 ## Getting Started
@@ -204,6 +213,7 @@ _For more examples, please refer to the [Documentation](https://quickshortapi.az
 
 - [x] investigate about URL shortener
 - [x] Architecture design with Hexagonal Architecture
+- [ ] Arquitecture diagram
 - [x] Create API rest project with Spring Boot
 - [x] Implement database with MongoDB
 - [x] Implement URL shortener logic
