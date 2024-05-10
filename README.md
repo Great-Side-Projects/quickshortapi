@@ -24,7 +24,7 @@
 [![Issues][issues-shield]][issues-url]
 [![MIT License][license-shield]][license-url]
 [![LinkedIn][linkedin-shield]][linkedin-url]
-[![Quality Gate Status](https://sonarqube.wise-moth-21.telebit.io/api/project_badges/measure?project=quickshort&metric=alert_status&token=sqb_d6d760d2c4c8281f3d3a27dff6d1bc548804a966)](https://sonarqube.wise-moth-21.telebit.io/dashboard?id=quickshort)
+[![Quality Gate Status](http://20.64.115.37:9000/api/project_badges/measure?project=quickshort&metric=alert_status&token=sqb_d6d760d2c4c8281f3d3a27dff6d1bc548804a966)](http://20.64.115.37:9000/dashboard?id=quickshort)
 
 <!-- PROJECT LOGO -->
 <br />
