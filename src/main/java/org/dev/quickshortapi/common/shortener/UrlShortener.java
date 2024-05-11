@@ -2,36 +2,35 @@ package org.dev.quickshortapi.common.shortener;
 
 import org.dev.quickshortapi.common.exceptionhandler.UrlInternalServerErrorException;
 import org.springframework.stereotype.Component;
+
+import java.net.URLEncoder;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
+import java.util.Base64;
 
 @Component
 public class UrlShortener implements IUrlShortener {
 
     private static final String ALPHABET = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-    private static final int URL_LENGTH = 8;
-
+    private static final int URL_LENGTH = 5;
+    private MessageDigest digest;
     private SecureRandom random = new SecureRandom();
 
-    @Override
-    public String generateSHAShortUrl(String urlOriginal) {
+    public UrlShortener() {
         try {
-            // Crear un objeto MessageDigest con el algoritmo SHA-256
-            MessageDigest digest = MessageDigest.getInstance("SHA-256");
-            // Calcular el hash de la URL original
-            byte[] hashBytes = digest.digest(urlOriginal.getBytes());
-            // Convertir el hash a una cadena hexadecimal
-            StringBuilder sb = new StringBuilder();
-            for (byte b : hashBytes) {
-                sb.append(String.format("%02x", b));
-            }
-            // Devolver los primeros 8 caracteres del hash como la URL corta
-            return sb.toString().substring(0, 8);
+            this.digest = MessageDigest.getInstance("SHA-256");
         } catch (NoSuchAlgorithmException e) {
-            //Define and throw a dedicated exception instead of using a generic one.
             throw new UrlInternalServerErrorException(e.getMessage());
         }
+    }
+    @Override
+    public String generateSHAShortUrl(String urlOriginal) {
+        // Calcular el hash de la URL original
+        String encodedURL = URLEncoder.encode(urlOriginal); // Codificar la URL original
+        byte[] hashBytes = digest.digest(encodedURL.getBytes());
+        String shortURL = Base64.getUrlEncoder().encodeToString(hashBytes).substring(0, URL_LENGTH); // Tomamos los primeros 8 caracteres del hash codificado
+        return shortURL;
     }
 
     @Override
