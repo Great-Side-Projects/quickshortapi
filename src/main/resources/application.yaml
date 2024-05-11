@@ -14,6 +14,15 @@ spring:
       port: 6379
       password: myrd
       timeout: 60000
+  #Hikari configuration
+  datasource:
+    hikari:
+      connection-timeout: 5000
+      maximum-pool-size: 10
+      minimum-idle: 5
+      max-lifetime: 1800000
+      validation-timeout: 5000
+      idle-timeout: 600000
   #Kafka configuration
   kafka:
     bootstrap-servers: mykafka:9092

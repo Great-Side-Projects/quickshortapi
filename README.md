@@ -218,7 +218,7 @@ _For more examples, please refer to the [Documentation](https://quickshortapi.az
 - [x] Implement URL shortener logic
 - [ ] Implement Unit Tests
 - [ ] Implement Integration Tests
-- [ ] Implement three party services
+- [x] Implement three party services
   - [x] Implement Redis for cache
   - [x] Implement Kafka for async communication
 - [x] Implement Swagger for API documentation
