@@ -58,7 +58,7 @@ public class UrlService implements IUrlServicePort {
 
         // Lógica para generar la URL corta
         String shortUrl = urlShortener.generateSHAShortUrl(url.getOriginalUrl());
-        logger.log(Level.INFO,"URL corta generada SHA: {0}}", shortUrl);
+        logger.log(Level.INFO,"URL corta generada SHA: {0}", shortUrl);
 
         if (urlPersistenceAdapter.existCollisionbyShortUrl(shortUrl)) {
             // Si la URL corta ya existe, genera otra URL corta Random
