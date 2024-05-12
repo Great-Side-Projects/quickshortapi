@@ -4,6 +4,7 @@ import org.dev.quickshortapi.common.exceptionhandler.UrlInternalServerErrorExcep
 import org.springframework.stereotype.Component;
 
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
@@ -27,10 +28,9 @@ public class UrlShortener implements IUrlShortener {
     @Override
     public String generateSHAShortUrl(String urlOriginal) {
         // Calcular el hash de la URL original
-        String encodedURL = URLEncoder.encode(urlOriginal); // Codificar la URL original
+        String encodedURL = URLEncoder.encode(urlOriginal, StandardCharsets.UTF_8); // Codificar la URL original
         byte[] hashBytes = digest.digest(encodedURL.getBytes());
-        String shortURL = Base64.getUrlEncoder().encodeToString(hashBytes).substring(0, URL_LENGTH); // Tomamos los primeros 8 caracteres del hash codificado
-        return shortURL;
+        return Base64.getUrlEncoder().encodeToString(hashBytes).substring(0, URL_LENGTH); // Tomamos los primeros 8 caracteres del hash codificado
     }
 
     @Override
