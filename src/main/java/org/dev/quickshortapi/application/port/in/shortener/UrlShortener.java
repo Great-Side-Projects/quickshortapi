@@ -1,6 +1,6 @@
-package org.dev.quickshortapi.common.shortener;
+package org.dev.quickshortapi.application.port.in.shortener;
 
-import org.dev.quickshortapi.common.exceptionhandler.UrlInternalServerErrorException;
+import org.dev.quickshortapi.domain.exceptionhandler.UrlInternalServerErrorException;
 import org.springframework.stereotype.Component;
 
 import java.net.URLEncoder;

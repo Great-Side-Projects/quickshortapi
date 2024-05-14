@@ -1,7 +1,7 @@
 package org.dev.quickshortapi.application.port.out;
 
 import lombok.Getter;
-import org.dev.quickshortapi.common.format.IUrlFormat;
+import org.dev.quickshortapi.application.port.in.format.IUrlFormat;
 import java.util.Date;
 
 @Getter
