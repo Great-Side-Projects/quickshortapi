@@ -4,9 +4,9 @@ import org.dev.quickshortapi.application.port.out.IUrlEventStreamingPort;
 import org.dev.quickshortapi.application.port.out.IUrlEventTemplatePort;
 import org.dev.quickshortapi.application.port.out.IUrlPersistencePort;
 import org.dev.quickshortapi.common.event.Event;
+import org.dev.quickshortapi.common.event.UrlEvent;
 import org.dev.quickshortapi.common.event.UrlVisitedEvent;
 import org.dev.quickshortapi.common.PersistenceAdapter;
-import org.dev.quickshortapi.domain.Url;
 import org.springframework.kafka.annotation.KafkaListener;
 
 import java.util.Date;
@@ -17,26 +17,26 @@ import java.util.logging.Logger;
 public class UrlEventStreamingAdapter implements IUrlEventStreamingPort {
 
     private final IUrlPersistencePort urlPersistenceAdapter;
-    private final IUrlEventTemplatePort<String, Event<Url>> urlEventTemplateAdapter;
+    private final IUrlEventTemplatePort<String, Event<UrlEvent>> urlEventTemplateAdapter;
 
     Logger logger = Logger.getLogger(getClass().getName());
 
-    public UrlEventStreamingAdapter(IUrlEventTemplatePort<String,Event<Url>>  urlEventTemplateAdapter, UrlPersistenceAdapter urlPersistenceAdapter) {
+    public UrlEventStreamingAdapter(IUrlEventTemplatePort<String,Event<UrlEvent>>  urlEventTemplateAdapter, UrlPersistenceAdapter urlPersistenceAdapter) {
         this.urlEventTemplateAdapter = urlEventTemplateAdapter;
         this.urlPersistenceAdapter = urlPersistenceAdapter;
     }
 
     @Override
-    public void sendVisitedEvent(Url url) {
-        url.setLastVisitedDate(new Date());
-        UrlVisitedEvent visited =  UrlMapper.toUrlVisitedEvent(url);
+    public void sendVisitedEvent(UrlEvent urlEvent) {
+        urlEvent.setLastVisitedDate(new Date());
+        UrlVisitedEvent visited =  UrlMapper.toUrlVisitedEvent(urlEvent);
         urlEventTemplateAdapter.send(visited.getId(), visited);
     }
 
     @KafkaListener(topics = "${spring.kafka.topic.name}")
     @Override
-    public void visitedEvent(Event<Url> url) {
-        urlPersistenceAdapter.increaseVisitsAndUpdateLastVisitedDate(url.getData());
-        logger.log(Level.INFO, "Visitas incrementadas: {0} - {1}", new Object[]{url.getData().getShortUrl(), url.getId()});
+    public void visitedEvent(Event<UrlEvent> urlEvent) {
+        urlPersistenceAdapter.increaseVisitsAndUpdateLastVisitedDate(urlEvent.getData());
+        logger.log(Level.INFO, "Visitas incrementadas: {0} - {1}", new Object[]{urlEvent.getData().getShortUrl(), urlEvent.getId()});
     }
 }

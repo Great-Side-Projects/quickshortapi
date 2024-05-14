@@ -3,6 +3,7 @@ package org.dev.quickshortapi.infraestructure.adapter.out.persistence;
 import org.dev.quickshortapi.application.port.out.IUrlMongoTemplate;
 import org.dev.quickshortapi.application.port.out.IUrlPersistencePort;
 import org.dev.quickshortapi.common.PersistenceAdapter;
+import org.dev.quickshortapi.common.event.UrlEvent;
 import org.dev.quickshortapi.common.exceptionhandler.UrlInternalServerErrorException;
 import org.dev.quickshortapi.common.exceptionhandler.UrlNotFoundException;
 import org.dev.quickshortapi.domain.Url;
@@ -56,12 +57,12 @@ public class UrlPersistenceAdapter implements IUrlPersistencePort{
     }
 
     @Override
-    public void increaseVisitsAndUpdateLastVisitedDate(Url url) {
+    public void increaseVisitsAndUpdateLastVisitedDate(UrlEvent urlEvent) {
         try{
             urlMongoTemplate.updateVisitsByIncrementAndLastVisitedDate(
-                    url.getId(),
+                    urlEvent.getId(),
                     INCREASE_VISITS_BY_1,
-                    url.getLastVisitedDate());
+                    urlEvent.getLastVisitedDate());
         }
         catch (Exception e) {
             throw new UrlInternalServerErrorException("Error interno al incrementar las visitas:" + e.getMessage());

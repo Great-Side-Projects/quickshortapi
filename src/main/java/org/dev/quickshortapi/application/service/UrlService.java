@@ -98,7 +98,7 @@ public class UrlService implements IUrlServicePort {
             throw new UrlNotFoundException(INVALID_URL);
         }
 
-        urlEventStreamingAdapter.sendVisitedEvent(url.get());
+        urlEventStreamingAdapter.sendVisitedEvent(UrlMapper.toUrlEvent(url.get()));
         return url.get().getOriginalUrl();
     }
 
