@@ -1,6 +1,6 @@
 package org.dev.quickshortapi.application.port.out;
 
-import org.dev.quickshortapi.common.event.UrlEvent;
+import org.dev.quickshortapi.domain.event.UrlEvent;
 import org.dev.quickshortapi.domain.Url;
 import org.dev.quickshortapi.infraestructure.adapter.out.persistence.UrlEntity;
 import org.springframework.data.domain.Page;

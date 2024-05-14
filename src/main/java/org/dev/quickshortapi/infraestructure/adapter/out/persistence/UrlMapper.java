@@ -2,10 +2,10 @@ package org.dev.quickshortapi.infraestructure.adapter.out.persistence;
 
 import org.dev.quickshortapi.application.port.out.UrlResponse;
 import org.dev.quickshortapi.application.port.out.UrlStatisticsResponse;
-import org.dev.quickshortapi.common.event.EventType;
-import org.dev.quickshortapi.common.event.UrlEvent;
-import org.dev.quickshortapi.common.event.UrlVisitedEvent;
-import org.dev.quickshortapi.common.format.IUrlFormat;
+import org.dev.quickshortapi.domain.event.EventType;
+import org.dev.quickshortapi.domain.event.UrlEvent;
+import org.dev.quickshortapi.domain.event.UrlVisitedEvent;
+import org.dev.quickshortapi.application.port.in.format.IUrlFormat;
 import org.dev.quickshortapi.domain.Url;
 import java.util.Date;
 import java.util.UUID;
