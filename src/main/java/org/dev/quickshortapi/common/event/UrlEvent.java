@@ -16,5 +16,7 @@ public class UrlEvent {
         this.shortUrl = shortUrl;
         this.lastVisitedDate = lastVisitedDate;
     }
+    public UrlEvent() {
+    }
 
 }
