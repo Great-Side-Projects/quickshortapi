@@ -7,7 +7,6 @@ import org.dev.quickshortapi.common.event.Event;
 import org.dev.quickshortapi.common.event.UrlEvent;
 import org.dev.quickshortapi.common.event.UrlVisitedEvent;
 import org.dev.quickshortapi.common.PersistenceAdapter;
-import org.dev.quickshortapi.domain.Url;
 import org.springframework.kafka.annotation.KafkaListener;
 
 import java.util.Date;
