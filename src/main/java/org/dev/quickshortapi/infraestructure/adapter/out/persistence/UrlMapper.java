@@ -3,6 +3,7 @@ package org.dev.quickshortapi.infraestructure.adapter.out.persistence;
 import org.dev.quickshortapi.application.port.out.UrlResponse;
 import org.dev.quickshortapi.application.port.out.UrlStatisticsResponse;
 import org.dev.quickshortapi.common.event.EventType;
+import org.dev.quickshortapi.common.event.UrlEvent;
 import org.dev.quickshortapi.common.event.UrlVisitedEvent;
 import org.dev.quickshortapi.common.format.IUrlFormat;
 import org.dev.quickshortapi.domain.Url;
@@ -44,7 +45,10 @@ public class UrlMapper {
         return new UrlCache(url.getShortUrl(), url.getId(), url.getOriginalUrl());
     }
 
-    public static UrlVisitedEvent toUrlVisitedEvent(Url url){
+    public static UrlVisitedEvent toUrlVisitedEvent(UrlEvent url){
         return new UrlVisitedEvent(UUID.randomUUID().toString(),new Date(), EventType.VISITED, url);
+    }
+    public static UrlEvent toUrlEvent(Url url){
+        return new UrlEvent(url.getId(), url.getOriginalUrl(), url.getShortUrl(), url.getLastVisitedDate());
     }
 }
