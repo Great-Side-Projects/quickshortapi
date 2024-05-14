@@ -55,8 +55,9 @@
       <a href="#about-the-project">About The Project</a>
       <ul>
         <li><a href="#built-with">Built With</a></li>
-        <li><a href="#Design-Architecture">Design Architecture</a></li>
-        <li><a href="#Architecture-diagram">Diagram Architecture</a></li>
+        <li><a href="#Architecture-design">Architecture design</a></li>
+        <li><a href="#Architecture-diagram">Architecture diagram</a></li>
+        <li><a href="#URL-Shortening-Algorithm">URL Shortening Algorithm</a></li>
      </ul>
     </li>
     <li>
@@ -75,8 +76,6 @@
   </ol>
 </details>
 
-
-
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
@@ -89,25 +88,33 @@ I remember when I was in an interview and they said to me, 'we need to create a 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-
-
 ### Built With
-
-
 
 * [![Java][java.com/es/]][Java-url]
 * [![Spring Boot][Spring Boot]][Spring Boot-url]
 * [![Redis][redis]][redis-url]
 * [![Apache Kafka][Apache Kafka]][Apache Kafka-url]
 
-### Design Architecture
+### Architecture diagram
 
-The project is designed with Hexagonal Architecture, this architecture is a way to design software systems that are easy to maintain, test, and understand. The main idea is to separate the business logic from the technical details. The business logic is the core of the application and should not depend on the technical details. The technical details are the implementation details that can change over time. The business logic should be stable and should not change often. The technical details can change often and should be easy to change. The business logic should be easy to test and should not depend on the technical details. The technical details should be easy to test and should not depend on the business logic. The business logic should be easy to understand and should not depend on the technical details. The technical details should be easy to understand and should not depend on the business logic.
+The project is designed with Hexagonal Architecture, which is a software architecture that aims to create loosely coupled application components that can be easily connected to their software environment by means of ports and adapters. This makes the application more flexible to changes and easier to test.
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ### Architecture diagram
 [![Architecture diagram][architecture-diagram]](https://quickshortapi.azurewebsites.net/)
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+### URL Shortening Algorithm
+
+There are two algorithms to shorten the URL, the first one is **generateSHAShortUrl** is de default algorithm and the second one is **generateRandomShortUrl** is used when the first one builds a short URL that already exists in the database (collision). 
+#### generateSHAShortUrl: 
+This algorithm utilizes the SHA-256 hash function to generate a unique short URL from an original URL. Firstly, the original URL is encoded in UTF-8 to ensure consistency in character representation. Then, the SHA-256 hash is applied to the encoded URL, producing a unique and irreproducible value. Subsequently, the hash is converted into a Base64 string to facilitate manipulation and storage. Finally, the first characters of the encoded string are taken to form the short URL, ensuring a fixed length and readable representation of the original hash.
+
+#### generateRandomShortUrl:
+This algorithm generates a random short URL by selecting alphanumeric characters from a predefined set. Characters are randomly chosen from lowercase letters, uppercase letters, and digits from 0 to 9. These characters are concatenated to form the short URL. The result is a short URL that is unrelated to the original URL and is difficult to predict, making it suitable for use in situations where security and randomness are important.
+
+![SequenceDiagram.png][sequence-diagram]
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- GETTING STARTED -->
@@ -159,18 +166,36 @@ This is an example of how to list things you need to use the software and how to
     properties:
       sasl.jaas.config: org.apache.kafka.common.security.plain.PlainLoginModule required username="username" password="password"; #username and password of your kafka
    ```
-5. Generate the jar file. root folder of the project or use the IDE, verify that name of the jar file is target/QuickShort-api-1.0.0-SNAPSHOT.jar or change the name in the Dockerfile.
+5. if you don't need kakfa authentication change de security properties in the `application.yaml` file
+   ```yaml
+   #Kafka configuration
+   kafka:
+     security:
+      #if you require autentication use SASL_SSL instead of PLAINTEXT and configure the username and password
+      protocol: SASL_SSL
+      
+   ```
+   to
+   ```yaml
+   #Kafka configuration
+    kafka:
+      security:
+        #if you require autentication use SASL_SSL instead of PLAINTEXT and configure the username and password
+        protocol: PLAINTEXT
+   ```
+   
+6. Generate the jar file. root folder of the project or use the IDE, verify that name of the jar file is target/QuickShort-api-1.0.0-SNAPSHOT.jar or change the name in the Dockerfile.
    ```sh
    mvn clean install
    ``` 
-6. Create image and run with docker. root folder of the project 
+7. Create image and run with docker. root folder of the project 
  
    ```sh
     docker build -t quickshortapi:latest .
     docker run -p 8080:8080 quickshortapi:latest
    ```
-7. Open your browser and go to `http://localhost:8080/swagger-ui/index.html#/` to see the API documentation or `http://localhost:8080/` to see the simple UI QuickShort URL Management.
-8. Enjoy!
+8. Open your browser and go to `http://localhost:8080/swagger-ui/index.html#/` to see the API documentation or `http://localhost:8080/` to see the simple UI QuickShort URL Management.
+9. Enjoy!
 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -315,6 +340,7 @@ Project Link: [https://github.com/Great-Side-Projects/quickshortapi](https://git
 [product-screenshot]: images/screenshot.png
 [product-screenshot-UI]: images/screenshotUI.png
 [architecture-diagram]: images/DesignArchitectureQuickShortv1.0.drawio.png
+[sequence-diagram]: images/SequenceDiagram.png
 [Next.js]: https://img.shields.io/badge/next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white
 [Next-url]: https://nextjs.org/
 [React.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
