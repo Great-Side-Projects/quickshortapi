@@ -1,4 +1,4 @@
-package org.dev.quickshortapi.common.event;
+package org.dev.quickshortapi.domain.event;
 
 import lombok.Data;
 import java.util.Date;

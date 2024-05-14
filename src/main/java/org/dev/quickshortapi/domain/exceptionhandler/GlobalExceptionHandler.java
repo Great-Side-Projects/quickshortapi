@@ -1,4 +1,4 @@
-package org.dev.quickshortapi.common.exceptionhandler;
+package org.dev.quickshortapi.domain.exceptionhandler;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
