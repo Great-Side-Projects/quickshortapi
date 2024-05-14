@@ -1,4 +1,4 @@
-package org.dev.quickshortapi.common.exceptionhandler;
+package org.dev.quickshortapi.domain.exceptionhandler;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
