@@ -1,4 +1,4 @@
-package org.dev.quickshortapi.common.shortener;
+package org.dev.quickshortapi.application.port.in.shortener;
 
 public interface IUrlShortener {
     String generateSHAShortUrl(String urlOriginal);

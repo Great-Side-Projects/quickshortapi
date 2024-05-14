@@ -1,4 +1,4 @@
-package org.dev.quickshortapi.common.format;
+package org.dev.quickshortapi.application.port.in.format;
 
 import org.apache.commons.lang3.StringUtils;
 
