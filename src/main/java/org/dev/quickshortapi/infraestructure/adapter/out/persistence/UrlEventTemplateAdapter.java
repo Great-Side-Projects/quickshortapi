@@ -3,7 +3,6 @@ package org.dev.quickshortapi.infraestructure.adapter.out.persistence;
 import org.dev.quickshortapi.application.port.out.IUrlEventTemplatePort;
 import org.dev.quickshortapi.common.event.Event;
 import org.dev.quickshortapi.common.event.UrlEvent;
-import org.dev.quickshortapi.domain.Url;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
