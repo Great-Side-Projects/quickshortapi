@@ -1,5 +1,6 @@
 package org.dev.quickshortapi.application.port.out;
 
+import org.dev.quickshortapi.common.event.UrlEvent;
 import org.dev.quickshortapi.domain.Url;
 import org.dev.quickshortapi.infraestructure.adapter.out.persistence.UrlEntity;
 import org.springframework.data.domain.Page;
@@ -16,7 +17,7 @@ public interface IUrlPersistencePort {
 
     Optional<Url> getUrlOrThrowByShortUrl(String shortUrl);
 
-    void increaseVisitsAndUpdateLastVisitedDate(Url url);
+    void increaseVisitsAndUpdateLastVisitedDate(UrlEvent urlEvent);
 
     boolean deleteUrlbyShortUrl(String shortUrl);
 
