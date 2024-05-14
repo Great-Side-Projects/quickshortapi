@@ -3,9 +3,9 @@ package org.dev.quickshortapi.infraestructure.adapter.out.persistence;
 import org.dev.quickshortapi.application.port.out.IUrlEventStreamingPort;
 import org.dev.quickshortapi.application.port.out.IUrlEventTemplatePort;
 import org.dev.quickshortapi.application.port.out.IUrlPersistencePort;
-import org.dev.quickshortapi.common.event.Event;
-import org.dev.quickshortapi.common.event.UrlEvent;
-import org.dev.quickshortapi.common.event.UrlVisitedEvent;
+import org.dev.quickshortapi.domain.event.Event;
+import org.dev.quickshortapi.domain.event.UrlEvent;
+import org.dev.quickshortapi.domain.event.UrlVisitedEvent;
 import org.dev.quickshortapi.common.PersistenceAdapter;
 import org.springframework.kafka.annotation.KafkaListener;
 
