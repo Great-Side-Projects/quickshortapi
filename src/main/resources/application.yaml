@@ -30,7 +30,9 @@ spring:
       sasl.mechanism: PLAIN
       sasl.jaas.config: org.apache.kafka.common.security.plain.PlainLoginModule required username="username" password="password";
     security:
-      protocol: SASL_SSL
+      #if you require autentication use SASL_SSL instead of PLAINTEXT and configure the username and password
+      #protocol: SASL_SSL
+      protocol: PLAINTEXT
     topic:
       name: quickshort
     consumer:
