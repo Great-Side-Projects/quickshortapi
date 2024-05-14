@@ -85,7 +85,6 @@ public class UrlService implements IUrlServicePort {
                 .map(UrlMapper::toUrl);
 
         if (url.isEmpty()) {
-
             // Actualizar en cache si solo estaba en la base de datos
             url =  urlPersistenceAdapter.getUrlOrThrowByShortUrl(shortUrl).map(u -> {
                 urlRepositoryCacheAdapter.save(UrlMapper.toUrlCache(u));
