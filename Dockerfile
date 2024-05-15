@@ -1,5 +1,12 @@
 # Usar una imagen base de Java
 FROM openjdk:18-jdk-alpine
+# Definir argumentos (variables de entorno) con valores predeterminados
+ARG MONGODB_URI=default_mongodb_uri
+ARG REDIS_HOST=default_redis_host
+ARG REDIS_PORT=default_redis_port
+ARG REDIS_PASSWORD=default_redis_password
+ARG KAFKA_BOOTSTRAP_SERVERS=default_kafka_bootstrap_servers
+ARG KAFKA_PROPERTIES_SASL_JAAS_CONFIG=default_kafka_properties_sasl_jaas_config
 # Copiar el archivo JAR de la aplicación al contenedor
 ADD target/QuickShort-api-1.0.0-SNAPSHOT.jar /app/quickshortapi.jar
 # Establecer el directorio de trabajo
