@@ -98,17 +98,17 @@ jobs:
         KAFKA_PROPERTIES_SASL_JAAS_CONFIG: "org.apache.kafka.common.security.plain.PlainLoginModule required username='${{ secrets.KAFKA_USERNAME }}' password='${{ secrets.KAFKA_PASSWORD }}';"
         PRUEBA_VAR: ${{ vars.PRUEBA_VAR }}
       run: |
-        echo "MONGODB_URI=$MONGODB_URI" >> $GITHUB_ENV
-        echo "REDIS_HOST=$REDIS_HOST" >> $GITHUB_ENV
-        echo "REDIS_PORT=$REDIS_PORT" >> $GITHUB_ENV
-        echo "REDIS_PASSWORD=$REDIS_PASSWORD" >> $GITHUB_ENV
-        echo "KAFKA_BOOTSTRAP_SERVERS=$KAFKA_BOOTSTRAP_SERVERS" >> $GITHUB_ENV
-        echo "KAFKA_PROPERTIES_SASL_JAAS_CONFIG=$KAFKA_PROPERTIES_SASL_JAAS_CONFIG" >> $GITHUB_ENV
-        echo "PRUEBA_VAR=$PRUEBA_VAR" >> $GITHUB_ENV
+        echo "MONGODB_URI=$MONGODB_URI"
+        echo "REDIS_HOST=$REDIS_HOST"
+        echo "REDIS_PORT=$REDIS_PORT"
+        echo "REDIS_PASSWORD=$REDIS_PASSWORD"
+        echo "KAFKA_BOOTSTRAP_SERVERS=$KAFKA_BOOTSTRAP_SERVERS"
+        echo "KAFKA_PROPERTIES_SASL_JAAS_CONFIG=$KAFKA_PROPERTIES_SASL_JAAS_CONFIG"
+        echo "PRUEBA_VAR=$PRUEBA_VAR"
        
 
     - name: Build and push container image to registry
-      uses: docker/build-push-action@v3
+      uses: docker/build-push-action@v5.3
       with:
         context: .
         push: true
@@ -122,7 +122,8 @@ jobs:
           KAFKA_BOOTSTRAP_SERVERS: ${{ secrets.KAFKA_BOOTSTRAP_SERVERS }}
           KAFKA_PROPERTIES_SASL_JAAS_CONFIG: "org.apache.kafka.common.security.plain.PlainLoginModule required username='${{ secrets.KAFKA_USERNAME }}' password='${{ secrets.KAFKA_PASSWORD }}';"
           PRUEBA_VAR: ${{ vars.PRUEBA_VAR }}
-    
+        
+          
 
     - name: Debug variables
       run: |
