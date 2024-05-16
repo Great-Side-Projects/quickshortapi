@@ -27,11 +27,11 @@ RUN echo "PRUEBA_VARIABLE: $PRUEBA_VARIABLE"
 
 # Comando para ejecutar la aplicación Spring Boot al iniciar el contenedor
 CMD ["java", "-jar", "quickshortapi.jar",\
-"--spring.data.mongodb.uri=$ñMONGODB_URI}",\
-"--spring.data.redis.host=$ñREDIS_HOST}",\
-"--spring.data.redis.port=$ñREDIS_PORT}",\
-"--spring.data.redis.password=$ñREDIS_PASSWORD}",\
-"--spring.kafka.bootstrap-servers=$ñKAFKA_BOOTSTRAP_SERVERS}",\
-"--spring.kafka.properties.sasl.jaas.config=$ñKAFKA_PROPERTIES_SASL_JAAS_CONFIG}"\
+"--spring.data.mongodb.uri=${MONGODB_URI}",\
+"--spring.data.redis.host=${REDIS_HOST}",\
+"--spring.data.redis.port=${REDIS_PORT}",\
+"--spring.data.redis.password=${REDIS_PASSWORD}",\
+"--spring.kafka.bootstrap-servers=${KAFKA_BOOTSTRAP_SERVERS}",\
+"--spring.kafka.properties.sasl.jaas.config=${KAFKA_PROPERTIES_SASL_JAAS_CONFIG}"\
 
 ]
