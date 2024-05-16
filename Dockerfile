@@ -6,13 +6,13 @@ ADD target/QuickShort-api-1.0.0-SNAPSHOT.jar /app/quickshortapi.jar
 WORKDIR /app
 # Exponer el puerto en el que se ejecuta la aplicación Spring Boot
 EXPOSE 8080
-# Definir variables de entorno y asignarles valores predeterminados
-ENV MONGODB_URI="default_mongodb_uri" \
-    REDIS_HOST="default_redis_host" \
-    REDIS_PORT="default_redis_port" \
-    REDIS_PASSWORD="default_redis_password" \
-    KAFKA_BOOTSTRAP_SERVERS="default_kafka_bootstrap_servers" \
-    KAFKA_PROPERTIES_SASL_JAAS_CONFIG="default_kafka_properties_sasl_jaas_config"
+# Depurar valores de las variables de entorno
+RUN echo "MONGODB_URI: $MONGODB_URI"
+RUN echo "REDIS_HOST: $REDIS_HOST"
+RUN echo "REDIS_PORT: $REDIS_PORT"
+RUN echo "REDIS_PASSWORD: $REDIS_PASSWORD"
+RUN echo "KAFKA_BOOTSTRAP_SERVERS: $KAFKA_BOOTSTRAP_SERVERS"
+RUN echo "KAFKA_PROPERTIES_SASL_JAAS_CONFIG: $KAFKA_PROPERTIES_SASL_JAAS_CONFIG"
 # Comando para ejecutar la aplicación Spring Boot al iniciar el contenedor
 CMD ["java", "-jar", "quickshortapi.jar",\
 "--spring.data.mongodb.uri=${MONGODB_URI}",\
