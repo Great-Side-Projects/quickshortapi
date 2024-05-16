@@ -8,13 +8,13 @@ WORKDIR /app
 EXPOSE 8080
 
 # Definir argumentos (variables de entorno) con valores predeterminados
-ARG MONGODB_URI=default_mongodb_uri
-ARG REDIS_HOST=default_redis_host
-ARG REDIS_PORT=default_redis_port
-ARG REDIS_PASSWORD=default_redis_password
-ARG KAFKA_BOOTSTRAP_SERVERS=default_kafka_bootstrap_servers
-ARG KAFKA_PROPERTIES_SASL_JAAS_CONFIG=default_kafka_properties_sasl_jaas_config
-ARG PRUEBA_VARIABLE=prueba_variable
+ARG MONGODB_URI
+ARG REDIS_HOST
+ARG REDIS_PORT
+ARG REDIS_PASSWORD
+ARG KAFKA_BOOTSTRAP_SERVERS
+ARG KAFKA_PROPERTIES_SASL_JAAS_CONFIG
+ARG PRUEBA_VARIABLE
 
 # Depurar valores de las variables de entorno
 RUN echo "MONGODB_URI: $MONGODB_URI"
@@ -27,11 +27,11 @@ RUN echo "PRUEBA_VARIABLE: $PRUEBA_VARIABLE"
 
 # Comando para ejecutar la aplicación Spring Boot al iniciar el contenedor
 CMD ["java", "-jar", "quickshortapi.jar",\
-"--spring.data.mongodb.uri=$MONGODB_URI",\
-"--spring.data.redis.host=$REDIS_HOST",\
-"--spring.data.redis.port=$REDIS_PORT",\
-"--spring.data.redis.password=$REDIS_PASSWORD",\
-"--spring.kafka.bootstrap-servers=$KAFKA_BOOTSTRAP_SERVERS",\
-"--spring.kafka.properties.sasl.jaas.config=$KAFKA_PROPERTIES_SASL_JAAS_CONFIG"\
+"--spring.data.mongodb.uri=$ñMONGODB_URI}",\
+"--spring.data.redis.host=$ñREDIS_HOST}",\
+"--spring.data.redis.port=$ñREDIS_PORT}",\
+"--spring.data.redis.password=$ñREDIS_PASSWORD}",\
+"--spring.kafka.bootstrap-servers=$ñKAFKA_BOOTSTRAP_SERVERS}",\
+"--spring.kafka.properties.sasl.jaas.config=$ñKAFKA_PROPERTIES_SASL_JAAS_CONFIG}"\
 
 ]
