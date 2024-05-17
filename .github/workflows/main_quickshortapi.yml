@@ -88,9 +88,6 @@ jobs:
         push: true
         tags: quickshortregistry.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_7b7f1f9646764d188bfab3dc6c7d7989 }}/quickshortapi:${{ github.sha }}
 
-    - name: Print Dockerfile content before build
-      run: cat Dockerfile
-
   deploy:
     runs-on: ubuntu-latest
     needs: build
