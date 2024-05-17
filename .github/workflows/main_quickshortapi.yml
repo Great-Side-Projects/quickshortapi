@@ -94,13 +94,13 @@ jobs:
         context: .
         file: ./Dockerfile
         build-args: |
-          MONGODB_URI:${{ secrets.MONGODB_URI }}
-          REDIS_HOST:${{ secrets.REDIS_HOST }}
-          REDIS_PORT:${{ secrets.REDIS_PORT }}
-          REDIS_PASSWORD:${{ secrets.REDIS_PASSWORD }}
-          KAFKA_BOOTSTRAP_SERVERS:${{ secrets.KAFKA_BOOTSTRAP_SERVERS }}
-          KAFKA_PROPERTIES_SASL_JAAS_CONFIG:"org.apache.kafka.common.security.plain.PlainLoginModule required username='${{ secrets.KAFKA_USERNAME }}' password='${{ secrets.KAFKA_PASSWORD }}';"
-          PRUEBA_VAR:${{ vars.PRUEBA_VAR }}
+          MONGODB_URI=${{ secrets.MONGODB_URI }}
+          REDIS_HOST=${{ secrets.REDIS_HOST }}
+          REDIS_PORT=${{ secrets.REDIS_PORT }}
+          REDIS_PASSWORD=${{ secrets.REDIS_PASSWORD }}
+          KAFKA_BOOTSTRAP_SERVERS=${{ secrets.KAFKA_BOOTSTRAP_SERVERS }}
+          KAFKA_PROPERTIES_SASL_JAAS_CONFIG="org.apache.kafka.common.security.plain.PlainLoginModule required username='${{ secrets.KAFKA_USERNAME }}' password='${{ secrets.KAFKA_PASSWORD }}';"
+          PRUEBA_VAR=${{ vars.PRUEBA_VAR }}
         push: true
         tags: quickshortregistry.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_7b7f1f9646764d188bfab3dc6c7d7989 }}/quickshortapi:${{ github.sha }}
 
