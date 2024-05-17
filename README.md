@@ -184,7 +184,7 @@ This is an example of how to list things you need to use the software and how to
         protocol: PLAINTEXT
    ```
    
-6. Generate the jar file. root folder of the project or use the IDE, verify that name of the jar file is target/QuickShort-api-1.0.0-SNAPSHOT.jar or change the name in the Dockerfile.
+6. Generate the jar file. root folder of the project or use the IDE, verify jar file is target/*.jar.
    ```sh
    mvn clean install
    ``` 

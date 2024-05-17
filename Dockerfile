@@ -1,5 +1,3 @@
-# Usar una imagen base de Java
-FROM openjdk:18-jdk-alpine
 # Establecer argumentos
 ARG MONGODB_URI
 ARG REDIS_HOST
@@ -9,6 +7,8 @@ ARG KAFKA_BOOTSTRAP_SERVERS
 ARG KAFKA_PROPERTIES_SASL_JAAS_CONFIG
 
 RUN echo "MONGODB_URI=${MONGODB_URI}"
+# Usar una imagen base de Java
+FROM openjdk:18-jdk-alpine
 # Establecer el directorio de trabajo
 WORKDIR /app
 # Copiar el archivo JAR de la aplicación al contenedor
