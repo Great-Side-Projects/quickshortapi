@@ -72,22 +72,6 @@ jobs:
         username: ${{ secrets.AzureAppService_ContainerUsername_7b7f1f9646764d188bfab3dc6c7d7989 }}
         password: ${{ secrets.AzureAppService_ContainerPassword_25a8c812f2d94527874bf324504870eb }}
 
-    #buscar otra formas de setiar las variables de entorno
-    #- name: Set MongoDB URI in Dockerfile
-    #  run: |
-    #    mongodb_uri="${{ secrets.MONGODB_URI }}"
-    #    escaped_mongodb_uri=$(printf '%s\n' "$mongodb_uri" | sed -e 's/[\/&]/\\&/g')
-    #    sed -i "s|\${MONGODB_URI}|$escaped_mongodb_uri|g" Dockerfile
-
-    #- name: Set configuration in Dockerfile
-    #  run: |
-    #    kafka_properties_sasl_jaas_config="org.apache.kafka.common.security.plain.PlainLoginModule required username='${{ secrets.KAFKA_USERNAME }}' password='${{ secrets.KAFKA_PASSWORD }}';"
-    #    sed -i -e "s|\${REDIS_HOST}|${{ secrets.REDIS_HOST }}|g" \
-    #               -e "s|\${REDIS_PORT}|${{ secrets.REDIS_PORT }}|g" \
-    #               -e "s|\${REDIS_PASSWORD}|${{ secrets.REDIS_PASSWORD }}|g" \
-    #               -e "s|\${KAFKA_BOOTSTRAP_SERVERS}|${{ secrets.KAFKA_BOOTSTRAP_SERVERS }}|g" \
-    #               -e "s|\${KAFKA_PROPERTIES_SASL_JAAS_CONFIG}|$kafka_properties_sasl_jaas_config|g" Dockerfile
-
     - name: Build and push container image to registry
       uses: docker/build-push-action@v5
       with:
