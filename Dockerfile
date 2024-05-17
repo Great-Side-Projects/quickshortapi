@@ -1,5 +1,12 @@
 # Usar una imagen base de Java
 FROM openjdk:18-jdk-alpine
+# Establecer argumentos
+ARG MONGODB_URI
+ARG REDIS_HOST
+ARG REDIS_PORT
+ARG REDIS_PASSWORD
+ARG KAFKA_BOOTSTRAP_SERVERS
+ARG KAFKA_PROPERTIES_SASL_JAAS_CONFIG
 # Copiar el archivo JAR de la aplicación al contenedor
 ADD target/QuickShort-api-1.0.0-SNAPSHOT.jar /app/quickshortapi.jar
 # Establecer el directorio de trabajo
