@@ -18,7 +18,7 @@ COPY target/*.jar /app/quickshortapi.jar
 # Exponer el puerto en el que se ejecuta la aplicación Spring Boot
 EXPOSE 8080
 # Comando para ejecutar la aplicación Spring Boot al iniciar el contenedor
-CMD ["java", "-jar", "quickshortapi.jar",\
+ENTRYPOINT ["java", "-jar", "quickshortapi.jar",\
 "--spring.data.mongodb.uri=${MONGODB_URI}",\
 "--spring.data.redis.host=${REDIS_HOST}",\
 "--spring.data.redis.port=${REDIS_PORT}",\
