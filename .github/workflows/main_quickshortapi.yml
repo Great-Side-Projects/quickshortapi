@@ -88,6 +88,9 @@ jobs:
     #               -e "s|\${KAFKA_BOOTSTRAP_SERVERS}|${{ secrets.KAFKA_BOOTSTRAP_SERVERS }}|g" \
     #               -e "s|\${KAFKA_PROPERTIES_SASL_JAAS_CONFIG}|$kafka_properties_sasl_jaas_config|g" Dockerfile
 
+    - name: print Dockerfile
+      run: cat Dockerfile
+
     - name: Build and push container image to registry
       uses: docker/build-push-action@v5
       with:

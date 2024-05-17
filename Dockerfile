@@ -7,6 +7,8 @@ ARG REDIS_PORT
 ARG REDIS_PASSWORD
 ARG KAFKA_BOOTSTRAP_SERVERS
 ARG KAFKA_PROPERTIES_SASL_JAAS_CONFIG
+ARG PRUEBA_VAR
+RUN echo "PRUEBA_VAR=${PRUEBA_VAR}"
 # Establecer el directorio de trabajo
 WORKDIR /app
 # Copiar el archivo JAR de la aplicación al contenedor
