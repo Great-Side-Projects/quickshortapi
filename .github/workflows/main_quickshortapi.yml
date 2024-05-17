@@ -47,7 +47,7 @@ jobs:
         run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=quickshort -Dsonar.projectName='quickshort'
 
   build:
-    runs-on: 'ubuntu-latest'
+    runs-on: ubuntu-latest
     needs: buildSonarQube
 
     steps:
