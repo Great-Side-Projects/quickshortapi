@@ -13,7 +13,14 @@ spring:
       host: myrd:6379
       port: 6379
       password: myrd
-      timeout: 60000
+      timeout: 3000
+      lettuce:
+        pool:
+          max-active: 8
+          max-idle: 8
+          min-idle: 0
+          max-wait: 3000
+        shutdown-timeout: 100
   #Hikari configuration
   datasource:
     hikari:
