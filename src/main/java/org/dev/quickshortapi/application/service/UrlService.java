@@ -24,7 +24,6 @@ public class UrlService implements IUrlServicePort {
     private IUrlPersistenceCachePort urlRepositoryCacheAdapter;
     private IUrlPersistencePort urlPersistenceAdapter;
     private IUrlEventStreamingPort urlEventStreamingAdapter;
-
     private static final String INVALID_URL = "URL no válida";
 
     Logger logger = Logger.getLogger(getClass().getName());
