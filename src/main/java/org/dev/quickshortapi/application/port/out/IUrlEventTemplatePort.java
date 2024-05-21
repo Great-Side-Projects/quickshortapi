@@ -1,7 +1,7 @@
 package org.dev.quickshortapi.application.port.out;
 
 import org.springframework.lang.Nullable;
- public interface IUrlEventTemplatePort<K, V> {
+ public interface IUrlEventTemplatePort<T> {
 
-    void send(K key, @Nullable V data);
+    void send(@Nullable T data);
 }
