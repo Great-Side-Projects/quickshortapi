@@ -89,7 +89,6 @@ public class UrlService implements IUrlServicePort {
                 urlRepositoryCacheAdapter.save(UrlMapper.toUrlCache(u));
                 return u;
             });
-            logger.log(Level.INFO,"URL guardada en cache redirectUrl: {0}" , url.get().getShortUrl());
         }
 
         if (!url.get().isValidUrl()) {
