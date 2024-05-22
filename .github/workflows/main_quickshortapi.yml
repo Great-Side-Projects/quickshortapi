@@ -51,7 +51,7 @@ jobs:
                    -e "s|\${REDIS_PASSWORD}|${{ secrets.REDIS_PASSWORD }}|g" \
                    -e "s|\${KAFKA_BOOTSTRAP_SERVERS}|${{ secrets.KAFKA_BOOTSTRAP_SERVERS }}|g" \
                    -e "s|\${KAFKA_PROPERTIES_SASL_JAAS_CONFIG}|$kafka_properties_sasl_jaas_config|g" \
-                   -e "s|\${RABBITMQ_HOST}|${{ secrets.RABBITMQ_HOST }}|g" \  
+                   -e "s|\${RABBITMQ_HOST}|${{ secrets.RABBITMQ_HOST }}|g" \
                    -e "s|\${RABBITMQ_PORT}|${{ secrets.RABBITMQ_PORT }}|g" \
                    -e "s|\${RABBITMQ_USERNAME}|${{ secrets.RABBITMQ_USERNAME }}|g" \
                    -e "s|\${RABBITMQ_PASSWORD}|${{ secrets.RABBITMQ_PASSWORD }}|g" Dockerfile
