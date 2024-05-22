@@ -47,6 +47,7 @@ public class UrlPersistenceCacheAdapter implements IUrlPersistenceCachePort {
 
     public UrlEntityCache fallbackSave(UrlEntityCache urlEntityCache, Throwable t) {
 
+        logger.log(Level.SEVERE, "Error saving urlCache: {0}", t.getMessage());
         try {
             UrlSaveCacheEvent urlSaveCacheEvent = UrlMapper.toUrlSaveCacheEvent(UrlMapper.toUrlEventCache(urlEntityCache));
             String eventString = String.format("Error saving urlCache: %s, Event: %s", t.getMessage(), urlSaveCacheEvent);
@@ -60,6 +61,7 @@ public class UrlPersistenceCacheAdapter implements IUrlPersistenceCachePort {
 
     public Optional<UrlEntityCache> fallbackFindById(String id, Throwable t) {
 
+        logger.log(Level.SEVERE, "Error finding urlCache by id: {0}", t.getMessage());
         try {
             UrlFindByIdCacheEvent urlFindByIdCacheEvent = UrlMapper.toUrlFindByIdCacheEvent(id);
             String eventString = String.format("Error finding urlCache by id: %s, Event: %s", t.getMessage(), urlFindByIdCacheEvent);
@@ -73,6 +75,7 @@ public class UrlPersistenceCacheAdapter implements IUrlPersistenceCachePort {
 
     public void fallbackDeleteById(String id, Throwable t) {
 
+        logger.log(Level.SEVERE, "Error deleting urlCache by id: {0}", t.getMessage());
         try {
             UrlDeleteByIdCacheEvent urlDeleteByIdCacheEvent = UrlMapper.toUrlDeleteByIdCacheEvent(id);
             String eventString = String.format("Error deleting urlCache by id: %s, Event: %s", t.getMessage(), urlDeleteByIdCacheEvent);
