@@ -18,5 +18,12 @@ public class UrlEvent {
     }
     public UrlEvent() {
     }
-
+    public String toString() {
+        return this.getClass().getName()+"{" +
+                "id='" + id + '\'' +
+                ", originalUrl=" + originalUrl +
+                ", shortUrl=" + shortUrl +
+                ", lastVisitedDate=" + lastVisitedDate +
+                '}';
+    }
 }
