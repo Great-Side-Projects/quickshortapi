@@ -13,14 +13,14 @@ spring:
       host: myrd:6379
       port: 6379
       password: myrd
-      timeout: 3000
+      timeout: 1000
       lettuce:
         pool:
           max-active: 8
           max-idle: 8
           min-idle: 0
           max-wait: 3000
-        shutdown-timeout: 100
+        shutdown-timeout: 1000
   ##rabbitmq configuration
   rabbitmq:
     host: myhost
@@ -29,7 +29,7 @@ spring:
     password: pass
     queue:
       name: quickshort_deadletter
-    connection-timeout: 3000    
+    connection-timeout: 1000    
   #Hikari configuration
   datasource:
     hikari:
@@ -72,6 +72,9 @@ spring:
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
       acks: all
       client-id: redirecturl
+      properties:
+        max.block.ms: 1000
+        retries: 3 
     listener:
       poll-timeout: 60000
 #Swagger configuration
