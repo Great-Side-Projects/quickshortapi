@@ -27,5 +27,5 @@ ENTRYPOINT ["java", "-jar", "quickshortapi.jar",\
 "--spring.kafka.properties.sasl.jaas.config=${KAFKA_PROPERTIES_SASL_JAAS_CONFIG}",\
 "--spring.rabbitmq.host=${RABBITMQ_HOST}",\
 "--spring.rabbitmq.port=${RABBITMQ_PORT}",\
-"--spring-rabbitmq.username=${RABBITMQ_USERNAME}",\
+"--spring.rabbitmq.username=${RABBITMQ_USERNAME}",\
 "--spring.rabbitmq.password=${RABBITMQ_PASSWORD}"]
