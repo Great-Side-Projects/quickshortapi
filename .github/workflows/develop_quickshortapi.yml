@@ -43,4 +43,8 @@ jobs:
           SPRING_DATA_REDIS_PASSWORD: ${{ secrets.REDIS_PASSWORD }}
           SPRING_KAFKA_BOOTSTRAP_SERVERS: ${{ secrets.KAFKA_BOOTSTRAP_SERVERS }}
           SPRING_KAFKA_PROPERTIES_SASL_JAAS_CONFIG: "org.apache.kafka.common.security.plain.PlainLoginModule required username='${{ secrets.KAFKA_USERNAME }}' password='${{ secrets.KAFKA_PASSWORD }}';"
+          SPRING_RABBITMQ_HOST: ${{ secrets.RABBITMQ_HOST }}
+          SPRING_RABBITMQ_PORT: ${{ secrets.RABBITMQ_PORT }}
+          SPRING_RABBITMQ_USERNAME: ${{ secrets.RABBITMQ_USERNAME }}
+          SPRING_RABBITMQ_PASSWORD: ${{ secrets.RABBITMQ_PASSWORD }}
         run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=quickshort -Dsonar.projectName='quickshort'

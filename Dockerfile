@@ -24,4 +24,8 @@ ENTRYPOINT ["java", "-jar", "quickshortapi.jar",\
 "--spring.data.redis.port=${REDIS_PORT}",\
 "--spring.data.redis.password=${REDIS_PASSWORD}",\
 "--spring.kafka.bootstrap-servers=${KAFKA_BOOTSTRAP_SERVERS}",\
-"--spring.kafka.properties.sasl.jaas.config=${KAFKA_PROPERTIES_SASL_JAAS_CONFIG}"]
+"--spring.kafka.properties.sasl.jaas.config=${KAFKA_PROPERTIES_SASL_JAAS_CONFIG}",\
+"--spring.rabbitmq.host=${RABBITMQ_HOST}",\
+"--spring.rabbitmq.port=${RABBITMQ_PORT}",\
+"--spring-rabbitmq.username=${RABBITMQ_USERNAME}",\
+"--spring.rabbitmq.password=${RABBITMQ_PASSWORD}"]
