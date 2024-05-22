@@ -21,6 +21,15 @@ spring:
           min-idle: 0
           max-wait: 3000
         shutdown-timeout: 100
+  ##rabbitmq configuration
+  rabbitmq:
+    host: myhost
+    port: 5672
+    username: myuser
+    password: pass
+    queue:
+      name: quickshort_deadletter
+    connection-timeout: 3000    
   #Hikari configuration
   datasource:
     hikari:
@@ -85,3 +94,30 @@ springdoc:
      contact:
        name: Angel Morales
        email: angelmoralesb@gmail.com
+#resilience4j configuration for circuit breaker
+resilience4j.circuitbreaker:
+  backends:
+    urlPersistenceCache:
+      registerHealthIndicator: true
+      failureRateThreshold: 50
+      waitDurationInOpenState: 10m
+      slidingWindowSize: 10
+      minimumNumberOfCalls: 10
+      permittedNumberOfCallsInHalfOpenState: 1
+      automaticTransitionFromOpenToHalfOpenEnabled: true
+      eventConsumerBufferSize: 100
+      recordExceptions:
+          - org.springframework.data.redis.RedisConnectionFailureException
+          - java.nio.channels.ClosedChannelException
+    urlEventStreaming:
+      registerHealthIndicator: true
+      failureRateThreshold: 50
+      waitDurationInOpenState: 1m
+      slidingWindowSize: 5
+      minimumNumberOfCalls: 5
+      permittedNumberOfCallsInHalfOpenState: 1
+      automaticTransitionFromOpenToHalfOpenEnabled: true
+      eventConsumerBufferSize: 100
+      recordExceptions:
+            - org.apache.kafka.common.errors.TimeoutException
+            - org.apache.kafka.common.errors.SerializationException       

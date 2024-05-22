@@ -10,4 +10,13 @@ public abstract class Event <T> {
     private Date date;
     private EventType type;
     private T data;
+
+     public String toString() {
+        return this.getClass().getName()+"{" +
+                "id='" + id + '\'' +
+                ", date=" + date +
+                ", type=" + type +
+                ", data=" + data +
+                '}';
+    }
 }
