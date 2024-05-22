@@ -1,8 +1,6 @@
 package org.dev.quickshortapi.infraestructure.adapter.out.persistence;
 
 import org.dev.quickshortapi.application.port.out.IUrlEventTemplatePort;
-import org.dev.quickshortapi.domain.event.Event;
-import org.dev.quickshortapi.domain.event.UrlEvent;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
