@@ -2,11 +2,14 @@ package org.dev.quickshortapi.infraestructure.adapter.out.persistence;
 
 import org.dev.quickshortapi.application.port.out.UrlResponse;
 import org.dev.quickshortapi.application.port.out.UrlStatisticsResponse;
-import org.dev.quickshortapi.domain.event.EventType;
-import org.dev.quickshortapi.domain.event.UrlEvent;
-import org.dev.quickshortapi.domain.event.UrlVisitedEvent;
+import org.dev.quickshortapi.domain.event.*;
 import org.dev.quickshortapi.application.port.in.format.IUrlFormat;
 import org.dev.quickshortapi.domain.Url;
+import org.dev.quickshortapi.domain.event.cache.UrlDeleteByIdCacheEvent;
+import org.dev.quickshortapi.domain.event.cache.UrlEventCache;
+import org.dev.quickshortapi.domain.event.cache.UrlFindByIdCacheEvent;
+import org.dev.quickshortapi.domain.event.cache.UrlSaveCacheEvent;
+
 import java.util.Date;
 import java.util.UUID;
 
@@ -37,12 +40,12 @@ public class UrlMapper {
         return new UrlEntity(url.getOriginalUrl(), url.getShortUrl(), url.getVisits(), url.getCreatedDate());
     }
 
-    public static Url toUrl(UrlCache urlCache) {
-        return new Url(urlCache.getIdDbUrl(), urlCache.getOriginalUrl() ,urlCache.getId());
+    public static Url toUrl(UrlEntityCache urlEntityCache) {
+        return new Url(urlEntityCache.getIdDbUrl(), urlEntityCache.getOriginalUrl() , urlEntityCache.getId());
     }
 
-    public static UrlCache toUrlCache(Url url) {
-        return new UrlCache(url.getShortUrl(), url.getId(), url.getOriginalUrl());
+    public static UrlEntityCache toUrlCache(Url url) {
+        return new UrlEntityCache(url.getShortUrl(), url.getId(), url.getOriginalUrl());
     }
 
     public static UrlVisitedEvent toUrlVisitedEvent(UrlEvent url){
@@ -51,4 +54,21 @@ public class UrlMapper {
     public static UrlEvent toUrlEvent(Url url){
         return new UrlEvent(url.getId(), url.getOriginalUrl(), url.getShortUrl(), url.getLastVisitedDate());
     }
+
+    public static UrlSaveCacheEvent toUrlSaveCacheEvent(UrlEventCache urlEventCache){
+        return new UrlSaveCacheEvent(UUID.randomUUID().toString(),new Date(), EventType.SAVE_CACHE, urlEventCache);
+    }
+
+    public static UrlFindByIdCacheEvent toUrlFindByIdCacheEvent(String data){
+        return new UrlFindByIdCacheEvent(UUID.randomUUID().toString(),new Date(), EventType.FIND_BY_ID_CACHE, data);
+    }
+
+    public static UrlDeleteByIdCacheEvent toUrlDeleteByIdCacheEvent(String data){
+        return new UrlDeleteByIdCacheEvent(UUID.randomUUID().toString(),new Date(), EventType.DELETE_BY_ID_CACHE, data);
+    }
+
+    public static UrlEventCache toUrlEventCache(UrlEntityCache urlEntityCache){
+        return new UrlEventCache(urlEntityCache.getId(), urlEntityCache.getIdDbUrl(), urlEntityCache.getOriginalUrl());
+    }
+
 }

@@ -1,5 +1,6 @@
 package org.dev.quickshortapi.infraestructure.adapter.out.persistence;
 
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import org.dev.quickshortapi.application.port.out.IUrlEventStreamingPort;
 import org.dev.quickshortapi.application.port.out.IUrlEventTemplatePort;
 import org.dev.quickshortapi.application.port.out.IUrlPersistencePort;
@@ -17,20 +18,35 @@ import java.util.logging.Logger;
 public class UrlEventStreamingAdapter implements IUrlEventStreamingPort {
 
     private final IUrlPersistencePort urlPersistenceAdapter;
-    private final IUrlEventTemplatePort<String, Event<UrlEvent>> urlEventTemplateAdapter;
+    private final IUrlEventTemplatePort<Event<UrlEvent>> urlEventKafkaTemplateAdapter;
+    private final IUrlEventTemplatePort<String> urlEventRabbitMQTemplateAdapter;
+    private static final String MESSAGE_ERROR = "Error sending event to RabbitMQ {0}";
 
     Logger logger = Logger.getLogger(getClass().getName());
 
-    public UrlEventStreamingAdapter(IUrlEventTemplatePort<String,Event<UrlEvent>>  urlEventTemplateAdapter, UrlPersistenceAdapter urlPersistenceAdapter) {
-        this.urlEventTemplateAdapter = urlEventTemplateAdapter;
+    public UrlEventStreamingAdapter(IUrlEventTemplatePort<Event<UrlEvent>>  urlEventKafkaTemplateAdapter, UrlPersistenceAdapter urlPersistenceAdapter, IUrlEventTemplatePort<String> urlEventRabbitMQTemplateAdapter) {
+        this.urlEventKafkaTemplateAdapter = urlEventKafkaTemplateAdapter;
         this.urlPersistenceAdapter = urlPersistenceAdapter;
+        this.urlEventRabbitMQTemplateAdapter = urlEventRabbitMQTemplateAdapter;
     }
 
     @Override
+    @CircuitBreaker(name = "urlEventStreaming", fallbackMethod = "fallbackVisitedEvent")
     public void sendVisitedEvent(UrlEvent urlEvent) {
         urlEvent.setLastVisitedDate(new Date());
         UrlVisitedEvent visited =  UrlMapper.toUrlVisitedEvent(urlEvent);
-        urlEventTemplateAdapter.send(visited.getId(), visited);
+        urlEventKafkaTemplateAdapter.send(visited);
+    }
+
+    public void fallbackVisitedEvent(UrlEvent urlEvent, Throwable t) {
+        logger.log(Level.SEVERE, "Error sending visited event: {0}", t.getMessage());
+        try {
+            UrlVisitedEvent visited =  UrlMapper.toUrlVisitedEvent(urlEvent);
+            String eventString = String.format("Error sending visited event: %s, Event: %s", t.getMessage(), visited);
+            urlEventRabbitMQTemplateAdapter.send(eventString);
+        } catch (Exception e) {
+            logger.log(Level.SEVERE, MESSAGE_ERROR, e.getMessage());
+        }
     }
 
     @KafkaListener(topics = "${spring.kafka.topic.name}")
