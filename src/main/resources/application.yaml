@@ -110,9 +110,10 @@ resilience4j.circuitbreaker:
       automaticTransitionFromOpenToHalfOpenEnabled: true
       eventConsumerBufferSize: 100
       recordExceptions:
-        - io.lettuce.core.RedisCommandTimeoutException
+        - io.lettuce.core.RedisConnectionException
         - org.springframework.data.redis.RedisConnectionFailureException
         - java.nio.channels.ClosedChannelException
+        - io.lettuce.core.RedisCommandTimeoutException
     urlEventStreaming:
       registerHealthIndicator: true
       failureRateThreshold: 50
