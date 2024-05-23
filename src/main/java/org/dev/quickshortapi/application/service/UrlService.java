@@ -98,7 +98,6 @@ public class UrlService implements IUrlServicePort {
 
         if (urlPersistenceAdapter.deleteUrlbyShortUrl(shortUrl)) {
             urlRepositoryCacheAdapter.deleteById(shortUrl);
-            logger.log(Level.INFO,"URL corta eliminada: {0}" , shortUrl);
             return;
         }
         throw new UrlNotFoundException("URL corta no encontrada");
@@ -116,7 +115,6 @@ public class UrlService implements IUrlServicePort {
     @Override
     public void deleteCachebyShortUrl(String shortUrl) {
         urlRepositoryCacheAdapter.deleteById(shortUrl);
-        logger.log(Level.INFO,"Cache eliminado: {0}" , shortUrl);
     }
 
     @Override
