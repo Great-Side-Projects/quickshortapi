@@ -5,6 +5,7 @@ import org.dev.quickshortapi.application.port.out.IUrlEventTemplatePort;
 import org.dev.quickshortapi.application.port.out.IUrlPersistenceCachePort;
 import org.dev.quickshortapi.common.PersistenceAdapter;
 import org.dev.quickshortapi.application.port.out.IUrlRepositoryCache;
+import org.dev.quickshortapi.domain.Url;
 import org.dev.quickshortapi.domain.event.cache.UrlDeleteByIdCacheEvent;
 import org.dev.quickshortapi.domain.event.cache.UrlFindByIdCacheEvent;
 import org.dev.quickshortapi.domain.event.cache.UrlSaveCacheEvent;
@@ -28,15 +29,14 @@ public class UrlPersistenceCacheAdapter implements IUrlPersistenceCachePort {
 
     @Override
     @CircuitBreaker(name = "urlPersistenceCache", fallbackMethod = "fallbackSave")
-    public UrlEntityCache save(UrlEntityCache urlEntityCache) {
-      return UrlRepositoryCache.save(urlEntityCache);
-
+    public Url save(Url url) {
+        return UrlMapper.toUrl(UrlRepositoryCache.save(UrlMapper.toUrlEntityCache(url)));
     }
 
     @Override
     @CircuitBreaker(name = "urlPersistenceCache", fallbackMethod = "fallbackFindById")
-    public Optional<UrlEntityCache> findById(String id) {
-        return UrlRepositoryCache.findById(id);
+    public Optional<Url> findById(String id) {
+        return UrlRepositoryCache.findById(id).map(UrlMapper::toUrl);
     }
 
     @Override
@@ -45,11 +45,11 @@ public class UrlPersistenceCacheAdapter implements IUrlPersistenceCachePort {
         UrlRepositoryCache.deleteById(id);
     }
 
-    public UrlEntityCache fallbackSave(UrlEntityCache urlEntityCache, Throwable t) {
+    public Url fallbackSave(Url url, Throwable t) {
 
         logger.log(Level.SEVERE, "Error saving urlCache: {0}", t.getMessage());
         try {
-            UrlSaveCacheEvent urlSaveCacheEvent = UrlMapper.toUrlSaveCacheEvent(UrlMapper.toUrlEventCache(urlEntityCache));
+            UrlSaveCacheEvent urlSaveCacheEvent = UrlMapper.toUrlSaveCacheEvent(UrlMapper.toUrlEventCache(url));
             String eventString = String.format("Error saving urlCache: %s, Event: %s", t.getMessage(), urlSaveCacheEvent);
             urlEventRabbitMQTemplateAdapter.send(eventString);
         }
@@ -59,7 +59,7 @@ public class UrlPersistenceCacheAdapter implements IUrlPersistenceCachePort {
         return null; // o un valor por defecto
     }
 
-    public Optional<UrlEntityCache> fallbackFindById(String id, Throwable t) {
+    public Optional<Url> fallbackFindById(String id, Throwable t) {
 
         logger.log(Level.SEVERE, "Error finding urlCache by id: {0}", t.getMessage());
         try {

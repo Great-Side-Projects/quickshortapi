@@ -1,13 +1,12 @@
 package org.dev.quickshortapi.infraestructure.adapter.out.persistence;
 
-import org.dev.quickshortapi.application.port.out.IUrlMongoTemplate;
-import org.dev.quickshortapi.application.port.out.IUrlPersistencePort;
+import org.dev.quickshortapi.application.port.in.format.UrlFormatProvider;
+import org.dev.quickshortapi.application.port.out.*;
 import org.dev.quickshortapi.common.PersistenceAdapter;
 import org.dev.quickshortapi.domain.event.UrlEvent;
 import org.dev.quickshortapi.domain.exceptionhandler.UrlInternalServerErrorException;
 import org.dev.quickshortapi.domain.exceptionhandler.UrlNotFoundException;
 import org.dev.quickshortapi.domain.Url;
-import org.dev.quickshortapi.application.port.out.IUrlRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -79,15 +78,23 @@ public class UrlPersistenceAdapter implements IUrlPersistencePort{
     }
 
     @Override
-    public Optional<UrlEntity> findByUShortUrl(String shortUrl) {
-        return  urlRepository.findByShortUrl(shortUrl);
+    public Optional<Url> findByUShortUrl(String shortUrl) {
+
+        return urlRepository.findByShortUrl(shortUrl)
+                .map(UrlMapper::toUrl);
+    }
+
+    public Optional<UrlStatisticsResponse> getStatisticsByShortUrl(String shortUrl) {
+        return urlRepository.findByShortUrl(shortUrl)
+                .map(url -> UrlMapper.toUrlStatisticsResponse(url, new UrlFormatProvider()));
     }
 
     @Override
-    public Page<UrlEntity> getAllUrls(int page, int pageSize) {
+    public Page<UrlResponse> getAllUrls(int page, int pageSize) {
         if (pageSize > PAGE_SIZE)
             pageSize = PAGE_SIZE;
        Pageable pageable = PageRequest.of(page, pageSize);
-       return urlRepository.findAll(pageable);
+       Page<UrlEntity> urls = urlRepository.findAll(pageable);
+       return urls.map(url -> UrlMapper.toUrlResponse(url, new UrlFormatProvider()));
     }
 }
