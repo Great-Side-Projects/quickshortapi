@@ -43,6 +43,7 @@ public class UrlPersistenceCacheAdapter implements IUrlPersistenceCachePort {
     @CircuitBreaker(name = "urlPersistenceCache", fallbackMethod = "fallbackDeleteById")
     public void deleteById(String id) {
         UrlRepositoryCache.deleteById(id);
+        logger.log(Level.INFO,"URL corta eliminada: {0}" , id);
     }
 
     public Url fallbackSave(Url url, Throwable t) {
