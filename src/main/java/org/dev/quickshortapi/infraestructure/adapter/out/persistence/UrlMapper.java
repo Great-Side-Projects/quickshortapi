@@ -44,7 +44,7 @@ public class UrlMapper {
         return new Url(urlEntityCache.getIdDbUrl(), urlEntityCache.getOriginalUrl() , urlEntityCache.getId());
     }
 
-    public static UrlEntityCache toUrlCache(Url url) {
+    public static UrlEntityCache toUrlEntityCache(Url url) {
         return new UrlEntityCache(url.getShortUrl(), url.getId(), url.getOriginalUrl());
     }
 
@@ -67,8 +67,7 @@ public class UrlMapper {
         return new UrlDeleteByIdCacheEvent(UUID.randomUUID().toString(),new Date(), EventType.DELETE_BY_ID_CACHE, data);
     }
 
-    public static UrlEventCache toUrlEventCache(UrlEntityCache urlEntityCache){
-        return new UrlEventCache(urlEntityCache.getId(), urlEntityCache.getIdDbUrl(), urlEntityCache.getOriginalUrl());
+    public static UrlEventCache toUrlEventCache(Url url){
+        return new UrlEventCache(url.getShortUrl(), url.getId(), url.getOriginalUrl());
     }
-
 }

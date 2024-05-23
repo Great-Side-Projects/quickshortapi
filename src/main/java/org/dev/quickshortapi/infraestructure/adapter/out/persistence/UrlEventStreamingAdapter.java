@@ -4,6 +4,7 @@ import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import org.dev.quickshortapi.application.port.out.IUrlEventStreamingPort;
 import org.dev.quickshortapi.application.port.out.IUrlEventTemplatePort;
 import org.dev.quickshortapi.application.port.out.IUrlPersistencePort;
+import org.dev.quickshortapi.domain.Url;
 import org.dev.quickshortapi.domain.event.Event;
 import org.dev.quickshortapi.domain.event.UrlEvent;
 import org.dev.quickshortapi.domain.event.UrlVisitedEvent;
@@ -32,16 +33,17 @@ public class UrlEventStreamingAdapter implements IUrlEventStreamingPort {
 
     @Override
     @CircuitBreaker(name = "urlEventStreaming", fallbackMethod = "fallbackVisitedEvent")
-    public void sendVisitedEvent(UrlEvent urlEvent) {
-        urlEvent.setLastVisitedDate(new Date());
-        UrlVisitedEvent visited =  UrlMapper.toUrlVisitedEvent(urlEvent);
+    public void sendVisitedEvent(Url url) {
+        url.setLastVisitedDate(new Date());
+        UrlEvent urlEvent = UrlMapper.toUrlEvent(url);
+        Event<UrlEvent> visited = UrlMapper.toUrlVisitedEvent(urlEvent);
         urlEventKafkaTemplateAdapter.send(visited);
     }
 
-    public void fallbackVisitedEvent(UrlEvent urlEvent, Throwable t) {
+    public void fallbackVisitedEvent(Url url, Throwable t) {
         logger.log(Level.SEVERE, "Error sending visited event: {0}", t.getMessage());
         try {
-            UrlVisitedEvent visited =  UrlMapper.toUrlVisitedEvent(urlEvent);
+            UrlVisitedEvent visited = UrlMapper.toUrlVisitedEvent(UrlMapper.toUrlEvent(url));
             String eventString = String.format("Error sending visited event: %s, Event: %s", t.getMessage(), visited);
             urlEventRabbitMQTemplateAdapter.send(eventString);
         } catch (Exception e) {
