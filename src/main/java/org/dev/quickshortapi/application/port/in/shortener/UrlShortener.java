@@ -2,7 +2,6 @@ package org.dev.quickshortapi.application.port.in.shortener;
 
 import org.dev.quickshortapi.domain.exceptionhandler.UrlInternalServerErrorException;
 import org.springframework.stereotype.Component;
-
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
