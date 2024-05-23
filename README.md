@@ -94,6 +94,8 @@ I remember when I was in an interview and they said to me, 'we need to create a 
 * [![Spring Boot][Spring Boot]][Spring Boot-url]
 * [![Redis][redis]][redis-url]
 * [![Apache Kafka][Apache Kafka]][Apache Kafka-url]
+* [![MongoDB][MongoDB]][MongoDB-url]
+* [![RabbitMQ][RabbitMQ]][RabbitMQ-url] 
 
 ### Architecture diagram
 
@@ -132,6 +134,7 @@ This is an example of how to list things you need to use the software and how to
 * Apache Kafka local or cloud
 * MonngoDB local or cloud
 * Docker
+* RabbitMQ local or cloud
 
 
 ### Installation
@@ -160,11 +163,21 @@ This is an example of how to list things you need to use the software and how to
      host: localhost #url of your redis
      port: 14612 #port of your redis
      password: password #password of your redis
+   ##rabbitmq configuration
+   rabbitmq:
+     host: localhost #url of your rabbitmq
+     port: 5672 #port of your rabbitmq
+     username: admin #username of your rabbitmq
+     password: password #password of your rabbitmq 
+     queue:
+       name: quickshort_deadletter #name of the queue
      #Kafka configuration
    kafka:
     bootstrap-servers: localhost:9092 #url of your kafka
     properties:
       sasl.jaas.config: org.apache.kafka.common.security.plain.PlainLoginModule required username="username" password="password"; #username and password of your kafka
+    topic:
+      name: quickshort #name of the topic
    ```
 5. if you don't need kakfa authentication change de security properties in the `application.yaml` file
    ```yaml
@@ -254,7 +267,7 @@ _For more examples, please refer to the [Documentation](https://quickshortapi.az
 - [ ] Health check for the API
 - [ ] Telemetry for the API
 - [ ] API versioning
-- [ ] Implement Circuit Breaker for security
+- [x] Implement Circuit Breaker for security
 - [ ] Implement Rate Limit for security
 - [ ] Implement Authentication for security
 
@@ -339,7 +352,7 @@ Project Link: [https://github.com/Great-Side-Projects/quickshortapi](https://git
 [linkedin-url]: https://www.linkedin.com/in/angelmoralesb/
 [product-screenshot]: images/screenshot.png
 [product-screenshot-UI]: images/screenshotUI.png
-[architecture-diagram]: images/DesignArchitectureQuickShortv1.0.drawio.png
+[architecture-diagram]: images/DesignArchitectureQuickShortv2.0.drawio.png
 [sequence-diagram]: images/SequenceDiagram.png
 [Next.js]: https://img.shields.io/badge/next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white
 [Next-url]: https://nextjs.org/
@@ -365,3 +378,7 @@ Project Link: [https://github.com/Great-Side-Projects/quickshortapi](https://git
 [redis-url]: https://redis.io/
 [Apache Kafka]: https://img.shields.io/badge/Apache_Kafka-231F20?style=for-the-badge&logo=apache-kafka&logoColor=white
 [Apache Kafka-url]: https://kafka.apache.org/
+[MongoDB]: https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white
+[MongoDB-url]: https://www.mongodb.com/
+[RabbitMQ]: https://img.shields.io/badge/RabbitMQ-FF6600?style=for-the-badge&logo=rabbitmq&logoColor=white
+[RabbitMQ-url]: https://www.rabbitmq.com/
