@@ -2,9 +2,7 @@ package org.dev.quickshortapi.application.port.out;
 
 import org.dev.quickshortapi.domain.event.UrlEvent;
 import org.dev.quickshortapi.domain.Url;
-import org.dev.quickshortapi.infraestructure.adapter.out.persistence.UrlEntity;
 import org.springframework.data.domain.Page;
-
 import java.util.Optional;
 
 public interface IUrlPersistencePort {
@@ -21,7 +19,9 @@ public interface IUrlPersistencePort {
 
     boolean deleteUrlbyShortUrl(String shortUrl);
 
-    Optional<UrlEntity> findByUShortUrl(String shortUrl);
+    Optional<Url> findByUShortUrl(String shortUrl);
 
-    Page<UrlEntity> getAllUrls(int page, int pageSize);
+    Optional<UrlStatisticsResponse> getStatisticsByShortUrl(String shortUrl);
+
+    Page<UrlResponse> getAllUrls(int page, int pageSize);
 }
