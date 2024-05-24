@@ -5,8 +5,9 @@ import org.springframework.boot.actuate.health.Health;
 import org.springframework.boot.actuate.health.HealthIndicator;
 import org.springframework.stereotype.Component;
 import org.springframework.kafka.core.KafkaTemplate;
-
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 @Component("kafka")
 public class KafkaHealthCheck implements HealthIndicator {
@@ -24,8 +25,9 @@ public class KafkaHealthCheck implements HealthIndicator {
     public Health health() {
         try {
             KafkaTemplate.send(test_topic, "❥").get(1, TimeUnit.SECONDS);
-        } catch (Exception e) {
-            return Health.down(e).build();
+            // catch interrupted exception and return down
+        } catch (InterruptedException | ExecutionException | TimeoutException | NullPointerException e) {
+          return Health.down(e).build();
         }
         return Health.up().build();
     }
