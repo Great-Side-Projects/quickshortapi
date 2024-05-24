@@ -21,6 +21,7 @@
 [![MIT License][license-shield]][license-url]
 [![LinkedIn][linkedin-shield]][linkedin-url]
 [![Quality Gate Status](http://20.64.115.37:9000/api/project_badges/measure?project=quickshort&metric=alert_status&token=sqb_d6d760d2c4c8281f3d3a27dff6d1bc548804a966)](http://20.64.115.37:9000/dashboard?id=quickshort)
+[![Health Check][health-check]](https://quickshortapi.azurewebsites.net/actuator/health)
 
 <!-- PROJECT LOGO -->
 <br />
@@ -81,7 +82,6 @@
 
 [![Product Name Screen Shot][product-screenshot]](https://quickshortapi.azurewebsites.net/swagger-ui/index.html#/)
 [![Product Name Screen Shot][product-screenshot-UI]](https://quickshortapi.azurewebsites.net/)
-
 
 I remember when I was in an interview and they said to me, 'we need to create a URL shortener, we have 3 hours for the design and let's discuss the project.' Well, after we finished, I was left with many doubts that I couldn't let pass, so I decided to build it.
 **Postscript: I got an email and didn't continue in the process :(.**
@@ -354,6 +354,7 @@ Project Link: [https://github.com/Great-Side-Projects/quickshortapi](https://git
 [product-screenshot-UI]: images/screenshotUI.png
 [architecture-diagram]: images/DesignArchitectureQuickShortv2.0.drawio.png
 [sequence-diagram]: images/SequenceDiagram.png
+[health-check]: https://img.shields.io/badge/Health%20Check-UP-brightgreen
 [Next.js]: https://img.shields.io/badge/next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white
 [Next-url]: https://nextjs.org/
 [React.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
