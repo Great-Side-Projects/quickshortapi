@@ -77,13 +77,6 @@ public class UrlPersistenceAdapter implements IUrlPersistencePort{
         return false;
     }
 
-    @Override
-    public Optional<Url> findByUShortUrl(String shortUrl) {
-
-        return urlRepository.findByShortUrl(shortUrl)
-                .map(UrlMapper::toUrl);
-    }
-
     public Optional<UrlStatisticsResponse> getStatisticsByShortUrl(String shortUrl) {
         return urlRepository.findByShortUrl(shortUrl)
                 .map(url -> UrlMapper.toUrlStatisticsResponse(url, new UrlFormatProvider()));

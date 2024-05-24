@@ -8,20 +8,11 @@ import java.util.Optional;
 public interface IUrlPersistencePort {
 
     String getShortUrlbyOriginalUrl(String originalUrl);
-
     boolean existCollisionbyShortUrl(String shortUrl);
-
     Url save(Url url);
-
     Optional<Url> getUrlOrThrowByShortUrl(String shortUrl);
-
     void increaseVisitsAndUpdateLastVisitedDate(UrlEvent urlEvent);
-
     boolean deleteUrlbyShortUrl(String shortUrl);
-
-    Optional<Url> findByUShortUrl(String shortUrl);
-
     Optional<UrlStatisticsResponse> getStatisticsByShortUrl(String shortUrl);
-
     Page<UrlResponse> getAllUrls(int page, int pageSize);
 }
