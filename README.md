@@ -264,7 +264,7 @@ _For more examples, please refer to the [Documentation](https://quickshortapi.az
 - [x] Implement CI/CD with GitHub Actions
 - [x] Implement SonarQube for security
 - [x] Create a simple front-end to manage the URLs
-- [ ] Health check for the API
+- [x] Health check for the API
 - [ ] Telemetry for the API
 - [ ] API versioning
 - [x] Implement Circuit Breaker for security
