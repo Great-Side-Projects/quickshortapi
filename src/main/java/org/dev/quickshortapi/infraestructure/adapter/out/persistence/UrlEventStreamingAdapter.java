@@ -1,6 +1,7 @@
 package org.dev.quickshortapi.infraestructure.adapter.out.persistence;
 
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import org.dev.quickshortapi.application.port.out.IUrlEventFallBackStreamingPort;
 import org.dev.quickshortapi.application.port.out.IUrlEventStreamingPort;
 import org.dev.quickshortapi.application.port.out.IUrlEventTemplatePort;
 import org.dev.quickshortapi.application.port.out.IUrlPersistencePort;
@@ -16,7 +17,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @PersistenceAdapter
-public class UrlEventStreamingAdapter implements IUrlEventStreamingPort {
+public class UrlEventStreamingAdapter implements IUrlEventStreamingPort, IUrlEventFallBackStreamingPort {
 
     private final IUrlPersistencePort urlPersistenceAdapter;
     private final IUrlEventTemplatePort<Event<UrlEvent>> urlEventKafkaTemplateAdapter;
@@ -40,6 +41,7 @@ public class UrlEventStreamingAdapter implements IUrlEventStreamingPort {
         urlEventKafkaTemplateAdapter.send(visited);
     }
 
+    @Override
     public void fallbackVisitedEvent(Url url, Throwable t) {
         logger.log(Level.SEVERE, "Error sending visited event: {0}", t.getMessage());
         try {

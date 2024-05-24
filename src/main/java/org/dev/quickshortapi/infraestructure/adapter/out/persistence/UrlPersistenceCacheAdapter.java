@@ -3,6 +3,7 @@ package org.dev.quickshortapi.infraestructure.adapter.out.persistence;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import org.dev.quickshortapi.application.port.out.IUrlEventTemplatePort;
 import org.dev.quickshortapi.application.port.out.IUrlPersistenceCachePort;
+import org.dev.quickshortapi.application.port.out.IUrlPersistenceFallBackCachePort;
 import org.dev.quickshortapi.common.PersistenceAdapter;
 import org.dev.quickshortapi.application.port.out.IUrlRepositoryCache;
 import org.dev.quickshortapi.domain.Url;
@@ -15,7 +16,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @PersistenceAdapter
-public class UrlPersistenceCacheAdapter implements IUrlPersistenceCachePort {
+public class UrlPersistenceCacheAdapter implements IUrlPersistenceCachePort, IUrlPersistenceFallBackCachePort {
 
     private final IUrlRepositoryCache UrlRepositoryCache;
     private final IUrlEventTemplatePort<String> urlEventRabbitMQTemplateAdapter;
@@ -46,6 +47,7 @@ public class UrlPersistenceCacheAdapter implements IUrlPersistenceCachePort {
         logger.log(Level.INFO,"URL corta eliminada: {0}" , id);
     }
 
+    @Override
     public Url fallbackSave(Url url, Throwable t) {
 
         logger.log(Level.SEVERE, "Error saving urlCache: {0}", t.getMessage());
@@ -60,6 +62,7 @@ public class UrlPersistenceCacheAdapter implements IUrlPersistenceCachePort {
         return null; // o un valor por defecto
     }
 
+    @Override
     public Optional<Url> fallbackFindById(String id, Throwable t) {
 
         logger.log(Level.SEVERE, "Error finding urlCache by id: {0}", t.getMessage());
@@ -74,6 +77,7 @@ public class UrlPersistenceCacheAdapter implements IUrlPersistenceCachePort {
         return Optional.empty();
     }
 
+    @Override
     public void fallbackDeleteById(String id, Throwable t) {
 
         logger.log(Level.SEVERE, "Error deleting urlCache by id: {0}", t.getMessage());
