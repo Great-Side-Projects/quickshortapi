@@ -8,7 +8,6 @@ import org.springframework.boot.actuate.health.Health;
 import org.springframework.boot.actuate.health.HealthIndicator;
 import org.springframework.stereotype.Component;
 import org.springframework.kafka.core.KafkaTemplate;
-
 import java.util.Date;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
@@ -20,7 +19,8 @@ public class KafkaHealthCheck implements HealthIndicator {
   private final KafkaTemplate<String, Object> KafkaTemplate;
   private String test_topic;
 
-   public KafkaHealthCheck(KafkaTemplate<String, Object> kafkaTemplate, @Value("${spring.kafka.topic.name}") String test_topic) {
+   public KafkaHealthCheck(KafkaTemplate<String, Object> kafkaTemplate,
+                           @Value("${spring.kafka.topic.name}") String test_topic) {
        this.test_topic = test_topic;
        KafkaTemplate = kafkaTemplate;
        this.getHealth(true);
