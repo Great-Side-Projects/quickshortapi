@@ -32,7 +32,7 @@ public class KafkaHealthCheck implements HealthIndicator {
             // ping message to kafka
             UrlEvent urlEvent = new UrlEvent("1", "http://ping.com", "ping", new Date());
             UrlVisitedEvent urlVisitedEvent = UrlMapper.toUrlVisitedEvent(urlEvent);
-            KafkaTemplate.send(test_topic, urlVisitedEvent).get(1, TimeUnit.SECONDS);
+            KafkaTemplate.send(test_topic, "ping" ,urlVisitedEvent).get(1, TimeUnit.SECONDS);
         } catch (InterruptedException | ExecutionException | TimeoutException | NullPointerException e) {
           return Health.down(e).build();
         }
