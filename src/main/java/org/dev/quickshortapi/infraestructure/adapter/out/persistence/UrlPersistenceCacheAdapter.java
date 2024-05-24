@@ -18,32 +18,32 @@ import java.util.logging.Logger;
 @PersistenceAdapter
 public class UrlPersistenceCacheAdapter implements IUrlPersistenceCachePort, IUrlPersistenceFallBackCachePort {
 
-    private final IUrlRepositoryCache UrlRepositoryCache;
+    private final IUrlRepositoryCache urlRepositoryCache;
     private final IUrlEventTemplatePort<String> urlEventRabbitMQTemplateAdapter;
     Logger logger = Logger.getLogger(getClass().getName());
     private static final String MESSAGE_ERROR = "Error sending event to RabbitMQ {0}";
 
     public UrlPersistenceCacheAdapter(IUrlRepositoryCache urlRepositoryCache, IUrlEventTemplatePort<String> urlEventRabbitMQTemplateAdapter) {
-        this.UrlRepositoryCache = urlRepositoryCache;
+        this.urlRepositoryCache = urlRepositoryCache;
         this.urlEventRabbitMQTemplateAdapter = urlEventRabbitMQTemplateAdapter;
     }
 
     @Override
     @CircuitBreaker(name = "urlPersistenceCache", fallbackMethod = "fallbackSave")
     public Url save(Url url) {
-        return UrlMapper.toUrl(UrlRepositoryCache.save(UrlMapper.toUrlEntityCache(url)));
+        return UrlMapper.toUrl(urlRepositoryCache.save(UrlMapper.toUrlEntityCache(url)));
     }
 
     @Override
     @CircuitBreaker(name = "urlPersistenceCache", fallbackMethod = "fallbackFindById")
     public Optional<Url> findById(String id) {
-        return UrlRepositoryCache.findById(id).map(UrlMapper::toUrl);
+        return urlRepositoryCache.findById(id).map(UrlMapper::toUrl);
     }
 
     @Override
     @CircuitBreaker(name = "urlPersistenceCache", fallbackMethod = "fallbackDeleteById")
     public void deleteById(String id) {
-        UrlRepositoryCache.deleteById(id);
+        urlRepositoryCache.deleteById(id);
         logger.log(Level.INFO,"URL corta eliminada: {0}" , id);
     }
 
