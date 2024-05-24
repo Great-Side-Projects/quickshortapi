@@ -22,9 +22,9 @@ public class UrlPersistenceAdapter implements IUrlPersistencePort{
     private static final int PAGE_SIZE = 100;
 
     public UrlPersistenceAdapter(IUrlMongoTemplate urlMongoTemplate,
-                                 IUrlRepository UrlRepository){
+                                 IUrlRepository urlRepository){
         this.urlMongoTemplate = urlMongoTemplate;
-        this.urlRepository = UrlRepository;
+        this.urlRepository = urlRepository;
     }
 
     @Override
