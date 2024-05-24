@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class UrlEventKafkaTemplateAdapter implements IUrlEventTemplatePort<Event<UrlEvent>> {
 
-    private KafkaTemplate<String, Event<?>> kafkaTemplate;
+    private final KafkaTemplate<String, Event<?>> kafkaTemplate;
 
     @Value("${spring.kafka.topic.name}")
     private String TOPIC_NAME;
