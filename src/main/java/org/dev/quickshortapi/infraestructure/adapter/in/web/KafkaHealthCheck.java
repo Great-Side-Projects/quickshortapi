@@ -9,9 +9,10 @@ import org.springframework.boot.actuate.health.HealthIndicator;
 import org.springframework.stereotype.Component;
 import org.springframework.kafka.core.KafkaTemplate;
 import java.util.Date;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
+
+
+
 
 @Component("kafka")
 public class KafkaHealthCheck implements HealthIndicator {
@@ -33,7 +34,8 @@ public class KafkaHealthCheck implements HealthIndicator {
             UrlEvent urlEvent = new UrlEvent("1", "http://ping.com", "ping", new Date());
             UrlVisitedEvent urlVisitedEvent = UrlMapper.toUrlVisitedEvent(urlEvent);
             KafkaTemplate.send(test_topic, "ping" ,urlVisitedEvent).get(1, TimeUnit.SECONDS);
-        } catch (InterruptedException | ExecutionException | TimeoutException | NullPointerException e) {
+        }
+        catch (Exception e) {
           return Health.down(e).build();
         }
         return Health.up().build();
