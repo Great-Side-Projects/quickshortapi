@@ -88,6 +88,12 @@ I remember when I was in an interview and they said to me, 'we need to create a 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
+### Metrics with New Relic [![New Relic][New Relic]][New Relic-url]
+
+This project is integrated with New Relic to Azure Services, , you can see the metrics. if you want to see the metrics, contact me and I will give you access to the dashboard.
+
+[![Metrics][New-Relic]](https://onenr.io/0BQreX9Y8jZ) 
+
 ### Built With
 
 * [![Java][java.com/es/]][Java-url]
@@ -265,7 +271,7 @@ _For more examples, please refer to the [Documentation](https://quickshortapi.az
 - [x] Implement SonarQube for security
 - [x] Create a simple front-end to manage the URLs
 - [x] Health check for the API
-- [ ] Telemetry for the API
+- [x] Telemetry for the API
 - [ ] API versioning
 - [x] Implement Circuit Breaker for security
 - [ ] Implement Rate Limit for security
@@ -354,6 +360,7 @@ Project Link: [https://github.com/Great-Side-Projects/quickshortapi](https://git
 [product-screenshot-UI]: images/screenshotUI.png
 [architecture-diagram]: images/DesignArchitectureQuickShortv2.0.drawio.png
 [sequence-diagram]: images/SequenceDiagram.png
+[New-Relic]: images/metric.png
 [health-check]: https://img.shields.io/badge/Health%20Check-UP-brightgreen
 [Next.js]: https://img.shields.io/badge/next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white
 [Next-url]: https://nextjs.org/
@@ -383,3 +390,6 @@ Project Link: [https://github.com/Great-Side-Projects/quickshortapi](https://git
 [MongoDB-url]: https://www.mongodb.com/
 [RabbitMQ]: https://img.shields.io/badge/RabbitMQ-FF6600?style=for-the-badge&logo=rabbitmq&logoColor=white
 [RabbitMQ-url]: https://www.rabbitmq.com/
+[New Relic]: https://img.shields.io/badge/New%20Relic-008C99?style=for-the-badge&logo=new-relic&logoColor=white
+[New Relic-url]: https://newrelic.com/
+
