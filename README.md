@@ -261,8 +261,8 @@ _For more examples, please refer to the [Documentation](https://quickshortapi.az
 - [x] Create API rest project with Spring Boot
 - [x] Implement database with MongoDB
 - [x] Implement URL shortener logic
-- [ ] Implement Unit Tests
-- [ ] Implement Integration Tests
+- [x] Implement Unit Tests
+- [x] Implement Integration Tests
 - [x] Implement three party services
   - [x] Implement Redis for cache
   - [x] Implement Kafka for async communication
