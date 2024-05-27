@@ -128,6 +128,20 @@ resilience4j.circuitbreaker:
         - org.springframework.kafka.KafkaException
         - org.apache.kafka.common.errors.TimeoutException
         - org.apache.kafka.common.errors.SerializationException
+#resilience4j configuration for rate limiter
+resilience4j:
+  ratelimiter:
+    metrics:
+      enabled: true
+    instances:
+      shorten:
+        register-health-indicator: true
+        limitForPeriod: 10
+        limitRefreshPeriod: 60s
+        timeoutDuration: 0s
+        allow-health-indicator-to-fail: true
+        subscribe-for-events: true
+        event-consumer-buffer-size: 50
 #Actuator configuration for health check and metrics monitoring
 management:
   endpoints:
