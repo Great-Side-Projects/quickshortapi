@@ -11,9 +11,6 @@ import org.springframework.kafka.core.KafkaTemplate;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
-
-
-
 @Component("kafka")
 public class KafkaHealthCheck implements HealthIndicator {
 
