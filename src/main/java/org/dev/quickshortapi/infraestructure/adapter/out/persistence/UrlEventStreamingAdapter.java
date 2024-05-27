@@ -26,7 +26,7 @@ public class UrlEventStreamingAdapter implements IUrlEventStreamingPort, IUrlEve
 
     Logger logger = Logger.getLogger(getClass().getName());
 
-    public UrlEventStreamingAdapter(IUrlEventTemplatePort<Event<UrlEvent>>  urlEventKafkaTemplateAdapter, UrlPersistenceAdapter urlPersistenceAdapter, IUrlEventTemplatePort<String> urlEventRabbitMQTemplateAdapter) {
+    public UrlEventStreamingAdapter(IUrlEventTemplatePort<Event<UrlEvent>>  urlEventKafkaTemplateAdapter, IUrlPersistencePort urlPersistenceAdapter, IUrlEventTemplatePort<String> urlEventRabbitMQTemplateAdapter) {
         this.urlEventKafkaTemplateAdapter = urlEventKafkaTemplateAdapter;
         this.urlPersistenceAdapter = urlPersistenceAdapter;
         this.urlEventRabbitMQTemplateAdapter = urlEventRabbitMQTemplateAdapter;
