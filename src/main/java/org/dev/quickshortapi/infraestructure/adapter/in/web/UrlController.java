@@ -35,7 +35,7 @@ public class UrlController {
 
     private final IUrlServicePort urlService;
 
-    UrlController(UrlService urlService) {
+    public UrlController(UrlService urlService) {
         this.urlService = urlService;
     }
 
