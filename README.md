@@ -274,7 +274,7 @@ _For more examples, please refer to the [Documentation](https://quickshortapi.az
 - [x] Telemetry for the API
 - [x] API versioning
 - [x] Implement Circuit Breaker for security
-- [ ] Implement Rate Limit for security
+- [x] Implement Rate Limit for security
 - [ ] Implement Authentication for security
 
 See the [open issues](https://github.com/Great-Side-Projects/quickshortapi/issues) for a full list of proposed features (and known issues).
