@@ -16,5 +16,6 @@ public class GlobalExceptionHandler {
     @ExceptionHandler({ RequestNotPermitted.class })
     @ResponseStatus(HttpStatus.TOO_MANY_REQUESTS)
     public void handleRequestNotPermitted() {
+        // Do nothing because we just want to return the status code
     }
 }
