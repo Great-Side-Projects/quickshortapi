@@ -235,7 +235,8 @@ Use CURL to manage the URLs.
 
 1. Shorten URL by CURL
    ```sh
-   curl -X POST "http://localhost:8080/url/shorten" -H "accept: */*" -H "Content-Type: application/json" -d "{ \"url\": \"https://www.google.com\"}"
+   #curl with header X-API-VERSION
+   curl -X POST "http://localhost:8080/url/shorten" -H "accept: */*" -H "Content-Type: application/json" -H "X-API-VERSION: 1" -d "{ \"url\": \"https://www.google.com\"}"
    ```
 2. Build the URL and redirect by CURL - take the shorturl from the response of the previous step 
    ```sh
