@@ -1,5 +1,6 @@
 package org.dev.quickshortapi.infraestructure.adapter.in.web;
 
+import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -46,7 +47,8 @@ public class UrlController {
                             schema = @Schema(implementation = UrlShortenResponse.class)) }),
             @ApiResponse(responseCode = "404", description = "Url not found",
                     content = @Content) })
-    @PostMapping("/shorten")
+    @RateLimiter(name = "shorten")
+    @PostMapping(value = "/shorten", headers = "X-API-VERSION=1")
     public UrlShortenResponse shorten(
             @Parameter(description = "Url to shorten")
             @RequestBody
@@ -61,11 +63,19 @@ public class UrlController {
                     description = "Found url by short url and redirect to original url"),
             @ApiResponse(responseCode = "404",
                     description = "Url not found",
-                    content = @Content) })
-    @GetMapping("/{shorturl}")
+                    content = @Content) ,
+            @ApiResponse(responseCode = "400",
+                    description = "Invalid API version",
+                    content = @Content) }
+    )
+    @GetMapping(value = "/{shorturl}")
     public HttpEntity<Object> redirect(
             @Parameter(description = "Short url to redirect")
-            @PathVariable String shorturl) {
+            @PathVariable String shorturl,
+            @RequestHeader(value = "X-API-VERSION", required = false) String apiVersion) {
+        if (apiVersion != null && !apiVersion.equals("1")) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid API version");
+        }
         String urlOriginal = urlService.redirectUrl(shorturl);
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setLocation(URI.create(urlOriginal));
@@ -80,7 +90,7 @@ public class UrlController {
                             schema = @Schema(implementation = UrlStatisticsResponse.class)) }),
             @ApiResponse(responseCode = "404", description = "Url not found",
                     content = @Content) })
-    @GetMapping("/statistics/{shorturl}")
+    @GetMapping(value = "/statistics/{shorturl}", headers = "X-API-VERSION=1")
     public UrlStatisticsResponse statistics(
             @Parameter(description = "Short url to get statistics")
             @PathVariable String shorturl) {
@@ -93,7 +103,7 @@ public class UrlController {
             @ApiResponse(responseCode = "200", description = "Url deleted"),
             @ApiResponse(responseCode = "404", description = "Url not found",
                     content = @Content) })
-    @DeleteMapping("/{shorturl}")
+    @DeleteMapping(value = "/{shorturl}", headers = "X-API-VERSION=1")
     public void delete(
             @Parameter(description = "Short url to delete")
             @PathVariable String shorturl) {
@@ -106,7 +116,7 @@ public class UrlController {
             @ApiResponse(responseCode = "200", description = "Url cache deleted"),
             @ApiResponse(responseCode = "404", description = "Url not found",
                     content = @Content) })
-    @DeleteMapping("/cache/{shorturl}")
+    @DeleteMapping(value = "/cache/{shorturl}", headers = "X-API-VERSION=1")
     public void deleteCache(
             @Parameter(description = "Short url to delete cache")
             @PathVariable String shorturl) {
@@ -121,12 +131,12 @@ public class UrlController {
                             schema = @Schema(implementation = UrlResponse.class)) }),
             @ApiResponse(responseCode = "404", description = "Urls not found",
                     content = @Content) })
-    @GetMapping("/all")
+    @GetMapping(value = "/all", headers = "X-API-VERSION=1")
        public ResponseEntity<Page<UrlResponse>> getAllUrls(
                 @Parameter(description = "Page number")
                @RequestParam int page ,
                 @Parameter(description = "Page size between 1 and 100")
-               @RequestParam @Min(1) @Max(100) int pageSize) {
-        return ResponseEntity.ok(urlService.getAllUrls(page,pageSize));
+               @RequestParam @Min(1) @Max(100) int pagesize) {
+        return ResponseEntity.ok(urlService.getAllUrls(page,pagesize));
     }
 }
