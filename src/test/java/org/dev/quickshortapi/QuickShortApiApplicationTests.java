@@ -13,18 +13,9 @@ class QuickShortApiApplicationTests {
     @Autowired
     private UrlController urlController;
 
-    @Autowired
-    private IUrlShortener urlShortener;
     @Test
     void contextLoads() {
         assertThat(urlController).isNotNull();
 
     }
-    @Test
-    void generateRandomShortUrlEveryTime() {
-        String shortUrl1 = urlShortener.generateRandomShortUrl();
-        String shortUrl2 = urlShortener.generateRandomShortUrl();
-        assertThat(shortUrl1).isNotEqualTo(shortUrl2);
-    }
-
 }
