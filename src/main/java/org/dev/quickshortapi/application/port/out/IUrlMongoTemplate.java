@@ -6,6 +6,5 @@ import java.util.Date;
 
 public interface IUrlMongoTemplate {
 
-   public UpdateResult updateVisitsByIncrementAndLastVisitedDate(String id, int visits, Date lastVisitedDate);
-
+UpdateResult updateVisitsByIncrementAndLastVisitedDate(String id, int visits, Date lastVisitedDate);
 }
