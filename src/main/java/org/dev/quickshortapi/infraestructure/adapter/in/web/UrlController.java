@@ -1,5 +1,6 @@
 package org.dev.quickshortapi.infraestructure.adapter.in.web;
 
+import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -46,6 +47,7 @@ public class UrlController {
                             schema = @Schema(implementation = UrlShortenResponse.class)) }),
             @ApiResponse(responseCode = "404", description = "Url not found",
                     content = @Content) })
+    @RateLimiter(name = "shorten")
     @PostMapping(value = "/shorten", headers = "X-API-VERSION=1")
     public UrlShortenResponse shorten(
             @Parameter(description = "Url to shorten")
