@@ -1,7 +1,7 @@
 package org.dev.quickshortapi.application.port.out;
 
 import lombok.Getter;
-import org.dev.quickshortapi.application.port.in.format.IUrlFormat;
+import org.dev.quickshortapi.application.port.format.IUrlFormatProviderPort;
 import java.util.Date;
 
 @Getter
@@ -14,9 +14,9 @@ public class UrlStatisticsResponse
             Long visits,
             Date createdDate,
             Date lastVisitedDate,
-            IUrlFormat urlFormatProvider) {
+            IUrlFormatProviderPort urlFormatProviderAdapter) {
         this.visits = visits;
-        this.createdDate = urlFormatProvider.getDateFormatedToString(createdDate);
-        this.lastVisitedDate = urlFormatProvider.getDateFormatedToString(lastVisitedDate);
+        this.createdDate = urlFormatProviderAdapter.getDateFormatedToString(createdDate);
+        this.lastVisitedDate = urlFormatProviderAdapter.getDateFormatedToString(lastVisitedDate);
     }
 }

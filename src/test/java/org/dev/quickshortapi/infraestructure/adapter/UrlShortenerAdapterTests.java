@@ -1,16 +1,16 @@
-package org.dev.quickshortapi.application.port.in;
-import org.dev.quickshortapi.application.port.in.shortener.UrlShortener;
+package org.dev.quickshortapi.infraestructure.adapter;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
-class UrlShortenerTests {
+class UrlShortenerAdapterTests {
 
-    private UrlShortener urlShortener;
+    private UrlShortenerAdapter urlShortener;
 
     @BeforeEach
     void setup() {
-        urlShortener = new UrlShortener();
+        urlShortener = new UrlShortenerAdapter();
     }
 
     @Test
