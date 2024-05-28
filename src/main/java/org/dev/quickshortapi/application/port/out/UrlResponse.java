@@ -1,8 +1,7 @@
 package org.dev.quickshortapi.application.port.out;
 
 import lombok.Data;
-import org.dev.quickshortapi.application.port.in.format.IUrlFormat;
-
+import org.dev.quickshortapi.application.port.format.IUrlFormatProviderPort;
 import java.util.Date;
 
 @Data
@@ -14,12 +13,12 @@ public class UrlResponse {
     private String createdDate;
     private String lastVisitedDate;
 
-    public UrlResponse(String id, String originalUrl, String shortUrl, Long visits, Date createdDate, Date lastVisitedDate, IUrlFormat urlFormatProviderr) {
+    public UrlResponse(String id, String originalUrl, String shortUrl, Long visits, Date createdDate, Date lastVisitedDate, IUrlFormatProviderPort urlFormatProviderAdapter) {
         this.id = id;
         this.originalUrl = originalUrl;
         this.shortUrl = shortUrl;
         this.visits = visits;
-        this.createdDate =urlFormatProviderr.getDateFormatedToString(createdDate);
-        this.lastVisitedDate = urlFormatProviderr.getDateFormatedToString(lastVisitedDate);
+        this.createdDate = urlFormatProviderAdapter.getDateFormatedToString(createdDate);
+        this.lastVisitedDate = urlFormatProviderAdapter.getDateFormatedToString(lastVisitedDate);
     }
 }

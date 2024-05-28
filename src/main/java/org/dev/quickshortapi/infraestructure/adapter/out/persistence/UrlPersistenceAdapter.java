@@ -1,6 +1,6 @@
 package org.dev.quickshortapi.infraestructure.adapter.out.persistence;
 
-import org.dev.quickshortapi.application.port.in.format.UrlFormatProvider;
+import org.dev.quickshortapi.application.port.format.IUrlFormatProviderPort;
 import org.dev.quickshortapi.application.port.out.*;
 import org.dev.quickshortapi.common.PersistenceAdapter;
 import org.dev.quickshortapi.domain.event.UrlEvent;
@@ -10,7 +10,6 @@ import org.dev.quickshortapi.domain.Url;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-
 import java.util.Optional;
 
 @PersistenceAdapter
@@ -20,11 +19,13 @@ public class UrlPersistenceAdapter implements IUrlPersistencePort{
     private final IUrlMongoTemplate urlMongoTemplate;
     private static final int INCREASE_VISITS_BY_1 = 1;
     private static final int PAGE_SIZE = 100;
+    private final IUrlFormatProviderPort urlFormatProviderAdapter;
 
     public UrlPersistenceAdapter(IUrlMongoTemplate urlMongoTemplate,
-                                 IUrlRepository urlRepository){
+                                 IUrlRepository urlRepository, IUrlFormatProviderPort urlFormatProviderAdapter){
         this.urlMongoTemplate = urlMongoTemplate;
         this.urlRepository = urlRepository;
+        this.urlFormatProviderAdapter = urlFormatProviderAdapter;
     }
 
     @Override
@@ -79,7 +80,7 @@ public class UrlPersistenceAdapter implements IUrlPersistencePort{
 
     public Optional<UrlStatisticsResponse> getStatisticsByShortUrl(String shortUrl) {
         return urlRepository.findByShortUrl(shortUrl)
-                .map(url -> UrlMapper.toUrlStatisticsResponse(url, new UrlFormatProvider()));
+                .map(url -> UrlMapper.toUrlStatisticsResponse(url, urlFormatProviderAdapter));
     }
 
     @Override
@@ -88,6 +89,6 @@ public class UrlPersistenceAdapter implements IUrlPersistencePort{
             pageSize = PAGE_SIZE;
        Pageable pageable = PageRequest.of(page, pageSize);
        Page<UrlEntity> urls = urlRepository.findAll(pageable);
-       return urls.map(url -> UrlMapper.toUrlResponse(url, new UrlFormatProvider()));
+       return urls.map(url -> UrlMapper.toUrlResponse(url, urlFormatProviderAdapter));
     }
 }
