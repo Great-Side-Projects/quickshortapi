@@ -1,33 +1,30 @@
-package org.dev.quickshortapi.application.port.in;
+package org.dev.quickshortapi.infraestructure.adapter;
 
-import org.dev.quickshortapi.application.port.in.format.IUrlFormat;
-import org.dev.quickshortapi.application.port.in.format.UrlFormatProvider;
+import org.dev.quickshortapi.application.port.format.IUrlFormatProviderPort;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import java.util.Date;
-
 import static org.assertj.core.api.Assertions.assertThat;
 
-class UrlFormatProviderTests {
+class UrlFormatProviderAdapterTests {
 
-    private IUrlFormat urlFormatProvider;
+    private IUrlFormatProviderPort urlFormatProviderAdapter;
 
     @BeforeEach
     void setup() {
-        urlFormatProvider = new UrlFormatProvider();
+        urlFormatProviderAdapter = new UrlFormatProviderAdapter();
     }
 
     @Test
     void getDateFormatedToStringReturnsCorrectFormat() {
         Date date = new Date();
-        String formattedDate = urlFormatProvider.getDateFormatedToString(date);
+        String formattedDate = urlFormatProviderAdapter.getDateFormatedToString(date);
         assertThat(formattedDate).matches("\\w{3}, \\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}");
     }
 
     @Test
     void getDateFormatedToStringReturnsEmptyForNullDate() {
-        String formattedDate = urlFormatProvider.getDateFormatedToString(null);
+        String formattedDate = urlFormatProviderAdapter.getDateFormatedToString(null);
         assertThat(formattedDate).isEmpty();
     }
 }
