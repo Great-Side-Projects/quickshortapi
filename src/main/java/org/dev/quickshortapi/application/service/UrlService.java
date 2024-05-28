@@ -3,7 +3,7 @@ package org.dev.quickshortapi.application.service;
 import org.dev.quickshortapi.application.port.in.IUrlServicePort;
 import org.dev.quickshortapi.application.port.in.UrlCommand;
 import org.dev.quickshortapi.application.port.out.*;
-import org.dev.quickshortapi.application.port.in.shortener.IUrlShortener;
+import org.dev.quickshortapi.application.port.shortener.IUrlShortenerPort;
 import org.dev.quickshortapi.common.UseCase;
 import org.dev.quickshortapi.domain.exceptionhandler.UrlInternalServerErrorException;
 import org.dev.quickshortapi.domain.exceptionhandler.UrlNotFoundException;
@@ -16,7 +16,7 @@ import java.util.logging.Logger;
 @UseCase
 public class UrlService implements IUrlServicePort {
 
-    private IUrlShortener urlShortener;
+    private IUrlShortenerPort urlShortenerAdapter;
     private IUrlPersistenceCachePort urlRepositoryCacheAdapter;
     private IUrlPersistencePort urlPersistenceAdapter;
     private IUrlEventStreamingPort urlEventStreamingAdapter;
@@ -25,10 +25,10 @@ public class UrlService implements IUrlServicePort {
     Logger logger = Logger.getLogger(getClass().getName());
 
     public UrlService(IUrlPersistencePort urlRepository,
-                      IUrlShortener urlShortener,
+                      IUrlShortenerPort urlShortener,
                       IUrlPersistenceCachePort urlRepositoryCache,
                       IUrlEventStreamingPort urlEventStreaming) {
-        this.urlShortener = urlShortener;
+        this.urlShortenerAdapter = urlShortener;
         this.urlRepositoryCacheAdapter = urlRepositoryCache;
         this.urlPersistenceAdapter = urlRepository;
         this.urlEventStreamingAdapter = urlEventStreaming;
@@ -52,12 +52,12 @@ public class UrlService implements IUrlServicePort {
         }
 
         // Lógica para generar la URL corta
-        String shortUrl = urlShortener.generateSHAShortUrl(url.getOriginalUrl());
+        String shortUrl = urlShortenerAdapter.generateSHAShortUrl(url.getOriginalUrl());
         logger.log(Level.INFO, "URL corta generada SHA: {0}", shortUrl);
 
         if (urlPersistenceAdapter.existCollisionbyShortUrl(shortUrl)) {
             // Si la URL corta ya existe, genera otra URL corta Random
-            shortUrl = urlShortener.generateRandomShortUrl();
+            shortUrl = urlShortenerAdapter.generateRandomShortUrl();
             logger.log(Level.INFO, "URL corta generada Random: {0}", shortUrl);
         }
         url.setShortUrl(shortUrl);

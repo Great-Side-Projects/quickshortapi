@@ -5,7 +5,6 @@ import org.dev.quickshortapi.application.port.out.IUrlPersistencePort;
 import org.dev.quickshortapi.domain.Url;
 import org.dev.quickshortapi.domain.event.Event;
 import org.dev.quickshortapi.domain.event.UrlEvent;
-import org.dev.quickshortapi.domain.event.UrlVisitedEvent;
 import org.dev.quickshortapi.infraestructure.adapter.out.persistence.UrlEventStreamingAdapter;
 import org.dev.quickshortapi.infraestructure.adapter.out.persistence.UrlMapper;
 import org.junit.jupiter.api.BeforeEach;

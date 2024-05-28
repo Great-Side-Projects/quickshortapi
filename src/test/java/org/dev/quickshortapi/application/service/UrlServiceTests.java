@@ -1,7 +1,7 @@
 package org.dev.quickshortapi.application.service;
 
 import org.dev.quickshortapi.application.port.in.UrlCommand;
-import org.dev.quickshortapi.application.port.in.shortener.IUrlShortener;
+import org.dev.quickshortapi.application.port.shortener.IUrlShortenerPort;
 import org.dev.quickshortapi.application.port.out.IUrlEventStreamingPort;
 import org.dev.quickshortapi.application.port.out.IUrlPersistenceCachePort;
 import org.dev.quickshortapi.application.port.out.IUrlPersistencePort;
@@ -21,7 +21,7 @@ import static org.mockito.Mockito.*;
 class UrlServiceTests {
 
     @MockBean
-    private IUrlShortener urlShortener;
+    private IUrlShortenerPort urlShortener;
 
     @MockBean
     private IUrlPersistenceCachePort urlRepositoryCacheAdapter;

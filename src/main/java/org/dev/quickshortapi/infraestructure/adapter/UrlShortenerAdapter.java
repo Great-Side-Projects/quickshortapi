@@ -1,5 +1,6 @@
-package org.dev.quickshortapi.application.port.in.shortener;
+package org.dev.quickshortapi.infraestructure.adapter;
 
+import org.dev.quickshortapi.application.port.shortener.IUrlShortenerPort;
 import org.dev.quickshortapi.domain.exceptionhandler.UrlInternalServerErrorException;
 import org.springframework.stereotype.Component;
 import java.net.URLEncoder;
@@ -10,14 +11,14 @@ import java.security.SecureRandom;
 import java.util.Base64;
 
 @Component
-public class UrlShortener implements IUrlShortener {
+public class UrlShortenerAdapter implements IUrlShortenerPort {
 
     private static final String ALPHABET = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
     private static final int URL_LENGTH = 5;
     private MessageDigest digest;
     private SecureRandom random = new SecureRandom();
 
-    public UrlShortener() {
+    public UrlShortenerAdapter() {
         try {
             this.digest = MessageDigest.getInstance("SHA-256");
         } catch (NoSuchAlgorithmException e) {
