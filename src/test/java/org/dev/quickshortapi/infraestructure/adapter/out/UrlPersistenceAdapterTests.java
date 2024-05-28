@@ -1,18 +1,15 @@
 package org.dev.quickshortapi.infraestructure.adapter.out;
 
+import org.dev.quickshortapi.application.port.format.IUrlFormatProviderPort;
 import org.dev.quickshortapi.application.port.out.IUrlMongoTemplate;
 import org.dev.quickshortapi.application.port.out.IUrlRepository;
 import org.dev.quickshortapi.domain.Url;
-import org.dev.quickshortapi.domain.event.UrlEvent;
-import org.dev.quickshortapi.domain.exceptionhandler.UrlInternalServerErrorException;
 import org.dev.quickshortapi.domain.exceptionhandler.UrlNotFoundException;
 import org.dev.quickshortapi.infraestructure.adapter.out.persistence.UrlEntity;
 import org.dev.quickshortapi.infraestructure.adapter.out.persistence.UrlPersistenceAdapter;
-import org.glassfish.jaxb.core.v2.TODO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import java.util.Date;
 import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -24,12 +21,13 @@ class UrlPersistenceAdapterTests {
     private UrlPersistenceAdapter urlPersistenceAdapter;
     private IUrlRepository urlRepository;
     private IUrlMongoTemplate urlMongoTemplate;
+    private IUrlFormatProviderPort urlFormatProviderAdapter;
 
     @BeforeEach
     void setup() {
         urlRepository = Mockito.mock(IUrlRepository.class);
         urlMongoTemplate = Mockito.mock(IUrlMongoTemplate.class);
-        urlPersistenceAdapter = new UrlPersistenceAdapter(urlMongoTemplate, urlRepository);
+        urlPersistenceAdapter = new UrlPersistenceAdapter(urlMongoTemplate, urlRepository, urlFormatProviderAdapter);
     }
 
     @Test

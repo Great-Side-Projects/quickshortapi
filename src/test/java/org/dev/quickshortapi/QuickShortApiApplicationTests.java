@@ -1,6 +1,5 @@
 package org.dev.quickshortapi;
 
-import org.dev.quickshortapi.application.port.in.shortener.IUrlShortener;
 import org.dev.quickshortapi.infraestructure.adapter.in.web.UrlController;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
