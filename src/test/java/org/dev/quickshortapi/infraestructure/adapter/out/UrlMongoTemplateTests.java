@@ -12,7 +12,6 @@ import org.mockito.Mockito;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import java.util.Date;
 import java.util.stream.Stream;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
