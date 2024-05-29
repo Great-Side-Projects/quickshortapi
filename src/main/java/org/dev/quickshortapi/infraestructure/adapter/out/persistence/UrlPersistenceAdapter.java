@@ -4,7 +4,6 @@ import org.dev.quickshortapi.application.port.format.IUrlFormatProviderPort;
 import org.dev.quickshortapi.application.port.out.*;
 import org.dev.quickshortapi.common.PersistenceAdapter;
 import org.dev.quickshortapi.domain.event.UrlEvent;
-import org.dev.quickshortapi.domain.exceptionhandler.UrlInternalServerErrorException;
 import org.dev.quickshortapi.domain.exceptionhandler.UrlNotFoundException;
 import org.dev.quickshortapi.domain.Url;
 import org.springframework.data.domain.Page;
@@ -58,15 +57,11 @@ public class UrlPersistenceAdapter implements IUrlPersistencePort{
 
     @Override
     public void increaseVisitsAndUpdateLastVisitedDate(UrlEvent urlEvent) {
-        try{
-            urlMongoTemplate.updateVisitsByIncrementAndLastVisitedDate(
+
+         urlMongoTemplate.updateVisitsByIncrementAndLastVisitedDate(
                     urlEvent.getId(),
                     INCREASE_VISITS_BY_1,
                     urlEvent.getLastVisitedDate());
-        }
-        catch (Exception e) {
-            throw new UrlInternalServerErrorException("Error interno al incrementar las visitas:" + e.getMessage());
-        }
     }
 
     @Override
