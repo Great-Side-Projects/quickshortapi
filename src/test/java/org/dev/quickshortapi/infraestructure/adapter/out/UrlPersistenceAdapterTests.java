@@ -3,6 +3,8 @@ package org.dev.quickshortapi.infraestructure.adapter.out;
 import org.dev.quickshortapi.application.port.format.IUrlFormatProviderPort;
 import org.dev.quickshortapi.application.port.out.IUrlMongoTemplate;
 import org.dev.quickshortapi.application.port.out.IUrlRepository;
+import org.dev.quickshortapi.application.port.out.UrlResponse;
+import org.dev.quickshortapi.application.port.out.UrlStatisticsResponse;
 import org.dev.quickshortapi.domain.Url;
 import org.dev.quickshortapi.domain.exceptionhandler.UrlNotFoundException;
 import org.dev.quickshortapi.infraestructure.adapter.out.persistence.UrlEntity;
@@ -10,6 +12,12 @@ import org.dev.quickshortapi.infraestructure.adapter.out.persistence.UrlPersiste
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+
+import java.util.List;
 import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -81,18 +89,6 @@ class UrlPersistenceAdapterTests {
     }
 
     @Test
-    void increaseVisitsAndUpdateLastVisitedDateThrowsExceptionForFailure() {
-        Mockito.doThrow(new RuntimeException()).when(urlMongoTemplate)
-                .updateVisitsByIncrementAndLastVisitedDate(any(), any(int.class), any());
-        //TODO: Refactorizar para que se pueda testear el mensaje de la excepción
-        //assertThatThrownBy(() ->
-        //        urlPersistenceAdapter.increaseVisitsAndUpdateLastVisitedDate(
-        //                new UrlEvent("id", "shortUrl", "originalUrl", new Date())))
-        //        .isInstanceOf(UrlInternalServerErrorException.class)
-        //        .hasMessageContaining("Error interno al incrementar las visitas:");
-    }
-
-    @Test
     void deleteUrlbyShortUrlReturnsTrueForExistingUrl() {
         UrlEntity urlEntity = new UrlEntity();
         urlEntity.setOriginalUrl("www.google.com");
@@ -108,5 +104,55 @@ class UrlPersistenceAdapterTests {
         Mockito.when(urlRepository.findByShortUrl(anyString())).thenReturn(Optional.empty());
         boolean isDeleted = urlPersistenceAdapter.deleteUrlbyShortUrl("nonexistentUrl");
         assertThat(isDeleted).isFalse();
+    }
+
+    @Test
+    void getShortUrlbyOriginalUrlReturnsEmptyWhenUrlNotFound() {
+        Mockito.when(urlRepository.findByOriginalUrl(anyString())).thenReturn(Optional.empty());
+        String shortUrl = urlPersistenceAdapter.getShortUrlbyOriginalUrl("nonexistentUrl");
+        assertThat(shortUrl).isEmpty();
+    }
+
+    @Test
+    void existCollisionbyShortUrlReturnsTrueWhenUrlExists() {
+        Mockito.when(urlRepository.findByShortUrl(anyString())).thenReturn(Optional.of(new UrlEntity()));
+        boolean exists = urlPersistenceAdapter.existCollisionbyShortUrl("existingShortUrl");
+        assertThat(exists).isTrue();
+    }
+
+    @Test
+    void existCollisionbyShortUrlReturnsFalseWhenUrlDoesNotExist() {
+        Mockito.when(urlRepository.findByShortUrl(anyString())).thenReturn(Optional.empty());
+        boolean exists = urlPersistenceAdapter.existCollisionbyShortUrl("nonexistentShortUrl");
+        assertThat(exists).isFalse();
+    }
+
+    @Test
+    void getUrlOrThrowByShortUrlThrowsExceptionWhenUrlNotFound() {
+        Mockito.when(urlRepository.findByShortUrl(anyString())).thenReturn(Optional.empty());
+        assertThatThrownBy(() -> urlPersistenceAdapter.getUrlOrThrowByShortUrl("nonexistentShortUrl"))
+                .isInstanceOf(UrlNotFoundException.class)
+                .hasMessageContaining("URL corta no encontrada");
+    }
+
+    @Test
+    void deleteUrlbyShortUrlReturnsFalseWhenUrlNotFound() {
+        Mockito.when(urlRepository.findByShortUrl(anyString())).thenReturn(Optional.empty());
+        boolean isDeleted = urlPersistenceAdapter.deleteUrlbyShortUrl("nonexistentShortUrl");
+        assertThat(isDeleted).isFalse();
+    }
+
+    @Test
+    void getStatisticsByShortUrlReturnsEmptyWhenUrlNotFound() {
+        Mockito.when(urlRepository.findByShortUrl(anyString())).thenReturn(Optional.empty());
+        Optional<UrlStatisticsResponse> statistics = urlPersistenceAdapter.getStatisticsByShortUrl("nonexistentShortUrl");
+        assertThat(statistics).isEmpty();
+    }
+
+    @Test
+    void getAllUrlsReturnsEmptyPageWhenNoUrlsExist() {
+        Mockito.when(urlRepository.findAll((Pageable) any())).thenReturn(Page.empty());
+        Page<UrlResponse> urls = urlPersistenceAdapter.getAllUrls(0, 10);
+        assertThat(urls).isEmpty();
     }
 }
