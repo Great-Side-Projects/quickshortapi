@@ -3,7 +3,6 @@ package org.dev.quickshortapi.infraestructure.adapter.out;
 import org.dev.quickshortapi.application.port.out.IUrlEventTemplatePort;
 import org.dev.quickshortapi.application.port.out.IUrlRepositoryCache;
 import org.dev.quickshortapi.domain.Url;
-import org.dev.quickshortapi.infraestructure.adapter.out.persistence.UrlEntity;
 import org.dev.quickshortapi.infraestructure.adapter.out.persistence.UrlEntityCache;
 import org.dev.quickshortapi.infraestructure.adapter.out.persistence.UrlPersistenceCacheAdapter;
 import org.junit.jupiter.api.BeforeEach;
