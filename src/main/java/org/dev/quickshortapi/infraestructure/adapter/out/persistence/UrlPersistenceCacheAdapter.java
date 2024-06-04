@@ -10,7 +10,6 @@ import org.dev.quickshortapi.domain.Url;
 import org.dev.quickshortapi.domain.event.cache.UrlDeleteByIdCacheEvent;
 import org.dev.quickshortapi.domain.event.cache.UrlFindByIdCacheEvent;
 import org.dev.quickshortapi.domain.event.cache.UrlSaveCacheEvent;
-
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -44,7 +43,7 @@ public class UrlPersistenceCacheAdapter implements IUrlPersistenceCachePort, IUr
     @CircuitBreaker(name = "urlPersistenceCache", fallbackMethod = "fallbackDeleteById")
     public void deleteById(String id) {
         urlRepositoryCache.deleteById(id);
-        logger.log(Level.INFO,"URL corta eliminada: {0}" , id);
+        logger.log(Level.INFO,"URL corta eliminada del cache: {0}" , id);
     }
 
     @Override

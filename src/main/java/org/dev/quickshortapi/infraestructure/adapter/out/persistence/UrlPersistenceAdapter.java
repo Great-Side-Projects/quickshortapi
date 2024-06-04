@@ -12,7 +12,7 @@ import org.springframework.data.domain.Pageable;
 import java.util.Optional;
 
 @PersistenceAdapter
-public class UrlPersistenceAdapter implements IUrlPersistencePort{
+public class UrlPersistenceAdapter implements IUrlPersistencePort {
 
     private final IUrlRepository urlRepository;
     private final IUrlMongoTemplate urlMongoTemplate;
@@ -29,7 +29,7 @@ public class UrlPersistenceAdapter implements IUrlPersistencePort{
 
     @Override
     public String getShortUrlbyOriginalUrl(String originalUrl) {
-        return urlRepository.findByOriginalUrl(originalUrl)
+        return urlRepository.findOriginalUrlByShortUrl(originalUrl)
                 .map(UrlEntity::getShortUrl)
                 .orElse("");
     }
@@ -37,7 +37,7 @@ public class UrlPersistenceAdapter implements IUrlPersistencePort{
     @Override
     public boolean existCollisionbyShortUrl(String shortUrl) {
         // Verificar si la URL corta ya existe en la base de datos
-        return urlRepository.findByShortUrl(shortUrl).isPresent();
+        return urlRepository.existsByShortUrl(shortUrl);
     }
 
     @Override
@@ -49,7 +49,7 @@ public class UrlPersistenceAdapter implements IUrlPersistencePort{
 
     @Override
     public Optional<Url> getUrlOrThrowByShortUrl(String shortUrl) {
-        Optional<UrlEntity> url = urlRepository.findByShortUrl(shortUrl);
+        Optional<UrlProjection> url = urlRepository.findByShortUrlProjection(shortUrl);
         if(url.isEmpty())
             throw new UrlNotFoundException("URL corta no encontrada");
         return Optional.of(UrlMapper.toUrl(url.get()));
@@ -66,7 +66,7 @@ public class UrlPersistenceAdapter implements IUrlPersistencePort{
 
     @Override
     public boolean deleteUrlbyShortUrl(String shortUrl) {
-        if (urlRepository.findByShortUrl(shortUrl).isPresent()) {
+        if (urlRepository.existsByShortUrl(shortUrl)) {
             urlRepository.deleteByShortUrl(shortUrl);
             return true;
         }
@@ -74,7 +74,7 @@ public class UrlPersistenceAdapter implements IUrlPersistencePort{
     }
 
     public Optional<UrlStatisticsResponse> getStatisticsByShortUrl(String shortUrl) {
-        return urlRepository.findByShortUrl(shortUrl)
+        return urlRepository.findUrlStatisticsByShortUrl(shortUrl)
                 .map(url -> UrlMapper.toUrlStatisticsResponse(url, urlFormatProviderAdapter));
     }
 
