@@ -19,6 +19,7 @@ public class UrlMapper {
     public static Url toUrl(UrlEntity urlEntity) {
         return new Url(urlEntity.getId(), urlEntity.getOriginalUrl(), urlEntity.getShortUrl());
     }
+
     public static UrlResponse toUrlResponse(UrlEntity urlEntity, IUrlFormatProviderPort urlFormatProviderAdapter) {
         return new UrlResponse(urlEntity.getId(),
                 urlEntity.getOriginalUrl(),
@@ -47,8 +48,8 @@ public class UrlMapper {
         return new UrlEntityCache(url.getShortUrl(), url.getId(), url.getOriginalUrl());
     }
 
-    public static UrlVisitedEvent toUrlVisitedEvent(UrlEvent url){
-        return new UrlVisitedEvent(UUID.randomUUID().toString(),new Date(), EventType.VISITED, url);
+    public static UrlVisitedEvent toUrlVisitedEvent(UrlEvent urlEvent){
+        return new UrlVisitedEvent(UUID.randomUUID().toString(),new Date(), EventType.VISITED, urlEvent);
     }
     public static UrlEvent toUrlEvent(Url url){
         return new UrlEvent(url.getId(), url.getOriginalUrl(), url.getShortUrl(), url.getLastVisitedDate());
