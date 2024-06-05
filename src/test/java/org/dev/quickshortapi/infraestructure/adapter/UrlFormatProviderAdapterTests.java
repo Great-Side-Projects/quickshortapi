@@ -19,7 +19,7 @@ class UrlFormatProviderAdapterTests {
     void getDateFormatedToStringReturnsCorrectFormat() {
         Date date = new Date();
         String formattedDate = urlFormatProviderAdapter.getDateFormatedToString(date);
-        assertThat(formattedDate).matches("\\w{3}, \\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}");
+        assertThat(formattedDate).matches("[\\wáéíóúñ]{1,3}, \\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}");
     }
 
     @Test
