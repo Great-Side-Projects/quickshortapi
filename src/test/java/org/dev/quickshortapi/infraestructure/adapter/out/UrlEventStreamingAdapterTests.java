@@ -56,7 +56,7 @@ class UrlEventStreamingAdapterTests {
         UrlEvent urlEvent = UrlMapper.toUrlEvent(url);
         Event<UrlEvent> visited = UrlMapper.toUrlVisitedEvent(urlEvent);
         urlEventStreamingAdapter.visitedEvent(visited);
-        Mockito.verify(urlPersistenceAdapter, times(1)).increaseVisitsAndUpdateLastVisitedDate(any());
+        Mockito.verify(urlPersistenceAdapter, times(1)).incrementVisitsAndUpdateLastVisitedDate(any());
     }
 }
 

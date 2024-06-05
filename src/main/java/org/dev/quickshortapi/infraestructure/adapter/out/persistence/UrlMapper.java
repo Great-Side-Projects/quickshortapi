@@ -20,9 +20,6 @@ public class UrlMapper {
         return new Url(urlEntity.getId(), urlEntity.getOriginalUrl(), urlEntity.getShortUrl());
     }
 
-    public static Url toUrl(UrlProjection urlProjection) {
-        return new Url(urlProjection.getId(), urlProjection.getOriginalUrl(), urlProjection.getShortUrl());
-    }
     public static UrlResponse toUrlResponse(UrlEntity urlEntity, IUrlFormatProviderPort urlFormatProviderAdapter) {
         return new UrlResponse(urlEntity.getId(),
                 urlEntity.getOriginalUrl(),
