@@ -6,8 +6,6 @@ import org.dev.quickshortapi.common.PersistenceAdapter;
 import org.dev.quickshortapi.domain.event.UrlEvent;
 import org.dev.quickshortapi.domain.exceptionhandler.UrlNotFoundException;
 import org.dev.quickshortapi.domain.Url;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -16,7 +14,6 @@ import java.util.Optional;
 @PersistenceAdapter
 public class UrlPersistenceAdapter implements IUrlPersistencePort {
 
-    private static final Logger log = LoggerFactory.getLogger(UrlPersistenceAdapter.class);
     private final IUrlRepository urlRepository;
     private static final int INCREMENT_VISITS_BY_1 = 1;
     private static final int PAGE_SIZE = 100;
