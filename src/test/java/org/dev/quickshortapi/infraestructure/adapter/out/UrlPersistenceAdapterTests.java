@@ -1,7 +1,6 @@
 package org.dev.quickshortapi.infraestructure.adapter.out;
 
 import org.dev.quickshortapi.application.port.format.IUrlFormatProviderPort;
-import org.dev.quickshortapi.application.port.out.IUrlMongoTemplate;
 import org.dev.quickshortapi.application.port.out.IUrlRepository;
 import org.dev.quickshortapi.application.port.out.UrlResponse;
 import org.dev.quickshortapi.application.port.out.UrlStatisticsResponse;
@@ -9,7 +8,6 @@ import org.dev.quickshortapi.domain.Url;
 import org.dev.quickshortapi.domain.exceptionhandler.UrlNotFoundException;
 import org.dev.quickshortapi.infraestructure.adapter.out.persistence.UrlEntity;
 import org.dev.quickshortapi.infraestructure.adapter.out.persistence.UrlPersistenceAdapter;
-import org.dev.quickshortapi.infraestructure.adapter.out.persistence.UrlProjection;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -25,14 +23,12 @@ class UrlPersistenceAdapterTests {
 
     private UrlPersistenceAdapter urlPersistenceAdapter;
     private IUrlRepository urlRepository;
-    private IUrlMongoTemplate urlMongoTemplate;
     private IUrlFormatProviderPort urlFormatProviderAdapter;
 
     @BeforeEach
     void setup() {
         urlRepository = Mockito.mock(IUrlRepository.class);
-        urlMongoTemplate = Mockito.mock(IUrlMongoTemplate.class);
-        urlPersistenceAdapter = new UrlPersistenceAdapter(urlMongoTemplate, urlRepository, urlFormatProviderAdapter);
+        urlPersistenceAdapter = new UrlPersistenceAdapter(urlRepository, urlFormatProviderAdapter);
     }
 
     @Test
@@ -40,7 +36,7 @@ class UrlPersistenceAdapterTests {
         UrlEntity urlEntity = new UrlEntity();
         urlEntity.setOriginalUrl("www.google.com");
         urlEntity.setShortUrl("HKl_v");
-        Mockito.when(urlRepository.findOriginalUrlByShortUrl(anyString()))
+        Mockito.when(urlRepository.findShortUrlByOriginalUrl(anyString()))
                 .thenReturn(Optional.of(urlEntity));
         String shortUrl = urlPersistenceAdapter.getShortUrlbyOriginalUrl("www.google.com");
         assertThat(shortUrl).isEqualTo("HKl_v");
@@ -68,31 +64,21 @@ class UrlPersistenceAdapterTests {
 
     @Test
     void getUrlOrThrowByShortUrlReturnsUrl() {
-        UrlProjection urlProjection = new UrlProjection() {
-            @Override
-            public String getId() {
-                return "1";
-            }
+        UrlEntity urlEntity = new UrlEntity();
+        urlEntity.setId("1");
+        urlEntity.setOriginalUrl("www.google.com");
+        urlEntity.setShortUrl("HKl_v");
 
-            @Override
-            public String getOriginalUrl() {
-                return "www.google.com";
-            }
+        Mockito.when(urlRepository.findOriginalUrlByShortUrl(anyString()))
+                .thenReturn(Optional.of(urlEntity));
 
-            @Override
-            public String getShortUrl() {
-                return "HKl_v";
-            }
-        };
-        Mockito.when(urlRepository.findByShortUrlProjection(anyString()))
-                .thenReturn((Optional<UrlProjection>) Optional.of(urlProjection));
         Optional<Url> url = urlPersistenceAdapter.getUrlOrThrowByShortUrl("HKl_v");
         assertThat(url).isPresent();
     }
 
     @Test
     void getUrlOrThrowByShortUrlThrowsExceptionForNonexistentUrl() {
-        Mockito.when(urlRepository.findByShortUrlProjection(anyString())).thenReturn(Optional.empty());
+        Mockito.when(urlRepository.findOriginalUrlByShortUrl(anyString())).thenReturn(Optional.empty());
         assertThatThrownBy(() -> urlPersistenceAdapter.getUrlOrThrowByShortUrl("nonexistentUrl"))
                 .isInstanceOf(UrlNotFoundException.class)
                 .hasMessageContaining("URL corta no encontrada");
@@ -139,7 +125,7 @@ class UrlPersistenceAdapterTests {
 
     @Test
     void getUrlOrThrowByShortUrlThrowsExceptionWhenUrlNotFound() {
-        Mockito.when(urlRepository.findByShortUrlProjection(anyString())).thenReturn(Optional.empty());
+        Mockito.when(urlRepository.findOriginalUrlByShortUrl(anyString())).thenReturn(Optional.empty());
         assertThatThrownBy(() -> urlPersistenceAdapter.getUrlOrThrowByShortUrl("nonexistentShortUrl"))
                 .isInstanceOf(UrlNotFoundException.class)
                 .hasMessageContaining("URL corta no encontrada");
