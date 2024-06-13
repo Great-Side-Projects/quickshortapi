@@ -68,6 +68,7 @@ public class UrlPersistenceAdapter implements IUrlPersistencePort {
         return false;
     }
 
+    @Override
     public Optional<UrlStatisticsResponse> getStatisticsByShortUrl(String shortUrl) {
         return urlRepository.findUrlStatisticsByShortUrl(shortUrl)
                 .map(url -> UrlMapper.toUrlStatisticsResponse(url, urlFormatProviderAdapter));
