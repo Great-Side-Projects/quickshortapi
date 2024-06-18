@@ -2,7 +2,6 @@ package org.dev.quickshortapi.domain.event.cache;
 
 import org.dev.quickshortapi.domain.event.Event;
 import org.dev.quickshortapi.domain.event.EventType;
-
 import java.util.Date;
 
 public class UrlFindByIdCacheEvent extends Event<String> {

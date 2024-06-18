@@ -51,8 +51,7 @@ class UrlPersistenceAdapterTests {
 
     @Test
     void saveReturnsSavedUrl() {
-        Url url = new Url();
-        url.setOriginalUrl("www.google.com");
+        Url url = new Url("https://www.google.com");
         url.setShortUrl("HKl_v");
         UrlEntity urlEntity = new UrlEntity();
         urlEntity.setOriginalUrl("www.google.com");

@@ -1,12 +1,10 @@
 package org.dev.quickshortapi.domain;
 
-import lombok.Data;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Date;
 
-@Data
 public class Url {
     private String id;
     private String originalUrl;
@@ -26,6 +24,40 @@ public class Url {
         this.id = id;
         this.originalUrl = originalUrl;
         this.shortUrl = shortUrl;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getOriginalUrl() {
+        return originalUrl;
+    }
+
+    public String getShortUrl() {
+        return shortUrl;
+    }
+    public void setShortUrl(String shortUrl) {
+        this.shortUrl = shortUrl;
+    }
+
+    public Long getVisits() {
+        return visits;
+    }
+
+    public Date getCreatedDate() {
+        return createdDate;
+    }
+
+    public Date getLastVisitedDate() {
+        return lastVisitedDate;
+    }
+    public void setLastVisitedDate(Date lastVisitedDate) {
+        this.lastVisitedDate = lastVisitedDate;
     }
 
     public boolean isValidUrl() {

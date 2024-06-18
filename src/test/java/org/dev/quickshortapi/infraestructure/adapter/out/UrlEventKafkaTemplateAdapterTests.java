@@ -10,6 +10,8 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.kafka.core.KafkaTemplate;
 import java.util.Date;
+import java.util.UUID;
+
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 
@@ -26,9 +28,7 @@ class UrlEventKafkaTemplateAdapterTests {
 
     @Test
     void sendSendsEventToKafka() {
-        Url url = new Url();
-        url.setOriginalUrl("www.google.com");
-        url.setShortUrl("HKl_v");
+        Url url = new Url(UUID.randomUUID().toString(), "http://www.google.com", "HKl_v");
         url.setLastVisitedDate(new Date());
         UrlEvent urlEvent = UrlMapper.toUrlEvent(url);
         Event<UrlEvent> visited = UrlMapper.toUrlVisitedEvent(urlEvent);

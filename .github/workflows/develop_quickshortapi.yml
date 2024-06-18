@@ -21,6 +21,21 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 17
+      - name: Build UnitTests with Maven
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+          SPRING_DATA_MONGODB_URI: ${{ secrets.MONGODB_URI }}
+          SPRING_DATA_REDIS_HOST: ${{ secrets.REDIS_HOST }}
+          SPRING_DATA_REDIS_PORT: ${{ secrets.REDIS_PORT }}
+          SPRING_DATA_REDIS_PASSWORD: ${{ secrets.REDIS_PASSWORD }}
+          SPRING_KAFKA_BOOTSTRAP_SERVERS: ${{ secrets.KAFKA_BOOTSTRAP_SERVERS }}
+          SPRING_KAFKA_PROPERTIES_SASL_JAAS_CONFIG: "org.apache.kafka.common.security.plain.PlainLoginModule required username='${{ secrets.KAFKA_USERNAME }}' password='${{ secrets.KAFKA_PASSWORD }}';"
+          SPRING_RABBITMQ_HOST: ${{ secrets.RABBITMQ_HOST }}
+          SPRING_RABBITMQ_PORT: ${{ secrets.RABBITMQ_PORT }}
+          SPRING_RABBITMQ_USERNAME: ${{ secrets.RABBITMQ_USERNAME }}
+          SPRING_RABBITMQ_PASSWORD: ${{ secrets.RABBITMQ_PASSWORD }}
+        run: mvn test
       - name: Cache SonarQube packages
         uses: actions/cache@v1
         with:

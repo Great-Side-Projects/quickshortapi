@@ -1,9 +1,7 @@
 package org.dev.quickshortapi.domain.event;
 
-import lombok.Data;
 import java.util.Date;
 
-@Data
 public class UrlEvent {
     private String id;
     private String originalUrl;
@@ -25,5 +23,17 @@ public class UrlEvent {
                 ", shortUrl=" + shortUrl +
                 ", lastVisitedDate=" + lastVisitedDate +
                 '}';
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public Date getLastVisitedDate() {
+        return lastVisitedDate;
+    }
+
+    public String getShortUrl() {
+        return shortUrl;
     }
 }

@@ -1,8 +1,5 @@
 package org.dev.quickshortapi.domain.event.cache;
 
-import lombok.Data;
-
-@Data
 public class UrlEventCache {
     private String id;
     private String idDbUrl;

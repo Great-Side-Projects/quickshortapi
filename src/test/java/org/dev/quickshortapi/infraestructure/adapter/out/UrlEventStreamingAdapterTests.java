@@ -31,8 +31,7 @@ class UrlEventStreamingAdapterTests {
 
     @Test
     void sendVisitedEventSendsEvent() {
-        Url url = new Url();
-        url.setOriginalUrl("www.google.com");
+        Url url = new Url("https://www.google.com");
         url.setShortUrl("HKl_v");
         urlEventStreamingAdapter.sendVisitedEvent(url);
         Mockito.verify(urlEventKafkaTemplateAdapter, times(1)).send(any());
@@ -40,8 +39,7 @@ class UrlEventStreamingAdapterTests {
 
     @Test
     void fallbackVisitedEventSendsEvent() {
-        Url url = new Url();
-        url.setOriginalUrl("www.google.com");
+        Url url = new Url("https://www.google.com");
         url.setShortUrl("HKl_v");
         urlEventStreamingAdapter.fallbackVisitedEvent(url, new Exception("Test Exception"));
         Mockito.verify(urlEventRabbitMQTemplateAdapter, times(1)).send(any());
@@ -49,8 +47,7 @@ class UrlEventStreamingAdapterTests {
 
     @Test
     void visitedEventIncreasesVisits() {
-        Url url = new Url();
-        url.setOriginalUrl("www.google.com");
+        Url url = new Url("https://www.google.com");
         url.setShortUrl("HKl_v");
         url.setLastVisitedDate(new Date());
         UrlEvent urlEvent = UrlMapper.toUrlEvent(url);

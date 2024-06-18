@@ -70,8 +70,7 @@ class UrlServiceTests {
 
     @Test
     void redirectUrlReturnsOriginalUrl() {
-        Url url = new Url();
-        url.setOriginalUrl("https://www.google.com");
+        Url url = new Url("https://www.google.com");
         url.setShortUrl("HKl_v");
         when(urlRepositoryCacheAdapter.findById(any())).thenReturn(Optional.of(url));
         String originalUrl = urlService.redirectUrl("HKl_v");
@@ -99,8 +98,7 @@ class UrlServiceTests {
 
     @Test
     void redirectUrlReturnsOriginalUrlWhenUrlExistsInCache() {
-        Url url = new Url();
-        url.setOriginalUrl("https://www.google.com");
+        Url url = new Url("https://www.google.com");
         url.setShortUrl("HKl_v");
         when(urlRepositoryCacheAdapter.findById(any())).thenReturn(Optional.of(url));
         String originalUrl = urlService.redirectUrl("HKl_v");
