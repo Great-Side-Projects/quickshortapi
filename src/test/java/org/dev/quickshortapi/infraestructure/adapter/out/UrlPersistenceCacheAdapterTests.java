@@ -28,15 +28,14 @@ class UrlPersistenceCacheAdapterTests {
 
     @Test
     void saveReturnsSavedUrl() {
-        Url url = new Url();
-        url.setOriginalUrl("www.google.com");
+        Url url = new Url("https://www.google.com");
         url.setShortUrl("HKl_v");
         UrlEntityCache urlEntityCache = new UrlEntityCache();
-        urlEntityCache.setOriginalUrl("www.google.com");
+        urlEntityCache.setOriginalUrl("https://www.google.com");
         urlEntityCache.setId("HKl_v");
         Mockito.when(urlRepositoryCache.save(any())).thenReturn(urlEntityCache);
         Url savedUrl = urlPersistenceCacheAdapter.save(url);
-        assertThat(savedUrl).isEqualToComparingFieldByField(url);
+        assertThat(savedUrl).isEqualToIgnoringGivenFields(url, "createdDate");
     }
 
     @Test
