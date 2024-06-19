@@ -22,6 +22,14 @@
 [![LinkedIn][linkedin-shield]][linkedin-url]
 [![Quality Gate Status](http://20.64.115.37:9000/api/project_badges/measure?project=quickshort&metric=alert_status&token=sqb_d6d760d2c4c8281f3d3a27dff6d1bc548804a966)](http://20.64.115.37:9000/dashboard?id=quickshort)
 [![Health Check][health-check]](https://quickshortapi.azurewebsites.net/actuator/health)
+[![Coverage](http://20.64.115.37:9000/api/project_badges/measure?project=quickshort&metric=coverage&token=sqb_d6d760d2c4c8281f3d3a27dff6d1bc548804a966)](http://20.64.115.37:9000/dashboard?id=quickshort)
+[![Duplicated Lines (%)](http://20.64.115.37:9000/api/project_badges/measure?project=quickshort&metric=duplicated_lines_density&token=sqb_d6d760d2c4c8281f3d3a27dff6d1bc548804a966)](http://20.64.115.37:9000/dashboard?id=quickshort)
+[![Lines of Code](http://20.64.115.37:9000/api/project_badges/measure?project=quickshort&metric=ncloc&token=sqb_d6d760d2c4c8281f3d3a27dff6d1bc548804a966)](http://20.64.115.37:9000/dashboard?id=quickshort)
+[![Maintainability Rating](http://20.64.115.37:9000/api/project_badges/measure?project=quickshort&metric=sqale_rating&token=sqb_d6d760d2c4c8281f3d3a27dff6d1bc548804a966)](http://20.64.115.37:9000/dashboard?id=quickshort)
+[![Reliability Rating](http://20.64.115.37:9000/api/project_badges/measure?project=quickshort&metric=reliability_rating&token=sqb_d6d760d2c4c8281f3d3a27dff6d1bc548804a966)](http://20.64.115.37:9000/dashboard?id=quickshort)
+[![Security Rating](http://20.64.115.37:9000/api/project_badges/measure?project=quickshort&metric=security_rating&token=sqb_d6d760d2c4c8281f3d3a27dff6d1bc548804a966)](http://20.64.115.37:9000/dashboard?id=quickshort)
+[![Technical Debt](http://20.64.115.37:9000/api/project_badges/measure?project=quickshort&metric=sqale_index&token=sqb_d6d760d2c4c8281f3d3a27dff6d1bc548804a966)](http://20.64.115.37:9000/dashboard?id=quickshort)
+
 
 <!-- PROJECT LOGO -->
 <br />
