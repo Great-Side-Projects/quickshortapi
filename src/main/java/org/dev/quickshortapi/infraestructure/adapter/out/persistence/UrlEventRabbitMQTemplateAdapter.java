@@ -18,7 +18,7 @@ public class UrlEventRabbitMQTemplateAdapter implements IUrlEventTemplatePort<St
     }
 
     @Override
-    public void send(String urlEvent) {
-           rabbitTemplate.convertAndSend(QUEUE_NAME, urlEvent);
+    public void send(String data) {
+           rabbitTemplate.convertAndSend(QUEUE_NAME, data);
     }
 }
