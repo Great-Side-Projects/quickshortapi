@@ -1,5 +1,4 @@
 HELP.md
-src/main/resources/application.yaml
 target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
@@ -32,3 +31,7 @@ build/
 
 ### VS Code ###
 .vscode/
+
+src/main/resources/application.yaml
+src/main/resources/META-INF/MANIFEST.MF
+.azure

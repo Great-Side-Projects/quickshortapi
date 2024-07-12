@@ -33,7 +33,7 @@ spring:
     password: pass
     queue:
       name: quickshort_deadletter
-    connection-timeout: 1000    
+    connection-timeout: 1000
   #Hikari configuration
   datasource:
     hikari:
@@ -78,7 +78,7 @@ spring:
       client-id: redirecturl
       properties:
         max.block.ms: 1000
-        retries: 3 
+        retries: 3
     listener:
       poll-timeout: 60000
 #Swagger configuration
@@ -91,16 +91,16 @@ springdoc:
     path: /swagger-ui.html
   open-api:
     info:
-     title: QuickShort API Documentation
-     description: This is the API documentation for the QuickShort API
-     version: 1.0.0
-     #termsOfService: https://quickshort.com/terms
-     license:
-       name: MTI License
-       url: https://github.com/Great-Side-Projects/quickshortapi/blob/main/LICENSE
-     contact:
-       name: Angel Morales
-       email: angelmoralesb@gmail.com
+      title: QuickShort API Documentation
+      description: This is the API documentation for the QuickShort API
+      version: 1.0.0
+      #termsOfService: https://quickshort.com/terms
+      license:
+        name: MTI License
+        url: https://github.com/Great-Side-Projects/quickshortapi/blob/main/LICENSE
+      contact:
+        name: Angel Morales
+        email: angelmoralesb@gmail.com
 #resilience4j configuration for circuit breaker
 resilience4j.circuitbreaker:
   backends:
