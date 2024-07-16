@@ -110,7 +110,7 @@ This project is integrated with New Relic to Azure Services, , you can see the m
 * [![MongoDB][MongoDB]][MongoDB-url]
 * [![RabbitMQ][RabbitMQ]][RabbitMQ-url] 
 
-### Architecture diagram
+### Architecture design
 
 The project is designed with Hexagonal Architecture, which is a software architecture that aims to create loosely coupled application components that can be easily connected to their software environment by means of ports and adapters. This makes the application more flexible to changes and easier to test.
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
