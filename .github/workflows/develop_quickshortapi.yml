@@ -6,11 +6,13 @@ on:
       - develop
     paths-ignore:
       - '**/README.md'
+      - '**/Dockerfile'
   pull_request:
     branches:
       - develop
     paths-ignore:
       - '**/README.md'
+      - '**/Dockerfile'
 
 jobs:
   build:
