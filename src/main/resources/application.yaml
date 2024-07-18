@@ -1,0 +1,159 @@
+server:
+  port: 8080
+  compression:
+    enabled: true
+    mime-types: text/html, text/xml, text/plain, text/css, text/javascript, application/javascript, application/json
+    min-response-size: 2048
+spring:
+  application:
+    name: QuickShort-api
+  data:
+    #Datasource configuration
+    mongodb:
+      uri: mongodb://mymdb:27017/quickshort
+    #Redis configuration
+    redis:
+      database: 0
+      host: myrd:6379
+      port: 6379
+      password: myrd
+      timeout: 1000
+      lettuce:
+        pool:
+          max-active: 8
+          max-idle: 8
+          min-idle: 0
+          max-wait: 3000
+        shutdown-timeout: 1000
+  ##rabbitmq configuration
+  rabbitmq:
+    host: myhost
+    port: 5672
+    username: myuser
+    password: pass
+    queue:
+      name: quickshort_deadletter
+    connection-timeout: 1000
+  #Hikari configuration
+  datasource:
+    hikari:
+      connection-timeout: 5000
+      maximum-pool-size: 10
+      minimum-idle: 5
+      max-lifetime: 1800000
+      validation-timeout: 5000
+      idle-timeout: 600000
+  #Kafka configuration
+  kafka:
+    bootstrap-servers: mykafka:9092
+    properties:
+      sasl.mechanism: PLAIN
+      sasl.jaas.config: org.apache.kafka.common.security.plain.PlainLoginModule required username="username" password="password";
+    security:
+      #if you require autentication use SASL_SSL instead of PLAINTEXT and configure the username and password
+      #protocol: SASL_SSL
+      protocol: PLAINTEXT
+    topic:
+      name: quickshort
+    consumer:
+      group-id: quickshort
+      auto-offset-reset: earliest
+      key-deserializer: org.springframework.kafka.support.serializer.ErrorHandlingDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.ErrorHandlingDeserializer
+      properties:
+        request.timeout.ms: 70000
+        max.poll.interval.ms: 300000
+        max.poll.records: 500
+        spring:
+          json:
+            trusted:
+              packages: '*'
+        spring.deserializer.key.delegate.class: org.apache.kafka.common.serialization.StringDeserializer
+        spring.deserializer.value.delegate.class: org.springframework.kafka.support.serializer.JsonDeserializer
+      fetch-max-wait: 60000
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      acks: all
+      client-id: redirecturl
+      properties:
+        max.block.ms: 1000
+        retries: 3
+    listener:
+      poll-timeout: 60000
+#Swagger configuration
+springdoc:
+  api-docs:
+    enabled: true
+    path: /v3/api-docs
+  swagger-ui:
+    enabled: true
+    path: /swagger-ui.html
+  open-api:
+    info:
+      title: QuickShort API Documentation
+      description: This is the API documentation for the QuickShort API
+      version: 1.0.0
+      #termsOfService: https://quickshort.com/terms
+      license:
+        name: MTI License
+        url: https://github.com/Great-Side-Projects/quickshortapi/blob/main/LICENSE
+      contact:
+        name: Angel Morales
+        email: angelmoralesb@gmail.com
+#resilience4j configuration for circuit breaker
+resilience4j.circuitbreaker:
+  backends:
+    urlPersistenceCache:
+      registerHealthIndicator: true
+      failureRateThreshold: 50
+      waitDurationInOpenState: 10m
+      slidingWindowSize: 10
+      minimumNumberOfCalls: 10
+      permittedNumberOfCallsInHalfOpenState: 1
+      automaticTransitionFromOpenToHalfOpenEnabled: true
+      eventConsumerBufferSize: 100
+      recordExceptions:
+        - org.springframework.dao.QueryTimeoutException
+        - io.lettuce.core.RedisConnectionException
+        - org.springframework.data.redis.RedisConnectionFailureException
+        - java.nio.channels.ClosedChannelException
+        - io.lettuce.core.RedisCommandTimeoutException
+    urlEventStreaming:
+      registerHealthIndicator: true
+      failureRateThreshold: 50
+      waitDurationInOpenState: 10m
+      slidingWindowSize: 5
+      minimumNumberOfCalls: 5
+      permittedNumberOfCallsInHalfOpenState: 1
+      automaticTransitionFromOpenToHalfOpenEnabled: true
+      eventConsumerBufferSize: 100
+      recordExceptions:
+        - org.springframework.kafka.KafkaException
+        - org.apache.kafka.common.errors.TimeoutException
+        - org.apache.kafka.common.errors.SerializationException
+#resilience4j configuration for rate limiter
+resilience4j:
+  ratelimiter:
+    metrics:
+      enabled: true
+    instances:
+      shorten:
+        register-health-indicator: true
+        limitForPeriod: 10
+        limitRefreshPeriod: 60s
+        timeoutDuration: 0s
+        allow-health-indicator-to-fail: true
+        subscribe-for-events: true
+        event-consumer-buffer-size: 50
+#Actuator configuration for health check and metrics monitoring
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+      show-components: always
+      enabled: true
