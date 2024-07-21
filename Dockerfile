@@ -1,5 +1,5 @@
 # Usar una imagen base de Java
-FROM openjdk:18-jdk-alpine
+FROM openjdk:22-jdk-slim
 # Establecer argumentos
 ARG MONGODB_URI
 ARG REDIS_HOST
