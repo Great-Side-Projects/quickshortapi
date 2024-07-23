@@ -18,6 +18,7 @@ spring:
       port: 6379
       password: myrd
       timeout: 1000
+      time-to-live: 1440 #minutes
       lettuce:
         pool:
           max-active: 8

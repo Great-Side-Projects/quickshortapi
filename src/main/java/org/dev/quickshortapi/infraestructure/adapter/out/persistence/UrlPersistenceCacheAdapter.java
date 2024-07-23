@@ -10,6 +10,7 @@ import org.dev.quickshortapi.domain.Url;
 import org.dev.quickshortapi.domain.event.cache.UrlDeleteByIdCacheEvent;
 import org.dev.quickshortapi.domain.event.cache.UrlFindByIdCacheEvent;
 import org.dev.quickshortapi.domain.event.cache.UrlSaveCacheEvent;
+import org.springframework.beans.factory.annotation.Value;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -21,6 +22,8 @@ public class UrlPersistenceCacheAdapter implements IUrlPersistenceCachePort, IUr
     private final IUrlEventTemplatePort<String> urlEventRabbitMQTemplateAdapter;
     Logger logger = Logger.getLogger(getClass().getName());
     private static final String MESSAGE_ERROR = "Error sending event to RabbitMQ {0}";
+    @Value("${spring.data.redis.time-to-live}")
+    private long expirationTime;;
 
     public UrlPersistenceCacheAdapter(IUrlRepositoryCache urlRepositoryCache, IUrlEventTemplatePort<String> urlEventRabbitMQTemplateAdapter) {
         this.urlRepositoryCache = urlRepositoryCache;
@@ -30,7 +33,9 @@ public class UrlPersistenceCacheAdapter implements IUrlPersistenceCachePort, IUr
     @Override
     @CircuitBreaker(name = "urlPersistenceCache", fallbackMethod = "fallbackSave")
     public Url save(Url url) {
-        return UrlMapper.toUrl(urlRepositoryCache.save(UrlMapper.toUrlEntityCache(url)));
+        UrlEntityCache urlEntityCache = UrlMapper.toUrlEntityCache(url);
+        urlEntityCache.setExpirationTime(expirationTime);
+        return UrlMapper.toUrl(urlRepositoryCache.save(urlEntityCache));
     }
 
     @Override

@@ -75,20 +75,18 @@ public class UrlService implements IUrlServicePort {
     @Override
     public String redirectUrl(String shortUrl) {
 
-        Optional<Url> url = urlRepositoryCacheAdapter.findById(shortUrl);
+        Optional<Url> url = urlRepositoryCacheAdapter.findById(shortUrl)
+                .map(Optional::of).orElseGet(
+                        () -> urlPersistenceAdapter.getUrlOrThrowByShortUrl(shortUrl).map(u -> {
+                            urlRepositoryCacheAdapter.save(u);
+                            return u;
+                        }));
 
-        if (!url.isEmpty() && !url.get().isValidUrl()){
+        if (!url.isEmpty() && !url.get().isValidUrl()) {
             logger.warning(INVALID_URL);
             throw new UrlNotFoundException(INVALID_URL);
         }
 
-        if (url.isEmpty()) {
-            // Actualizar en cache si solo estaba en la base de datos
-            url = urlPersistenceAdapter.getUrlOrThrowByShortUrl(shortUrl).map(u -> {
-                urlRepositoryCacheAdapter.save(u);
-                return u;
-            });
-        }
         urlEventStreamingAdapter.sendVisitedEvent(url.get());
         return url.get().getOriginalUrl();
     }
