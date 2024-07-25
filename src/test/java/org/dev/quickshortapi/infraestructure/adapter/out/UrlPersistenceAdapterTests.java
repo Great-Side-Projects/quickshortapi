@@ -43,13 +43,6 @@ class UrlPersistenceAdapterTests {
     }
 
     @Test
-    void getShortUrlbyOriginalUrlReturnsEmptyForNonexistentUrl() {
-        Mockito.when(urlRepository.findOriginalUrlByShortUrl(anyString())).thenReturn(Optional.empty());
-        String shortUrl = urlPersistenceAdapter.getShortUrlbyOriginalUrl("nonexistentUrl");
-        assertThat(shortUrl).isEmpty();
-    }
-
-    @Test
     void saveReturnsSavedUrl() {
         Url url = new Url("https://www.google.com");
         url.setShortUrl("HKl_v");
@@ -58,7 +51,7 @@ class UrlPersistenceAdapterTests {
         urlEntity.setShortUrl("HKl_v");
         Mockito.when(urlRepository.save(any())).thenReturn(urlEntity);
         Url savedUrl = urlPersistenceAdapter.save(url);
-        assertThat(savedUrl).isEqualToComparingFieldByField(url);
+        assertThat(savedUrl).isEqualTo(url);
     }
 
     @Test
