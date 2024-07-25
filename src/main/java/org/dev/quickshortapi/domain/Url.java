@@ -1,6 +1,7 @@
 package org.dev.quickshortapi.domain;
 
 import java.net.MalformedURLException;
+import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Date;
@@ -62,9 +63,9 @@ public class Url {
 
     public boolean isValidUrl() {
         try {
-            new URL(this.originalUrl).toURI();
+            URI.create(originalUrl).toURL();
             return true;
-        } catch (MalformedURLException | URISyntaxException e) {
+        } catch (MalformedURLException | IllegalArgumentException e) {
             return false;
         }
     }
