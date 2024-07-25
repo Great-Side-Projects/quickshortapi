@@ -23,7 +23,7 @@ public class UrlPersistenceCacheAdapter implements IUrlPersistenceCachePort, IUr
     Logger logger = Logger.getLogger(getClass().getName());
     private static final String MESSAGE_ERROR = "Error sending event to RabbitMQ {0}";
     @Value("${spring.data.redis.time-to-live}")
-    private long expirationTime;;
+    private long expirationTime;
 
     public UrlPersistenceCacheAdapter(IUrlRepositoryCache urlRepositoryCache, IUrlEventTemplatePort<String> urlEventRabbitMQTemplateAdapter) {
         this.urlRepositoryCache = urlRepositoryCache;
