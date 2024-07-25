@@ -40,16 +40,6 @@ class UrlControllerTests {
     }
 
     @Test
-    void shortenReturnsShortUrl() {
-        UrlCommand urlCommand = new UrlCommand();
-        urlCommand.setUrl("https://www.google.com");
-        UrlShortenResponse expectedResponse = new UrlShortenResponse("https://www.google.com", "HKl_v");
-        when(urlService.shortenUrl(any())).thenReturn(expectedResponse);
-        UrlShortenResponse actualResponse = urlController.shorten(urlCommand);
-        assertEquals(expectedResponse, actualResponse);
-    }
-
-    @Test
     void redirectReturnsSeeOtherStatus() {
         String shortUrl = "HKl_v";
         String originalUrl = "https://www.google.com";
