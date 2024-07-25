@@ -35,7 +35,10 @@ class UrlPersistenceCacheAdapterTests {
         urlEntityCache.setId("HKl_v");
         Mockito.when(urlRepositoryCache.save(any())).thenReturn(urlEntityCache);
         Url savedUrl = urlPersistenceCacheAdapter.save(url);
-        assertThat(savedUrl).isEqualToIgnoringGivenFields(url, "createdDate");
+        assertThat(savedUrl)
+                .usingRecursiveComparison()
+                .ignoringFields("createdDate")
+                .isEqualTo(url);
     }
 
     @Test
