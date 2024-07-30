@@ -58,8 +58,8 @@ jobs:
     #               -e "s|\${RABBITMQ_USERNAME}|${{ secrets.RABBITMQ_USERNAME }}|g" \
     #               -e "s|\${RABBITMQ_PASSWORD}|${{ secrets.RABBITMQ_PASSWORD }}|g" Dockerfile
 
-    #- name: print Dockerfile
-    #  run: cat Dockerfile
+    - name: print Dockerfile
+      run: cat Dockerfile
 
     - name: Build and push container image to registry
       uses: docker/build-push-action@v5
