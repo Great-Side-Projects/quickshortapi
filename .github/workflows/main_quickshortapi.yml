@@ -61,7 +61,7 @@ jobs:
     - name: Set configuration in Dockerfile
       run: |
         kafka_properties_sasl_jaas_config="org.apache.kafka.common.security.plain.PlainLoginModule required username='${{ secrets.KAFKA_USERNAME }}' password='${{ secrets.KAFKA_PASSWORD }}';"
-        sed -i -e -e "s|\${KAFKA_PROPERTIES_SASL_JAAS_CONFIG}|$kafka_properties_sasl_jaas_config|g" Dockerfile
+        sed -i -e "s|\${KAFKA_PROPERTIES_SASL_JAAS_CONFIG}|$kafka_properties_sasl_jaas_config|g" Dockerfile
 
     - name: print Dockerfile
       run: cat Dockerfile
