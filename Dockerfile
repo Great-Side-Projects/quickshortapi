@@ -34,4 +34,4 @@ ENV SPRING_DATA_MONGODB_URI=${MONGODB_URI} \
     SPRING_RABBITMQ_PASSWORD=${RABBITMQ_PASSWORD}
 
 # Comando para ejecutar la aplicación Spring Boot al iniciar el contenedor
-ENTRYPOINT ["java", "-jar", "quickshortapi.jar", "--spring.kafka.properties.sasl.jaas.config=${KAFKA_PROPERTIES_SASL_JAAS_CONFIG}"]
+ENTRYPOINT ["java", "-jar", "quickshortapi.jar"]
