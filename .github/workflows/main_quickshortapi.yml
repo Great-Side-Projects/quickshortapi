@@ -58,8 +58,13 @@ jobs:
     #               -e "s|\${RABBITMQ_USERNAME}|${{ secrets.RABBITMQ_USERNAME }}|g" \
     #               -e "s|\${RABBITMQ_PASSWORD}|${{ secrets.RABBITMQ_PASSWORD }}|g" Dockerfile
 
-    #- name: print Dockerfile
-    #  run: cat Dockerfile
+    #- name: Set configuration in Dockerfile
+    #  run: |
+    #    kafka_properties_sasl_jaas_config="org.apache.kafka.common.security.plain.PlainLoginModule required username='${{ secrets.KAFKA_USERNAME }}' password='${{ secrets.KAFKA_PASSWORD }}';"
+    #    sed -i -e "s|\${KAFKA_PROPERTIES_SASL_JAAS_CONFIG}|$kafka_properties_sasl_jaas_config|g" Dockerfile
+
+    - name: print Dockerfile
+      run: cat Dockerfile
 
     - name: Build and push container image to registry
       uses: docker/build-push-action@v5
@@ -75,7 +80,7 @@ jobs:
           REDIS_PORT=${{ secrets.REDIS_PORT }}
           REDIS_PASSWORD=${{ secrets.REDIS_PASSWORD }}
           KAFKA_BOOTSTRAP_SERVERS=${{ secrets.KAFKA_BOOTSTRAP_SERVERS }}
-          KAFKA_PROPERTIES_SASL_JAAS_CONFIG="org.apache.kafka.common.security.plain.PlainLoginModule required username='${{ secrets.KAFKA_USERNAME }}' password='${{ secrets.KAFKA_PASSWORD }}';"
+          KAFKA_PROPERTIES_SASL_JAAS_CONFIG=org.apache.kafka.common.security.plain.PlainLoginModule required username='${{ secrets.KAFKA_USERNAME }}' password='${{ secrets.KAFKA_PASSWORD }}';
           RABBITMQ_HOST=${{ secrets.RABBITMQ_HOST }}
           RABBITMQ_PORT=${{ secrets.RABBITMQ_PORT }}
           RABBITMQ_USERNAME=${{ secrets.RABBITMQ_USERNAME }}
